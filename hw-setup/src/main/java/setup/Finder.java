@@ -112,7 +112,7 @@ public class Finder {
    */
   private static boolean checkInv(int[] A, int val, int i) {
     for (int j = 0; j <= i; j++) {
-      if (A[i] == val)
+      if (A[j] == val)
         return false;
     }
     return true;
