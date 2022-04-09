@@ -1,7 +1,5 @@
 package setup;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /** RandomHello selects and prints a random greeting. */
