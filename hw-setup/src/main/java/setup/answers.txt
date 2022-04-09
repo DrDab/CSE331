@@ -4,17 +4,31 @@
 1. Why did Fibonacci fail the testThrowsIllegalArgumentException< test? What (if anything) did
 you have to do to fix it? If you did not have to change anything to fix this issue, explain why.
 
-
+Fibonacci failed the testThrowsIllegalArgumentException test because the Fibonacci.getFibTerm
+method was erroneously programmed to throw IllegalArgumentException for an integer n <= 0, even though
+the method was only supposed to throw the exception for an integer n < 0 (because n = 0 should be a valid
+case, but wasn't accepted by Fibonacci.getFibTerm). I fixed this issue by modifying line 32 of Fibonacci.java
+to only throw IllegalArgumentException if n < 0 instead of if n <= 0.
 
 2. Why did Fibonacci fail the testBaseCase test? What (if anything) did you have to do to fix
 it? If you did not have to change anything to fix this issue, explain why.
 
-
+Fibonacci failed the testBaseCase test (before I changed line 32 of Fibonacci.java to only throw
+IllegalArgumentException if n < 0 instead of if n <= 0) because the Fibonacci.getFibTerm method
+threw an IllegalArgumentException when it wasn't supposed to, since n = 0 is a valid base case while
+Fibonacci.getFibTerm when run with n = 0 threw an exception claiming that n was negative in that case.
+After I modified line 32 of Fibonacci.java to only throw IllegalArgumentException if n < 0 instead of
+if n <= 0 (as in question 1), Fibonacci passed the testBaseCase test.
 
 3.Why did Fibonacci fail the testInductiveCase test? What (if anything) did you have to do to
 fix it? If you did not have to change anything to fix this issue, explain why.
 
+Fibonacci failed the testInductiveCase test because line 34 in Fibonacci.getFibTerm, which checks whether
+to return a base case, was checking if n <= 2 rather than if n < 2. Line 34 should be checking whether n < 2
+because the indexing of terms in the Fibonacci sequence used by Fibonacci.getFibTerm starts at n = 0, not n = 1.
+After I changed line 34 to check if n < 2 rather than if n <= 2, Fibonacci passed the testInductiveCase check.
 
+Fibonacci
 
 ## Part 8: Debugger Tutorial
 
