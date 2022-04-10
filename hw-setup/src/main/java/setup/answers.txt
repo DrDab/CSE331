@@ -35,14 +35,23 @@ Fibonacci
 1. What are the values of "x", "y", and "sum" printed by your statement? Why was x not equal 
 to the first integer entered here, and how could we fix this?
 
-
+When I entered my first and second numbers as 5 and 2 respectively, my statement printed the values
+x = 4, y = 2, and sum = 2. x was not equal to the first integer entered here because x is set to
+2 * (console.nextInt() / 2) and Java's integer division ignores any remainder from the division,
+keeping only the integer quotient. Hence, when I entered 5 as my first number, 2 * (5 / 2) = 2 * (2) = 4,
+so x = 4. We could fix this by setting x to console.nextInt() instead of 2 * (console.nextInt() / 2).
 
 2. What are all the names and values listed in the “Variables” panel? What does the “frames” 
 tab list as the current method and line number? (Write down the text that was highlighted when 
 the Debug perspective first opened.)
 
-
+When Adder.main is run with my first and second numbers as 5 and 2 respectively, after making the changes
+described in question 1, the names and values listed in the "Variables" panel for the computeSum:43 frame
+are as follows: x = 5, y = 2. The "frames" tab lists the current (topmost) method and line number as
+"computeSum:43".
 
 3. What are all the names and values listed in the “Variables” panel after each of the two step overs?
 
+After the first step over, the values listed in the "Variables" panel are x = 5 and y = 2.
+After the second step over, the values listed in the "Variables" panel are x = 5, y = 2, and sum = 3.
 

@@ -26,10 +26,11 @@ public class Adder {
     public static void main(String[] args) {
         Scanner console = new Scanner(System.in, UTF_8.name());
         System.out.print("Enter first number: ");
-        int x = 2 * (console.nextInt() / 2);
+        int x = console.nextInt();
         System.out.print("Enter second number: ");
         int y = console.nextInt();
         int sum = computeSum(x, y);
+        System.out.printf("x=%d, y=%d, sum=%d\n", x, y, sum);
         System.out.println("The sum of the two numbers is: " + sum);
     }
 
