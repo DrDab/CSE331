@@ -58,8 +58,11 @@ public class Evaluator {
 
     // Inv: val = A[j] v^0 + ... + A[1] v^{j-1} + A[0] v^j
     while (j != A.length - 1) {
+      // {{ val = A[j] v^0 + ... + A[1] v^{j-1} + A[0] v^j && j != n - 1 }}
       j = j + 1;
+      // {{ val = A[j-1] v^0 + ... + A[1] v^{j-2} + A[0] v^{j-1} && j != n }}
       val = val * v + A[j];
+      // {{ val = A[j] v^0 + A[j-1] v^1 + ... + A[1] v^{j-2} + A[0] v^{j-1} && j != n }}
     }
 
     // Post: val = A[n-1] + A[n-2] v + ... + A[1] v^{n-2} + A[0] v^{n-1}
