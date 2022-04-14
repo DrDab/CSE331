@@ -23,6 +23,18 @@ setup-validation:
   only: ["hw2-final"]
   except: ["branches"]
 
+base-build:
+  stage: build
+  script: $RUNNER_SCRIPT hw-base build
+  only: ["hw3-final"]
+  except: ["branches"]
+
+base-validation:
+  stage: validation
+  script: $RUNNER_SCRIPT hw-base validation
+  only: ["hw3-final"]
+  except: ["branches"]
+
 poly-build:
   stage: build
   script: $RUNNER_SCRIPT hw-poly build
