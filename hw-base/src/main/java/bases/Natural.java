@@ -327,10 +327,10 @@ public class Natural {
     // Since A and B represent numbers with the same base b, each digit of A and B must
     // be integers in the range [0, b), and since each element of D is the sum of the corresponding
     // digits for A and B in that index, the maximum possible value of A[i] + B[i] where i is
-    // between [0, n-1] is b-1 + b-1 = 2b - 2, because the greatest integer in the range [0, b) is b-1.
+    // between [0, n-1] is b-1 + b-1 = 2b - 2 < 2b, because the greatest integer in the range [0, b) is b-1.
 
     // The invariant of the loop below holds initially because after the first loop finishes,
-    // i = B.length (the termination condition for the precding loop), and the invariant of the
+    // i = B.length (the termination condition for the preceding loop), and the invariant of the
     // first loop holds, so we know that D[x] = A[x] + B[x] for all integers x such that 0 <= x <= i-1,
     // which implies the invariant that D[0] = A[0]+B[0], D[1] = A[1]+B[1], ..., D[i-1] = A[i-1]+B[i-1].
 
@@ -352,32 +352,25 @@ public class Natural {
     //       where n = this.digits.length and B is as defined above
     checkZipSum(other.digits, this.digits, newDigits);
 
-
-    // TODO: Remove the next two lines before starting work on the loop below!
-    // They cause the code to always return null, which we only want to do
-    // while you are working on the two loops above. Once those work, remove
-    // these lines and start on the third and final loop below.
-    if (this.digits.length < newDigits.length)
-      return null;
-
-
-    // TODO: Explain why we have
-    //         this.value + other.value = D[0] + D[1] b + ... + D[n-1] b^{n-1}
+    // Since the previous code ensures that D[i] = A[i] + B[i] for all integers
+    // 0 <= i <= n-1, and the coefficient for b^i in A (A[i]) and B (B[i])
+    // corresponds to the same power of b, we therefore know that the numeric value
+    // represented by D equals the sum of the values represented by A and B
+    // (which this.getValue() and other.getValue() return), which implies that
+    // this.value + other.value = D[0] + D[1] b + ... + D[n-1] b^{n-1}.
 
     // The next loop changes the values in newDigits so that it satisfies the
     // part of the RI that says each digit is between 0 and b-1. It does this
     // *without* changing the value that the digits represent, so they will
     // still represent the value this.value + other.value.
 
-    i = -1;  // TODO: Change this so that the invariant holds initially.
+    i = 0;
 
     // Inv: this.value + other.value = D[0] + D[1] b + ... + D[n-1] b^{n-1} and
     //      D[0] < b, D[1] < b, ..., D[i-1] < b and
     //      D[i] < 2b, D[i+1] < 2b, ..., D[n-1] < 2b
-    while (i != -1) {  // TODO: Replace the condition here with a suitable one.
-
-      // TODO: Implement the body of this loop. The reader must to be able to
-      //       reason through why your code is correct, so keep it simple!
+    while (i != newDigits.length)
+    {
       // NOTE: Do not use div or mod. Simple arithmetic should be enough.
 
       // Hint: Subtracting b from D[i] while adding 1 to D[i+1] does not change
@@ -385,13 +378,32 @@ public class Natural {
       //
       //   (D[i] - b) b^i + (D[i+1] + 1) b^{i+1}
       //   = D[i] b^i - b^{i+1} + D[i+1] b^{i+1} + b^{i+1}
-      //   = D[i] b^i + D[i+1] b^{i+1]
+      //   = D[i] b^i + D[i+1] b^{i+1}
+
+      // {{ D[0], ..., D[i-1] < b && D[i], ..., D[n-1] < 2b }}
+      if (newDigits[i] >= base)
+      {
+        newDigits[i] -= base;
+        newDigits[i + 1]++;
+      }
+
+      // {{ D[0], D[1], ..., D[i] < b && D[i+1], ..., D[n-1] < 2b }}
 
       i = i + 1;  // NOTE: do not change this line
     }
 
-    // TODO: Explain why (1) the postcondition holds and
-    //                   (2) the preconditions of this constructor hold.
+    // {{ D[0], D[1], ..., D[n-1] < b }}
+
+    // The postcondition holds with the loop condition that I wrote above,
+    // because when the loop terminates, the invariant that
+    // D[0], ..., D[i-1] < b && D[i], ..., D[n-1] < 2b holds and i = n
+    // also holds, which means that D[0], ..., D[n-1] < b.
+
+    // The preconditions of the new Natural constructor holds because
+    // it is already known that 2 <= this.base <= 36, and we also know from
+    // the postcondition that D[0], ..., D[n-1] < b also holds, which means that
+    // all requirements for the Natural constructor taking in a base b and the
+    // digits of the base-b number as an array indexed by powers of b are satisfied.
     return new Natural(this.base, newDigits);
   }
 
