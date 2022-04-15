@@ -208,14 +208,6 @@ public class Natural {
   public Natural toBase(int base) {
     assert 2 <= base && base <= 36;
 
-    // Hints: 1. Compare this invariant to the one from getValue above
-    //        2. Take advantage of the existing methods, plus and times.
-    //
-    // TODO: Implement the method below, whose invariant is provided.
-    //       Your code must be correct with the invariant written.
-    //       Include a comment explaining why the postcondition follows from
-    //           the facts we know from above it.
-
     Natural r = new Natural(base);
     Natural b = new Natural(base, this.base);
 
@@ -239,7 +231,14 @@ public class Natural {
 
     // {{ r = (base, D[i] b^0 + D[i+1] b^1 + D[i+2] b^2 + ... + D[n-1] b^j) && j = n-1 && i = 0 }}
 
-    // TODO: Explain why the postcondition holds at the end of this code.
+    // Since the invariant holds after the preceding loop terminates, we know that
+    // r = (base, D[i] b^0 + D[i+1] b^1 + D[i+2] b^2 + ... + D[n-1] b^j) and i+j = n-1.
+    // Since the loop terminates on te condition that j = n-1, we know that i = 0 for the
+    // invariant condition that i+j = n-1 to be true. Hence, substituting i = 0 and j = n-1
+    // in the invariant, we get r = (base, D[0] b^0 + D[1] b^1 + ... + D[n-1] b^{n-1}), and
+    // we know that the numeric value of this from the D array representation is:
+    // D[0] b^0 + D[1] b^1 + ... + D[n-1] b^{n-1}. Hence, the postcondition holds.
+
     // Post: r = (base, this.value())
     return r;
   }
