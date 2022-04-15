@@ -64,14 +64,14 @@ public class Natural {
    *     0 if none are non-zero
    */
   public static int leadingDigit(int[] digits) {
-    // TODO: Implement this method with a loop, and include a loop invariant.
-    //       Your code must be correct with the invariant you write (tests don't check this!).
-    //       Include an explanation of why postcondition holds at each return statement.
-    //       You can use the template given right before the postcondition in this method.
-
+    // {{ true }}
     int i = digits.length - 1;
+    // {{ i = n - 1 }}
 
-    //
+    // Let n be the length of digits, and D shorthand for the array digits.
+    // Before and after this loop completes, we can be sure that D[n-1], D[n-2], ..., D[i+1] = 0.
+    // The first time this loop runs, i = n - 1 so the invariant is vacuously true, so no elements
+    // of D are known to be zero.
     // Inv: D[n-1], D[n-2], ..., D[i+1] = 0
     while (i != 0)
     {
@@ -242,18 +242,37 @@ public class Natural {
    * @return The string of digits corresponding to this value in this base.
    */
   public String toString() {
-    // TODO: Implement this method with a loop, and include a loop invariant.
-    //       Your code must be correct with the invariant you write (tests don't check this!).
-    //       Include an explanation of why postcondition holds at each return statement.
-    //       You can use the template given right before the postcondition in this method.
-
-
+    // {{ true }}
     StringBuilder buf = new StringBuilder();
+    // {{ buf = [] }}
+    int i = digits.length - 1;
+    // {{ buf = [] && i = n - 1 }}
 
-    // TODO: write your loop here
+    // Let n be the length of digits and D be shorthand for the digits array.
+    // Let the comma denote concatenation.
+    // Before and after this loop completes, we can be sure that
+    // buf = ch(D[n-1]), ch(D[n-2]), ... ,ch(D[i+1]). The first time this loop is
+    // run, the invariant that buf = ch(D[n-1]) , ch(D[n-2]) , ... , ch(D[i+1]) holds
+    // vacuously as i = n - 1, so buf is empty before the loop is run.
+    // Inv: buf = ch(D[n-1]) , ch(D[n-2]) , ... , ch(D[i+1])
+    while (i != -1)
+    {
+      // {{ buf = ch(D[n-1]), ch(D[n-2]), ... , ch(D[i+1]) && i != -1 }}
+      buf.append(digits[i]);
+      // {{ buf = ch(D[n-1]), ch(D[n-2]), ... , ch(D[i+1]), ch(D[i]) && i != -1 }}
+      i = i - 1;
+      // {{ buf = ch(D[n-1]), ch(D[n-2]), ... , ch(D[i+2]), ch(D[i+1]) }}
+    }
 
-    // At this point in the code, we know that _________.
-    // This implies the postcondition below, since __________.
+    // {{ buf = ch(D[n-1]) , ch(D[n-2]) , ... , ch(D[i+2]) , ch(D[i+1]) && i = -1 }}
+
+    // At this point in the code, we know that from our invariant that
+    // buf = ch(D[n-1]) , ch(D[n-2]) , ... , ch(D[i+2]) , ch(D[i+1]) and that i = -1
+    // from the fact that the preceding loop terminates on the condition that i = -1.
+    // This implies the postcondition below, since
+    // buf = ch(D[n-1]) , ch(D[n-2]) , ... , ch(D[i+2]) , ch(D[i+1]) and i = -1, therefore
+    // buf = ch(D[n-1]), ch(D[n-2]) , ... , ch(D[1]) , ch(D[0]) when we plug in the value of i,
+    // which is the postcondition.
 
     // Post: buf = ch(D[n-1]), ch(D[n-2]), ..., ch(D[0])
     return buf.toString();
