@@ -306,36 +306,46 @@ public class Natural {
     // the array newDigits. The first loop handles the digits that exist in
     // both this and other, and the second loop handles the digits that exist
     // only in this (i.e., when other is shorter). After the loops, newDigits
-    // will represent the correct value, but it it will not yet satisfy the RI.
+    // will represent the correct value, but it will not yet satisfy the RI.
 
-    // TODO: Before implementing them, write a summary comment above each of
-    //       the next two loops, explaining in English what it does.
+    int i = 0;
 
+    // The first loop populates each element of newDigits with the sum of corresponding digits
+    // in the same index as the current working index in newDigits in this.digits and other.digits,
+    // up until the length of other.digits is reached.
 
-    int i = this.digits.length;  // TODO: Fill in the initialization code such that the invariant holds initially.
-
-    // TODO: Summary comment here
     // Inv: D[0] = A[0]+B[0], D[1] = A[1]+B[1], ..., D[i-1] = A[i-1]+B[i-1],
     //      where D = new_digits, A = this.digits, and B = other.digits
-    while (i != other.digits.length) {
-
-      // TODO: Implement the body of this loop, such that it's correct with the given invariant.
-
+    while (i != other.digits.length)
+    {
+      newDigits[i] = this.digits[i] + other.digits[i];
+      i = i + 1;
     }
 
-    // TODO: Explain why we have D[0] < 2b, D[1] < 2b, ..., D[n-1] < 2b
+    // The reason why each element of D (D[0], D[1], ..., D[n-1] < 2b) is less than 2b
+    // is because each digit of a number with arbitrary base b is in the range [0, b).
+    // Since A and B represent numbers with the same base b, each digit of A and B must
+    // be integers in the range [0, b), and since each element of D is the sum of the corresponding
+    // digits for A and B in that index, the maximum possible value of A[i] + B[i] where i is
+    // between [0, n-1] is b-1 + b-1 = 2b - 2, because the greatest integer in the range [0, b) is b-1.
 
-    // TODO: Explain why the invariant of the loop below holds initially (no code needed).
+    // The invariant of the loop below holds initially because after the first loop finishes,
+    // i = B.length (the termination condition for the precding loop), and the invariant of the
+    // first loop holds, so we know that D[x] = A[x] + B[x] for all integers x such that 0 <= x <= i-1,
+    // which implies the invariant that D[0] = A[0]+B[0], D[1] = A[1]+B[1], ..., D[i-1] = A[i-1]+B[i-1].
 
-    // TODO: Summary comment here
+    // The second loop populates each element of newDigits with the sum of corresponding digits
+    // in the same index in this.digits and other.digits if the loop has not passed the length
+    // limit of B, or with the values in this.digits if the loop has passed the limit of B,
+    // up until the length of this.digits is reached.
+
     // Inv: D[0] = A[0]+B[0], D[1] = A[1]+B[1], ..., D[i-1] = A[i-1]+B[i-1],
     //      where B[k] = other.digits[k] if k < other.digits.length and
     //            B[k] = 0               otherwise
-    while (i != this.digits.length) {
-
-      // TODO: Implement the body of this loop, such that it's correct with the given invariant.
-
-
+    while (i != this.digits.length)
+    {
+      newDigits[i] = this.digits[i] + (i < other.digits.length ? other.digits[i] : 0);
+      i = i + 1;
     }
 
     // Have: D[0] = A[0]+B[0], D[1] = A[1]+B[1], ..., D[n-1] = A[n-1]+B[n-1],
