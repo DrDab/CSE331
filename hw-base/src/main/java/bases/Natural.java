@@ -69,12 +69,35 @@ public class Natural {
     //       Include an explanation of why postcondition holds at each return statement.
     //       You can use the template given right before the postcondition in this method.
 
-    int i = 0;  // TODO: feel free to change 0 to something else
+    int i = digits.length - 1;
 
-    // TODO: write your loop here
+    //
+    // Inv: D[n-1], D[n-2], ..., D[i+1] = 0
+    while (i != 0)
+    {
+      if (digits[i] != 0)
+      {
+        // The postcondition holds because from the invariant we know
+        // that D[i+1], ..., D[n-2], D[n-2] = 0. Because the if statement
+        // ensures that D[i] != 0 holds for i to be returned, the postcondition
+        // that D[n-1], D[n-2], ..., D[i+1] = 0 && D[i] != 0 holds.
 
-    // At this point in the code, we know that _________.
-    // This implies the postcondition below, since __________.
+        // Post: D[n-1], D[n-2], ..., D[i+1] = 0 && D[i] != 0
+        return i;
+      }
+
+      // {{ D[n-1], D[n-2], ..., D[i] = 0 }}
+      i = i - 1;
+      // {{ D[n-1], D[n-2], ..., D[i+1] = 0 }}
+    }
+
+    // {{ D[n-1], D[n-2], ..., D[i+1] = 0 && i = 0 }}
+
+    // At this point in the code, we know that D[i+1], D[i+2], ..., D[n-1] = 0 due to the preceding
+    // loop invariant, and we know that i = 0 because i = 0 is a terminating condition for the while loop.
+    // This implies that D[1], D[2], ..., D[n-1] = 0, but the condition of D[0] is unknown, which means that
+    // either D[0] = 0 or D[0] != 0. Either way, these preconditions satisfy the postcondition that
+    // D[i+1], ..., D[n-1] are all zero and (D[i] != 0 or i = 0).
 
     // Post: D[i+1], ..., D[n-1] are all zero and (D[i] != 0 or i = 0)
     return i;
