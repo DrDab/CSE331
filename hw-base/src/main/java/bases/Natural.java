@@ -265,7 +265,7 @@ public class Natural {
     while (i != -1)
     {
       // {{ buf = ch(D[n-1]), ch(D[n-2]), ... , ch(D[i+1]) && i != -1 }}
-      buf.append(digits[i]);
+      buf.append(BaseDigits.digitToChar(digits[i], base));
       // {{ buf = ch(D[n-1]), ch(D[n-2]), ... , ch(D[i+1]), ch(D[i]) && i != -1 }}
       i = i - 1;
       // {{ buf = ch(D[n-1]), ch(D[n-2]), ... , ch(D[i+2]), ch(D[i+1]) }}
