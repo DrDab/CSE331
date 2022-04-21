@@ -35,15 +35,15 @@ base-validation:
   only: ["hw3-final"]
   except: ["branches"]
 
-poly-build:
+sets-build:
   stage: build
-  script: $RUNNER_SCRIPT hw-poly build
+  script: $RUNNER_SCRIPT hw-sets build
   only: ["hw4-final"]
   except: ["branches"]
 
-poly-validation:
+sets-validation:
   stage: validation
-  script: $RUNNER_SCRIPT hw-poly validation
+  script: $RUNNER_SCRIPT hw-sets validation
   only: ["hw4-final"]
   except: ["branches"]
 
