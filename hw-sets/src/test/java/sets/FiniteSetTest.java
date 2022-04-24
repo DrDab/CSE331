@@ -114,8 +114,8 @@ public class FiniteSetTest {
     b = FiniteSet.of(new float[]{2,-4});
     assertEquals(a.union(b), FiniteSet.of(new float[]{1,2,-3,-4,5,7}));
 
-    // (k) test intersection of sets a = {-0.45, 0.38, 0.45, 3.14}, b = {-0.45, 0.45, 3.14}
-    // (expected result: a intersection b = {-0.45, 0.38, 0.45, 3.14})
+    // (k) test union of sets a = {-0.45, 0.38, 0.45, 3.14}, b = {-0.45, 0.45, 3.14}
+    // (expected result: a union b = {-0.45, 0.38, 0.45, 3.14})
     a = FiniteSet.of(new float[]{-0.45f, 0.38f, 0.45f, 3.14f});
     b = FiniteSet.of(new float[]{3.14f, -0.45f, 0.45f});
     assertEquals(a.union(b), FiniteSet.of(new float[]{0.45f, -0.45f, 3.14f, 0.38f}));
