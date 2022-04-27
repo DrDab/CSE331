@@ -274,7 +274,7 @@ public class SimpleSet {
       //  = A intersection B        [ Double Complement Law ]
       //
       //  Therefore, A \ B^C = A intersection B so taking the intersection of A and B
-      //  and setting the resultant SimpleSet as complement computes A \ B^C.
+      //  and setting the resultant SimpleSet as non-complement computes A \ B^C.
       return new SimpleSet(isComplement, isComplement ?
               other.points.union(this.points) : other.points.intersection(this.points));
     }
