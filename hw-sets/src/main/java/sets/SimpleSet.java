@@ -80,8 +80,6 @@ public class SimpleSet {
    *     where p1, p2, ... pN are replaced by the individual numbers.
    */
   public String toString() {
-    // TODO: implement this with a loop. document its invariant
-    //       a StringBuilder may be useful for creating the string
     StringBuilder sb = new StringBuilder();
 
     if (isComplement)
@@ -158,18 +156,39 @@ public class SimpleSet {
    * @return this union other
    */
   public SimpleSet union(SimpleSet other) {
-    // TODO:
-    //       include sufficient comments to see why it is correct (hint: cases)
+    // note: in explanations A refers to set this.points, B refers to the set other.points.
+    // A^C refers to the complement of A and B^C refers to the complement of B.
+
     if (isComplement && other.isComplement)
     {
+      // For the case that A and B are complement sets:
+      // A^C union B^C = (A intersection B)^C by DeMorgan's Law.
       return new SimpleSet(true, points.intersection(other.points));
     }
     else if (!isComplement && !other.isComplement)
     {
+      // For the case that A and B are non-complement sets:
+      // Just union the internal set representation as normal.
       return new SimpleSet(false, points.union(other.points));
     }
     else
     {
+      // If A is a complement set and B is not a complement set:
+      //      A^C union B
+      //    = (A intersection B^C)^C    [ DeMorgan's Law ]
+      //    = (A \ B)^C                 [ Set Difference Law ]
+      //      Therefore, A^C union B = (A \ B)^C,
+      //      so taking the difference between A and B and setting
+      //      new SimpleSet as a complement works.
+      //
+      // If A is not a complement set and B is a complement set:
+      //      A union B^C
+      //    = (A^C intersection B)^C    [ DeMorgan's Law ]
+      //    = (B intersection A^C)^C    [ Commutativity ]
+      //    = (B \ A)^C                 [ Set Difference Law ]
+      //      Therefore, A union B^C = (B \ A)^C,
+      //      so taking the difference between B and A and setting
+      //      new SimpleSet as a complement works.
       return new SimpleSet(true,
               isComplement ? this.points.difference(other.points) :
                             other.points.difference(this.points));
@@ -183,21 +202,27 @@ public class SimpleSet {
    * @return this intersect other
    */
   public SimpleSet intersection(SimpleSet other) {
-    // TODO:
-    //       include sufficient comments to see why it is correct
-    // NOTE: There is more than one correct way to implement this.
+    // note: in explanations A refers to set this.points, B refers to the set other.points.
+    // A^C refers to the complement of A and B^C refers to the complement of B.
 
     if (isComplement && other.isComplement)
     {
-      // A^C intersect B^C = (A union B)^C by DeMorgan's Law
+      // For the case that A and B are complement sets:
+      // A^C intersect B^C = (A union B)^C by DeMorgan's Law.
       return new SimpleSet(true, points.union(other.points));
     }
     else if (!isComplement && !other.isComplement)
     {
+      // For the case that A and B are non-complement sets:
+      // Just intersect the internal set representation as normal.
       return new SimpleSet(false, points.intersection(other.points));
     }
     else
     {
+      // If A is a complement set and B is not a complement set:
+      //    by Set Difference Law, A^C intersection B = B intersection A^C = B \ A
+      // If A is not a complement set and B is a complement set:
+      //    by Set Difference Law, A intersection B^C = A \ B
       return new SimpleSet(false, isComplement ?
               other.points.difference(this.points) : points.difference(other.points));
     }
