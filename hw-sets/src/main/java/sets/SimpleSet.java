@@ -26,6 +26,7 @@ public class SimpleSet {
    * @spec.effects this = {vals[0], vals[1], ..., vals[vals.length-1]}
    */
   public SimpleSet(float[] vals) {
+    assert vals != null;
     this.points = FiniteSet.of(vals);
     this.isComplement = false;
   }
@@ -38,6 +39,7 @@ public class SimpleSet {
    * @spec.effects this = R \ points if complement else points
    */
   private SimpleSet(boolean complement, FiniteSet points) {
+    assert points != null;
     this.isComplement = complement;
     this.points = points;
   }
