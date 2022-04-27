@@ -11,9 +11,11 @@ import java.util.List;
  */
 public class SimpleSet {
 
-  // TODO: fill in and document the representation
-  //       Make sure to include the representation invariant (RI)
-  //       and the abstraction function (AF).
+  // Representation Invariant (RI): FiniteSet points != null and isComplement is true or false.
+  //
+  // Abstraction Function:
+  //    AF(this) = FiniteSet containing all points included in this set iff isComplement is false
+  //               FiniteSet containing all points excluded in this set iff isComplement is true
   private FiniteSet points;
   private boolean isComplement;
 
