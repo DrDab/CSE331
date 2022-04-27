@@ -64,57 +64,72 @@ public class FiniteSetTest {
     FiniteSet b = FiniteSet.of(new float[]{});
     assertEquals(a.union(b), EMPTY_SET);
 
-    // (b) test union of two empty sets a = {1}, b = {} (expected result: a union b = {1})
+    // (b.1) test union of two empty sets a = {1}, b = {} (expected result: a union b = {1})
     a = S1;
     b = EMPTY_SET;
     assertEquals(a.union(b), S1);
 
-    // (c) test union of sets a = {1}, b = {2} (expected result: a union b = {1,2})
+    // (b.2) test union of two empty sets a = {}, b = {1} (expected result: a union b = {1})
+    a = EMPTY_SET;
+    b = S1;
+    assertEquals(a.union(b), S1);
+
+    // (b.3) test union of two empty sets a = {-1}, b = {} (expected result: a union b = {-1})
+    a = FiniteSet.of(new float[]{-1});
+    b = EMPTY_SET;
+    assertEquals(a.union(b), a);
+
+    // (b.4) test union of two empty sets a = {}, b = {-1} (expected result: a union b = {-1})
+    a = EMPTY_SET;
+    b = FiniteSet.of(new float[]{-1});
+    assertEquals(a.union(b), b);
+
+    // (c.1) test union of sets a = {1}, b = {2} (expected result: a union b = {1,2})
     a = S1;
     b = FiniteSet.of(new float[]{2});
     assertEquals(a.union(b), S12);
 
-    // (d) test union of sets a = {-1}, b = {2} (expected result: a union b = {-1,2})
+    // (c.2) test union of sets a = {-1}, b = {2} (expected result: a union b = {-1,2})
     a = FiniteSet.of(new float[]{-1});
     b = S2;
     assertEquals(a.union(b), FiniteSet.of(new float[]{2,-1}));
 
-    // (e) test union of sets a = {-1}, b = {-2} (expected result: a union b = {-1,2})
+    // (c.3) test union of sets a = {-1}, b = {-2} (expected result: a union b = {-1,2})
     a = FiniteSet.of(new float[]{-1});
     b = FiniteSet.of(new float[]{-2});
     assertEquals(a.union(b), FiniteSet.of(new float[]{-2,-1}));
 
-    // (f) test union of sets a = {1,2,4,8}, b = {}
+    // (d.1) test union of sets a = {1,2,4,8}, b = {}
     // (expected result: a union b = {1,2,4,8})
     a = FiniteSet.of(new float[]{8,4,2,1});
     b = EMPTY_SET;
     assertEquals(a.union(b), FiniteSet.of(new float[]{1,2,4,8}));
 
-    // (g) test union of sets a = {}, b = {1,2,4,8}
+    // (d.2) test union of sets a = {}, b = {1,2,4,8}
     // (expected result: a union b = {1,2,4,8})
     a = EMPTY_SET;
     b = FiniteSet.of(new float[]{8,4,2,1});
     assertEquals(a.union(b), FiniteSet.of(new float[]{1,2,4,8}));
 
-    // (h) test union of sets a = {1,3,5,7}, b = {2,4,6,8}
+    // (e.1) test union of sets a = {1,3,5,7}, b = {2,4,6,8}
     // (expected result: a union b = {1,2,3,4,5,6,7,8})
     a = FiniteSet.of(new float[]{3,7,5,1});
     b = FiniteSet.of(new float[]{6,2,8,4});
     assertEquals(a.union(b), FiniteSet.of(new float[]{1,2,3,4,5,6,7,8}));
 
-    // (i) test union of sets a = {1,3,5,7}, b = {2,4}
+    // (e.2) test union of sets a = {1,3,5,7}, b = {2,4}
     // (expected result: a union b = {1,2,3,4,5,7})
     a = FiniteSet.of(new float[]{1,3,5,7});
     b = FiniteSet.of(new float[]{2,4});
     assertEquals(a.union(b), FiniteSet.of(new float[]{1,2,3,4,5,7}));
 
-    // (j) test union of sets a = {-3,1,5,7}, b = {-4,2}
+    // (e.3) test union of sets a = {-3,1,5,7}, b = {-4,2}
     // (expected result: a union b = {-3,-4,1,2,5,7})
     a = FiniteSet.of(new float[]{1,-3,5,7});
     b = FiniteSet.of(new float[]{2,-4});
     assertEquals(a.union(b), FiniteSet.of(new float[]{1,2,-3,-4,5,7}));
 
-    // (k) test union of sets a = {-0.45, 0.38, 0.45, 3.14}, b = {-0.45, 0.45, 3.14}
+    // (f) test union of sets a = {-0.45, 0.38, 0.45, 3.14}, b = {-0.45, 0.45, 3.14}
     // (expected result: a union b = {-0.45, 0.38, 0.45, 3.14})
     a = FiniteSet.of(new float[]{-0.45f, 0.38f, 0.45f, 3.14f});
     b = FiniteSet.of(new float[]{3.14f, -0.45f, 0.45f});
@@ -129,43 +144,53 @@ public class FiniteSetTest {
     FiniteSet b = FiniteSet.of(new float[]{});
     assertEquals(a.intersection(b), EMPTY_SET);
 
-    // (b) test intersection of sets a = {1}, b = {} (expected result: a intersection b = {})
+    // (b.1) test intersection of sets a = {1}, b = {} (expected result: a intersection b = {})
     a = S1;
     b = EMPTY_SET;
     assertEquals(a.intersection(b), EMPTY_SET);
 
-    // (c) test intersection of sets a = {}, b = {1} (expected result: a intersection b = {})
+    // (b.2) test intersection of sets a = {}, b = {1} (expected result: a intersection b = {})
     a = EMPTY_SET;
     b = S1;
     assertEquals(a.intersection(b), EMPTY_SET);
 
-    // (d) test intersection of sets a = {1}, b = {2} (expected result: a intersection b = {})
+    // (b.3) test intersection of sets a = {}, b = {-1} (expected result: a intersection b = {})
+    a = EMPTY_SET;
+    b = FiniteSet.of(new float[]{-1});
+    assertEquals(a.intersection(b), EMPTY_SET);
+
+    // (b.4) test intersection of sets a = {-1}, b = {} (expected result: a intersection b = {})
+    a = FiniteSet.of(new float[]{-1});
+    b = EMPTY_SET;
+    assertEquals(a.intersection(b), EMPTY_SET);
+
+    // (c.1) test intersection of sets a = {1}, b = {2} (expected result: a intersection b = {})
     a = S1;
     b = S2;
     assertEquals(a.intersection(b), EMPTY_SET);
 
-    // (e) test intersection of sets a = {1}, b = {1} (expected result: a intersection b = {1})
+    // (c.2) test intersection of sets a = {1}, b = {1} (expected result: a intersection b = {1})
     a = S1;
     b = FiniteSet.of(new float[]{1});
     assertEquals(a.intersection(b), S1);
 
-    // (f) test intersection of sets a = {1,2}, b = {2} (expected result: a intersection b = {2})
+    // (d.1) test intersection of sets a = {1,2}, b = {2} (expected result: a intersection b = {2})
     a = S12;
     b = S2;
     assertEquals(a.intersection(b), S2);
 
-    // (g) test intersection of sets a = {-2,1}, b = {-2} (expected result: a intersection b = {-2})
+    // (d.2) test intersection of sets a = {-2,1}, b = {-2} (expected result: a intersection b = {-2})
     a = FiniteSet.of(new float[]{1,-2});
     b = FiniteSet.of(new float[]{-2});
     assertEquals(a.intersection(b), FiniteSet.of(new float[]{-2}));
 
-    // (h) test intersection of sets a = {-4,0,4,8,15,16,23,42}, b = {-42,0,6,7,15,16,20,23,621}
+    // (e) test intersection of sets a = {-4,0,4,8,15,16,23,42}, b = {-42,0,6,7,15,16,20,23,621}
     // (expected result: a intersection b = {15,16,23})
     a = FiniteSet.of(new float[]{-4,0,4,8,15,16,23,42});
     b = FiniteSet.of(new float[]{-42,0,6,7,15,16,20,23,621});
     assertEquals(a.intersection(b), FiniteSet.of(new float[]{0,15,16,23}));
 
-    // (i) test intersection of sets a = {-0.45, 0.0, 0.38, 0.45}, b = {-0.45, 0.22, 0.45}
+    // (f) test intersection of sets a = {-0.45, 0.0, 0.38, 0.45}, b = {-0.45, 0.22, 0.45}
     // (expected result: a intersection b = {-0.45, 0.45})
     a = FiniteSet.of(new float[]{-0.45f, 0.38f, 0.45f, 0.0f});
     b = FiniteSet.of(new float[]{0.22f, -0.45f, 0.45f});
@@ -183,42 +208,52 @@ public class FiniteSetTest {
     assertEquals(b, diffResult);
     assertEquals(diffResult, EMPTY_SET);
 
-    // (b) test difference of sets a = {1}, b = {} (expected result: a \ b = {1})
+    // (b.1) test difference of sets a = {1}, b = {} (expected result: a \ b = {1})
     a = S1;
     b = EMPTY_SET;
     assertEquals(a.difference(b), S1);
 
-    // (c) test difference of sets a = {}, b = {1} (expected result: a \ b = {})
+    // (b.2) test difference of sets a = {}, b = {1} (expected result: a \ b = {})
     a = EMPTY_SET;
     b = S1;
     assertEquals(a.difference(b), EMPTY_SET);
 
-    // (d) test difference of sets a = {1,2}, b = {} (expected result: a \ b = {1,2})
+    // (b.3) test difference of sets a = {-1}, b = {} (expected result: a \ b = {-1})
+    a = FiniteSet.of(new float[]{-1});
+    b = EMPTY_SET;
+    assertEquals(a.difference(b), a);
+
+    // (b.4) test difference of sets a = {}, b = {-1} (expected result: a \ b = {})
+    a = EMPTY_SET;
+    b = FiniteSet.of(new float[]{-1});
+    assertEquals(a.difference(b), EMPTY_SET);
+
+    // (c) test difference of sets a = {1,2}, b = {} (expected result: a \ b = {1,2})
     a = S12;
     b = EMPTY_SET;
     assertEquals(a.difference(b), S12);
 
-    // (d) test difference of sets a = {1,2}, b = {2} (expected result: a \ b = {1})
+    // (d.1) test difference of sets a = {1,2}, b = {2} (expected result: a \ b = {1})
     a = S12;
     b = S2;
     assertEquals(a.difference(b), S1);
 
-    // (e) test difference of sets a = {1,2}, b = {1} (expected result: a \ b = {2})
+    // (d.2) test difference of sets a = {1,2}, b = {1} (expected result: a \ b = {2})
     a = S12;
     b = S1;
     assertEquals(a.difference(b), S2);
 
-    // (f) test difference of sets a = {1,2,3,4,5}, b = {1,2,3} (expected result: a \ b = {4,5})
+    // (e.1) test difference of sets a = {1,2,3,4,5}, b = {1,2,3} (expected result: a \ b = {4,5})
     a = FiniteSet.of(new float[]{1,2,3,4,5});
     b = FiniteSet.of(new float[]{2,1,3});
     assertEquals(a.difference(b), FiniteSet.of(new float[]{5,4}));
 
-    // (g) test difference of sets a = {-3,-1,2,4,5}, b = {-3,-1,2} (expected result: a \ b = {4,5})
+    // (e.2) test difference of sets a = {-3,-1,2,4,5}, b = {-3,-1,2} (expected result: a \ b = {4,5})
     a = FiniteSet.of(new float[]{-1,2,-3,4,5});
     b = FiniteSet.of(new float[]{2,-1,-3});
     assertEquals(a.difference(b), FiniteSet.of(new float[]{5,4}));
 
-    // (h) test difference of sets a = {-0.45, 0.0, 0.38, 0.45}, b = {-0.45, 0.22, 0.45}
+    // (f) test difference of sets a = {-0.45, 0.0, 0.38, 0.45}, b = {-0.45, 0.22, 0.45}
     // (expected result: a \ b = {0.0, 0.38)
     a = FiniteSet.of(new float[]{-0.45f, 0.38f, 0.45f, 0.0f});
     b = FiniteSet.of(new float[]{0.22f, -0.45f, 0.45f});
