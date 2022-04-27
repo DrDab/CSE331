@@ -179,16 +179,16 @@ public class SimpleSet {
       //    = (A \ B)^C                 [ Set Difference Law ]
       //      Therefore, A^C union B = (A \ B)^C,
       //      so taking the difference between A and B and setting
-      //      new SimpleSet as a complement works.
+      //      new SimpleSet as a complement computes A^C union B.
       //
       // If A is not a complement set and B is a complement set:
       //      A union B^C
       //    = (A^C intersection B)^C    [ DeMorgan's Law ]
-      //    = (B intersection A^C)^C    [ Commutativity ]
+      //    = (B intersection A^C)^C    [ Set Commutativity ]
       //    = (B \ A)^C                 [ Set Difference Law ]
       //      Therefore, A union B^C = (B \ A)^C,
       //      so taking the difference between B and A and setting
-      //      new SimpleSet as a complement works.
+      //      new SimpleSet as a complement computes A union B^C.
       return new SimpleSet(true,
               isComplement ? this.points.difference(other.points) :
                             other.points.difference(this.points));
@@ -208,7 +208,7 @@ public class SimpleSet {
     if (isComplement && other.isComplement)
     {
       // For the case that A and B are complement sets:
-      // A^C intersect B^C = (A union B)^C by DeMorgan's Law.
+      // A^C intersection B^C = (A union B)^C by DeMorgan's Law.
       return new SimpleSet(true, points.union(other.points));
     }
     else if (!isComplement && !other.isComplement)
@@ -235,24 +235,44 @@ public class SimpleSet {
    * @return this minus other
    */
   public SimpleSet difference(SimpleSet other) {
-    // TODO:
-    //       include sufficient comments to see why it is correct
+    // note: in explanations A refers to set this.points, B refers to the set other.points.
+    // A^C refers to the complement of A and B^C refers to the complement of B.
 
     if (isComplement && other.isComplement)
     {
-      // R \ {1,2,3,4,5} \ R \ {1,2,3} = {4,5}
-      // R \ {1,2,3} \ R \ {1,2,3,4,5} = R \ ({1,2,3,4,5} \ {1,2,3})
+      // For the case that A and B are complement sets:
+      //   A^C \ B^C
+      // = A^C intersection (B^C)^C   [ Set Difference Law ]
+      // = A^C intersection B         [ Double Complement Law ]
+      // = B intersection A^C         [ Set Commutativity ]
+      // = B \ A                      [ Set Difference Law ]
+      //
+      // Therefore, A^C \ B^C = B \ A.
       return new SimpleSet(false, other.points.difference(points));
     }
     else if (!isComplement && !other.isComplement)
     {
+      // For the case that A and B are non-complement sets:
+      // Just take the difference of the internal set representation as normal.
       return new SimpleSet(false, points.difference(other.points));
     }
     else
     {
-      // {1,2,3,4,5} \ (R \ {1,2,3}) = {1,2,3}
-      // foxes, wolves, fuskies - (all animals not fuskies,birds) = fuskies
-      // R \ {1,2,3} \ {1,2,3,4,5} = R \ {1,2,3,4,5}
+      // If A is a complement set and B is not a complement set:
+      //    A^C \ B
+      //  = A^C intersection B^C    [ Set Difference Law ]
+      //  = (A union B)^C           [ DeMorgan's Law ]
+      //
+      //  Therefore, A^C \ B = (A union B)^C so taking the union of A and B
+      //  and setting the resultant SimpleSet as complement computes A^C \ B.
+      //
+      // If A is not a complement set and B is a complement set:
+      //    A \ B^C
+      //  = A intersection (B^C)^C  [ Set Difference Law ]
+      //  = A intersection B        [ Double Complement Law ]
+      //
+      //  Therefore, A \ B^C = A intersection B so taking the intersection of A and B
+      //  and setting the resultant SimpleSet as complement computes A \ B^C.
       return new SimpleSet(isComplement, isComplement ?
               other.points.union(this.points) : other.points.intersection(this.points));
     }
