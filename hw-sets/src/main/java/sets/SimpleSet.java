@@ -142,8 +142,11 @@ public class SimpleSet {
    * @return R \ this
    */
   public SimpleSet complement() {
-    // TODO:
-    //       include sufficient comments to see why it is correct (hint: cases)
+    // If this is a complement set, then copying the points and toggling the complement status gives the
+    // complement of the complement set which is a non-complement set of points.
+    //
+    // If this is a non-complement set, copying the points and toggling the complement status gives the
+    // complement of the non-complement set which is a complement set of points.
 
     return new SimpleSet(!isComplement, points);
   }
