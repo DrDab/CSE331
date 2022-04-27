@@ -59,6 +59,7 @@ public class FiniteSetTest {
   /** Tests forming the union of two finite sets. */
   @Test
   public void testUnion() {
+    // TODO: flip ordering of assertEquals :(
     // (a) test union of two empty sets a = {}, b = {} (expected result: a union b = {})
     FiniteSet a = FiniteSet.of(new float[]{});
     FiniteSet b = FiniteSet.of(new float[]{});

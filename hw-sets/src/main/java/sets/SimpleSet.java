@@ -14,6 +14,8 @@ public class SimpleSet {
   // TODO: fill in and document the representation
   //       Make sure to include the representation invariant (RI)
   //       and the abstraction function (AF).
+  private FiniteSet points;
+  private boolean isComplement;
 
   /**
    * Creates a simple set containing only the given points.
@@ -22,8 +24,7 @@ public class SimpleSet {
    * @spec.effects this = {vals[0], vals[1], ..., vals[vals.length-1]}
    */
   public SimpleSet(float[] vals) {
-    // TODO: implement this
-
+    this.points = FiniteSet.of(vals);
   }
 
   /**
@@ -34,8 +35,8 @@ public class SimpleSet {
    * @spec.effects this = R \ points if complement else points
    */
   private SimpleSet(boolean complement, FiniteSet points) {
-    // TODO: implement this
-
+    this.isComplement = complement;
+    this.points = points; // TODO ensure this don't break rep invariant. (finiteset is immutable so it shouldnt)
   }
 
   @Override
@@ -44,7 +45,12 @@ public class SimpleSet {
       return false;
 
     SimpleSet other = (SimpleSet) o;
-    return this == other;  // TODO: replace this with a correct check
+
+    if (this.isComplement != other.isComplement ||
+            this.points.size() != other.points.size())
+      return false;
+
+    return this.points.equals(other.points);
   }
 
   @Override
@@ -58,9 +64,7 @@ public class SimpleSet {
    *         infty  if this = R \ {p1, p2, ..., pN}
    */
   public float size() {
-    // TODO: implement this
-
-    return 0;
+    return isComplement ? Float.POSITIVE_INFINITY : points.size();
   }
 
   /**
@@ -87,7 +91,7 @@ public class SimpleSet {
     // TODO: implement this method
     //       include sufficient comments to see why it is correct (hint: cases)
 
-    return new SimpleSet(new float[] {});
+    return new SimpleSet(!isComplement, points);
   }
 
   /**
@@ -99,8 +103,20 @@ public class SimpleSet {
   public SimpleSet union(SimpleSet other) {
     // TODO: implement this method
     //       include sufficient comments to see why it is correct (hint: cases)
-
-    return new SimpleSet(new float[] {});
+    if (isComplement && other.isComplement)
+    {
+      return new SimpleSet(true, points.intersection(other.points));
+    }
+    else if (!isComplement && !other.isComplement)
+    {
+      return new SimpleSet(false, points.union(other.points));
+    }
+    else
+    {
+      return new SimpleSet(true,
+              isComplement ? this.points.difference(other.points) :
+                            other.points.difference(this.points));
+    }
   }
 
   /**
