@@ -12,15 +12,60 @@ public class SimpleSetTest {
   /** Tests calculating the size of a set. */
   @Test
   public void testSize() {
-    // TODO: implement this
-    
+    // (a) test empty set has size 0
+    assertTrue(S.size() == 0.0f);
+
+    // (b) test sets of size 1, have size 1.
+    assertTrue(S1.size() == 1.0f);
+    assertTrue(S2.size() == 1.0f);
+    assertTrue(S3.size() == 1.0f);
+
+    // (c) test sets of size n, have size n.
+    assertTrue(S12.size() == 2.0f);
+    assertTrue(S13.size() == 2.0f);
+    assertTrue(S23.size() == 2.0f);
+    assertTrue(S123.size() == 3.0f);
+
+    // (d) test complement of any set has infinite size.
+    assertTrue(R.size() == Float.POSITIVE_INFINITY);
+    assertTrue(R1.size() == Float.POSITIVE_INFINITY);
+    assertTrue(R2.size() == Float.POSITIVE_INFINITY);
+    assertTrue(R3.size() == Float.POSITIVE_INFINITY);
+    assertTrue(R12.size() == Float.POSITIVE_INFINITY);
+    assertTrue(R13.size() == Float.POSITIVE_INFINITY);
+    assertTrue(R123.size() == Float.POSITIVE_INFINITY);
   }
 
   /** Tests converting a set to a string. */
   @Test
   public void testToString() {
-    // TODO: implement this
-    
+    // (a) test empty set toString
+    assertEquals("{}", S.toString());
+
+    // (b) test set toString with 1 element
+    assertEquals("{1.0}", S1.toString());
+    assertEquals("{2.0}", S2.toString());
+
+    // (c) test set toString with 2 elements
+    assertEquals("{1.0, 2.0}", S12.toString());
+    assertEquals("{2.0, 3.0}", S23.toString());
+
+    // (d) test set toString with 3 elements
+    assertEquals("{1.0, 2.0, 3.0}", S123.toString());
+
+    // (e) test complement set toString with everything
+    assertEquals("R", R.toString());
+
+    // (f) test complement set toString excluding one value
+    assertEquals("R \\ {1.0}", R1.toString());
+    assertEquals("R \\ {2.0}", R2.toString());
+
+    // (g) test complement set toString excluding two values
+    assertEquals("R \\ {1.0, 2.0}", R12.toString());
+    assertEquals("R \\ {2.0, 3.0}", R23.toString());
+
+    // (h) test complement set toString excluding three values
+    assertEquals("R \\ {1.0, 2.0, 3.0}", R123.toString());
   }
 
   private static SimpleSet S = new SimpleSet(new float[0]);

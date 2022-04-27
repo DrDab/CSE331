@@ -25,6 +25,7 @@ public class SimpleSet {
    */
   public SimpleSet(float[] vals) {
     this.points = FiniteSet.of(vals);
+    this.isComplement = false;
   }
 
   /**
@@ -79,8 +80,37 @@ public class SimpleSet {
   public String toString() {
     // TODO: implement this with a loop. document its invariant
     //       a StringBuilder may be useful for creating the string
+    StringBuilder sb = new StringBuilder();
 
-    return "";
+    if (isComplement)
+    {
+      sb.append("R");
+
+      if (points.size() == 0)
+      {
+        return sb.toString();
+      }
+
+      sb.append(" \\ ");
+    }
+
+    sb.append("{");
+
+    List<Float> pointList = points.getPoints();
+
+    for (int i = 0; i < pointList.size(); i++)
+    {
+      sb.append(pointList.get(i));
+
+      if (i != pointList.size() - 1)
+      {
+        sb.append(", ");
+      }
+    }
+
+    sb.append("}");
+
+    return sb.toString();
   }
 
   /**
@@ -88,7 +118,7 @@ public class SimpleSet {
    * @return R \ this
    */
   public SimpleSet complement() {
-    // TODO: implement this method
+    // TODO:
     //       include sufficient comments to see why it is correct (hint: cases)
 
     return new SimpleSet(!isComplement, points);
@@ -101,7 +131,7 @@ public class SimpleSet {
    * @return this union other
    */
   public SimpleSet union(SimpleSet other) {
-    // TODO: implement this method
+    // TODO:
     //       include sufficient comments to see why it is correct (hint: cases)
     if (isComplement && other.isComplement)
     {
@@ -126,7 +156,7 @@ public class SimpleSet {
    * @return this intersect other
    */
   public SimpleSet intersection(SimpleSet other) {
-    // TODO: implement this method
+    // TODO:
     //       include sufficient comments to see why it is correct
     // NOTE: There is more than one correct way to implement this.
 
@@ -153,9 +183,8 @@ public class SimpleSet {
    * @return this minus other
    */
   public SimpleSet difference(SimpleSet other) {
-    // TODO: implement this method
+    // TODO:
     //       include sufficient comments to see why it is correct
-    // NOTE: There is more than one correct way to implement this.
 
     if (isComplement && other.isComplement)
     {
