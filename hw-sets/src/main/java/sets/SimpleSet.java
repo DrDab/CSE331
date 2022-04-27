@@ -36,7 +36,7 @@ public class SimpleSet {
    */
   private SimpleSet(boolean complement, FiniteSet points) {
     this.isComplement = complement;
-    this.points = points; // TODO ensure this don't break rep invariant. (finiteset is immutable so it shouldnt)
+    this.points = points;
   }
 
   @Override
@@ -130,7 +130,20 @@ public class SimpleSet {
     //       include sufficient comments to see why it is correct
     // NOTE: There is more than one correct way to implement this.
 
-    return new SimpleSet(new float[] {});
+    if (isComplement && other.isComplement)
+    {
+      // A^C intersect B^C = (A union B)^C by DeMorgan's Law
+      return new SimpleSet(true, points.union(other.points));
+    }
+    else if (!isComplement && !other.isComplement)
+    {
+      return new SimpleSet(false, points.intersection(other.points));
+    }
+    else
+    {
+      return new SimpleSet(false, isComplement ?
+              other.points.difference(this.points) : points.difference(other.points));
+    }
   }
 
   /**
@@ -144,7 +157,24 @@ public class SimpleSet {
     //       include sufficient comments to see why it is correct
     // NOTE: There is more than one correct way to implement this.
 
-    return new SimpleSet(new float[] {});
+    if (isComplement && other.isComplement)
+    {
+      // R \ {1,2,3,4,5} \ R \ {1,2,3} = {4,5}
+      // R \ {1,2,3} \ R \ {1,2,3,4,5} = R \ ({1,2,3,4,5} \ {1,2,3})
+      return new SimpleSet(false, other.points.difference(points));
+    }
+    else if (!isComplement && !other.isComplement)
+    {
+      return new SimpleSet(false, points.difference(other.points));
+    }
+    else
+    {
+      // {1,2,3,4,5} \ (R \ {1,2,3}) = {1,2,3}
+      // foxes, wolves, fuskies - (all animals not fuskies,birds) = fuskies
+      // R \ {1,2,3} \ {1,2,3,4,5} = R \ {1,2,3,4,5}
+      return new SimpleSet(isComplement, isComplement ?
+              other.points.union(this.points) : other.points.intersection(this.points));
+    }
   }
 
 }
