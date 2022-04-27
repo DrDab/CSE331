@@ -96,21 +96,43 @@ public class SimpleSet {
       sb.append(" \\ ");
     }
 
-    sb.append("{");
+    StringBuilder setStr = new StringBuilder();
+    setStr.append("{");
 
     List<Float> pointList = points.getPoints();
 
-    for (int i = 0; i < pointList.size(); i++)
-    {
-      sb.append(pointList.get(i));
+    // note: - pl is shortland for pointList.
+    //       - pl[i] refers to the string representation
+    //         of the element positioned at the ith index of pointList.
+    //       - n refers to pointList.size().
+    //
+    // Loop Invariant: (i != n && setStr = "{pl[0], pl[1], ..., pl[i-2], pl[i-1],") ||
+    //                 (i == n && setStr = "{pl[0], pl[1], ..., pl[i-2], pl[i-1]")
+    int i = 0;
 
+    while (i != pointList.size())
+    {
+      // {{ Inv && i != n }}
+      setStr.append(pointList.get(i));
+      // {{ setStr = "{pl[0], pl[1], ..., pl[i-1], pl[i]" && i != n }}
       if (i != pointList.size() - 1)
       {
-        sb.append(", ");
+        setStr.append(", ");
       }
+      // {{ (i != n - 1 && setStr = "{pl[0], pl[1], ..., pl[i-1], pl[i],")
+      //    || (i == n - 1 && setStr = "{pl[0], pl[1], ..., pl[i-1], pl[i]") }}
+
+      i += 1;
+
+      // {{ (i != n && setStr = "{pl[0], pl[1], ..., pl[i-2], pl[i-1],")
+      //    || (i == n && setStr = "{pl[0], pl[1], ..., pl[i-2], pl[i-1]") }}
     }
 
-    sb.append("}");
+    // {{ setStr = "{pl[0], pl[1], ..., pl[n-1]" }}
+    setStr.append("}");
+    // {{ setStr = "{pl[0], pl[1], ..., pl[n-1]}" }}
+
+    sb.append(setStr);
 
     return sb.toString();
   }
