@@ -222,9 +222,16 @@ public class SimpleSet {
     else
     {
       // If A is a complement set and B is not a complement set:
-      //    by Set Difference Law, A^C intersection B = B intersection A^C = B \ A
+      //    A^C intersection B
+      //  = B intersection A^C  [ Set Commutativity ]
+      //  = B \ (A^C)^C         [ Set Difference Law ]
+      //  = B \ A               [ Double Complement Law ]
+      //    Therefore A^C intersection B = B \ A.
       // If A is not a complement set and B is a complement set:
-      //    by Set Difference Law, A intersection B^C = A \ B
+      //    A intersection B^C
+      //  = A \ (B^C)^C         [ Set Difference Law ]
+      //  = A \ B               [ Double Complement Law ]
+      //    Therefore A intersection B^C = A \ B.
       return new SimpleSet(false, isComplement ?
               other.points.difference(this.points) : points.difference(other.points));
     }
