@@ -14,8 +14,8 @@ public class SimpleSet {
   // Representation Invariant (RI): FiniteSet points != null and isComplement is true or false.
   //
   // Abstraction Function:
-  //    AF(this) = FiniteSet containing all points included in this set iff isComplement is false
-  //               FiniteSet containing all points excluded in this set iff isComplement is true
+  //    AF(this) = FiniteSet points containing all points included in this set iff isComplement is false
+  //               FiniteSet points containing all points excluded in this set iff isComplement is true
   private FiniteSet points;
   private boolean isComplement;
 
@@ -143,7 +143,7 @@ public class SimpleSet {
    */
   public SimpleSet complement() {
     // If this is a complement set, then copying the points and toggling the complement status gives the
-    // complement of the complement set which is a non-complement set of points.
+    // complement of the complement set which is a non-complement set of points (by Double Complement Law).
     //
     // If this is a non-complement set, copying the points and toggling the complement status gives the
     // complement of the non-complement set which is a complement set of points.
