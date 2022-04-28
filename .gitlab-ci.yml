@@ -47,39 +47,27 @@ sets-validation:
   only: ["hw4-final"]
   except: ["branches"]
 
-graph-part1-build:
+graph-design-build:
   stage: build
-  script: $RUNNER_SCRIPT hw-graph-part1 build
-  only: ["hw5-part1-final"]
+  script: $RUNNER_SCRIPT hw-graph-design build
+  only: ["hw5-final"]
   except: ["branches"]
 
-graph-part1-validation:
+graph-design-validation:
   stage: validation
-  script: $RUNNER_SCRIPT hw-graph-part1 validation
-  only: ["hw5-part1-final"]
+  script: $RUNNER_SCRIPT hw-graph-design validation
+  only: ["hw5-final"]
   except: ["branches"]
 
-graph-part2-build:
+graph-build:
   stage: build
-  script: $RUNNER_SCRIPT hw-graph-part2 build
-  only: ["hw5-part2-final"]
-  except: ["branches"]
-
-graph-part2-validation:
-  stage: validation
-  script: $RUNNER_SCRIPT hw-graph-part2 validation
-  only: ["hw5-part2-final"]
-  except: ["branches"]
-
-marvel-build:
-  stage: build
-  script: $RUNNER_SCRIPT hw-marvel build
+  script: $RUNNER_SCRIPT hw-graph build
   only: ["hw6-final"]
   except: ["branches"]
 
-marvel-validation:
+graph-validation:
   stage: validation
-  script: $RUNNER_SCRIPT hw-marvel validation
+  script: $RUNNER_SCRIPT hw-graph validation
   only: ["hw6-final"]
   except: ["branches"]
 
