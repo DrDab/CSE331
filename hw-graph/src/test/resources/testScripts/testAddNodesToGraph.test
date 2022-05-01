@@ -1,0 +1,18 @@
+CreateGraph g
+ListNodes g
+AddNode g ALPHA
+ListNodes g
+AddNode g BRAVO
+ListNodes g
+AddNode g CHARLIE
+AddNode g DELTA
+ListNodes g
+AddNode g ECHO
+AddNode g FOXTROT
+AddNode g GOLF
+ListNodes g
+AddNode g HOTEL
+AddNode g INDIA
+AddNode g JULIET
+AddNode g KILO
+ListNodes g

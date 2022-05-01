@@ -1,0 +1,63 @@
+CreateGraph g
+
+AddNode g ALPHA
+AddNode g BRAVO
+AddNode g CHARLIE
+
+# All nodes should have no children yet, as there are no edges.
+ListChildren g ALPHA
+ListChildren g BRAVO
+ListChildren g CHARLIE
+
+# Add edge "ab1" from nodes ALPHA to BRAVO
+AddEdge g ALPHA BRAVO ab1
+
+# Check ALPHA has path "ab1" to BRAVO but not vice-versa (as the graph is directed).
+ListChildren g ALPHA
+ListChildren g BRAVO
+
+# Add edge "ab2" from nodes ALPHA to BRAVO
+AddEdge g ALPHA BRAVO ab2
+
+# Check ALPHA now has paths "ab1", "ab2" to BRAVO but not vice-versa (as the graph is directed).
+ListChildren g ALPHA
+ListChildren g BRAVO
+
+# Add edge "ab3" from nodes ALPHA to BRAVO
+AddEdge g ALPHA BRAVO ab3
+
+# Check ALPHA now has paths "ab1", "ab2", "ab3" to BRAVO but not vice-versa (as the graph is directed).
+ListChildren g ALPHA
+ListChildren g BRAVO
+
+# Add edge "ba1" from nodes BRAVO to ALPHA
+AddEdge g BRAVO ALPHA ba1
+
+# Check ALPHA has paths "ab1", "ab2", "ab3" to BRAVO and BRAVO has path "ba1" to ALPHA.
+ListChildren g ALPHA
+ListChildren g BRAVO
+
+# Add edge "ba2" from nodes BRAVO to ALPHA
+AddEdge g BRAVO ALPHA ba2
+
+# Check ALPHA has paths "ab1", "ab2", "ab3" to BRAVO and BRAVO has paths "ba1", "ba2" to ALPHA.
+ListChildren g ALPHA
+ListChildren g BRAVO
+
+# Add edge "ac1" from nodes ALPHA to CHARLIE
+AddEdge ALPHA CHARLIE ac1
+
+# Check ALPHA has paths "ab1", "ab2", "ab3" to BRAVO and BRAVO has paths "ba1", "ba2" to ALPHA, and
+# ALPHA has path "ac1" to CHARLIE and CHARLIE has no paths back to ALPHA.
+ListChildren g ALPHA
+ListChildren g BRAVO
+ListChildren g CHARLIE
+
+# Add a reflexive edge "reflexiveAA" from node ALPHA to ALPHA
+AddEdge ALPHA ALPHA reflexiveAA
+
+# Check ALPHA has paths "ab1", "ab2", "ab3" to BRAVO and BRAVO has paths "ba1", "ba2" to ALPHA, and
+# ALPHA has path "ac1" to CHARLIE and CHARLIE has no paths back to ALPHA, and ALPHA has path "reflexiveAA" to itself.
+ListChildren g ALPHA
+ListChildren g BRAVO
+ListChildren g CHARLIE

@@ -1,0 +1,18 @@
+created graph g
+graphName contains:
+added node ALPHA to g
+g contains: ALPHA
+added node BRAVO to g
+g contains: ALPHA BRAVO
+added node CHARLIE to g
+added node DELTA to g
+g contains: ALPHA BRAVO CHARLIE DELTA
+added node ECHO to g
+added node FOXTROT to g
+added node GOLF to g
+g contains: ALPHA BRAVO CHARLIE DELTA ECHO FOXTROT GOLF
+added node HOTEL to g
+added node INDIA to g
+added node JULIET to g
+added node KILO to g
+g contains: ALPHA BRAVO CHARLIE DELTA ECHO FOXTROT GOLF HOTEL INDIA JULIET KILO
