@@ -188,4 +188,25 @@ public class Graph
     {
         throw new RuntimeException();
     }
+
+    /**
+     * Removes the edge starting from node n1 and ending on node
+     * n2 with the given label, label, from the Graph. If an edge
+     * with the preceding characteristics does not exist in the Graph,
+     * this method will throw an IllegalArgumentException.
+     *
+     * @param n1 the name of the node the edge originates from
+     * @param n2 the name of the node the edge terminates on.
+     * @param label the label of the edge to check the existence of.
+     * @spec.requires n1, n2, label != null and there exists an edge starting from
+     *                node n1 and ending on node n2, with label, label.
+     * @spec.effects removes the edge starting from node n1 and ending on node n2
+     *               with the given label, label, from the Graph.
+     * @throws IllegalArgumentException if an edge with the preceding characteristics
+     *         does not exist in the Graph.
+     */
+    public void deleteEdge(String n1, String n2, String label) throws IllegalArgumentException
+    {
+        throw new RuntimeException();
+    }
 }
