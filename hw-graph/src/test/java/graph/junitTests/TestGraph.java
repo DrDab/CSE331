@@ -2,7 +2,6 @@ package graph.junitTests;
 
 import graph.Graph;
 import org.junit.Test;
-import org.junit.BeforeClass;
 
 import java.util.List;
 
@@ -201,7 +200,7 @@ public class TestGraph
     }
 
     @Test
-    public void testEdgeOperations()
+    public void testDetailedEdgeAccessors()
     {
         Graph g = new Graph();
         g.addNode("ALPHA");
@@ -278,5 +277,42 @@ public class TestGraph
         assertTrue(alphaBravoEdges.contains("bananaBoat"));
         assertFalse(alphaChildNodes.contains("applePen"));
         assertFalse(alphaChildNodes.contains("huskies"));
+    }
+
+    @Test
+    public void testDeleteEdge()
+    {
+        Graph g = new Graph();
+        g.addNode("ALPHA");
+        g.addNode("BRAVO");
+        g.addNode("CHARLIE");
+        g.addNode("Dubs");
+        g.addNode("Harry");
+
+        g.addEdge("ALPHA", "Dubs", "applePen");
+        g.addEdge("ALPHA", "BRAVO", "bananaBoat");
+        g.addEdge("Harry", "Dubs", "huskies");
+
+        assertTrue(g.hasEdge("ALPHA", "Dubs", "applePen"));
+        assertTrue(g.hasEdge("ALPHA", "BRAVO", "bananaBoat"));
+        assertTrue(g.hasEdge("Harry", "Dubs", "huskies"));
+        assertEquals(3, g.getEdgeCount());
+
+        g.deleteEdge("ALPHA", "Dubs", "applePen");
+
+        assertFalse(g.hasEdge("ALPHA", "Dubs", "applePen"));
+        assertTrue(g.hasEdge("ALPHA", "BRAVO", "bananaBoat"));
+        assertTrue(g.hasEdge("Harry", "Dubs", "huskies"));
+        assertEquals(2, g.getEdgeCount());
+
+        g.deleteEdge("ALPHA", "BRAVO", "bananaBoat");
+
+        assertFalse(g.hasEdge("ALPHA", "BRAVO", "bananaBoat"));
+        assertTrue(g.hasEdge("Harry", "Dubs", "huskies"));
+        assertEquals(1, g.getEdgeCount());
+
+        g.deleteEdge("Harry", "Dubs", "huskies");
+        assertFalse(g.hasEdge("Harry", "Dubs", "huskies"));
+        assertEquals(0, g.getEdgeCount());
     }
 }
