@@ -46,8 +46,8 @@ public class Graph
      * Returns a list of the names of all nodes in the Graph.
      * If the Graph has no nodes, returns an empty list.
      *
-     * @return a list of the names of all nodes in the Graph, or
-     *          an empty list if the Graph has no nodes.
+     * @return a list of the names of all nodes in the Graph,
+     *         or an empty list if the Graph has no nodes.
      */
     public List<String> getNodes()
     {
@@ -104,6 +104,16 @@ public class Graph
      *         with the name, name.
      */
     public void deleteNode(String name) throws IllegalArgumentException
+    {
+        throw new RuntimeException();
+    }
+
+    /**
+     * Returns the number of nodes in the Graph.
+     *
+     * @return the number of nodes in the Graph.
+     */
+    public int getNodeCount()
     {
         throw new RuntimeException();
     }
@@ -206,6 +216,16 @@ public class Graph
      *         does not exist in the Graph.
      */
     public void deleteEdge(String n1, String n2, String label) throws IllegalArgumentException
+    {
+        throw new RuntimeException();
+    }
+
+    /**
+     * Returns the number of edges in the Graph.
+     *
+     * @return the number of edges in the Graph.
+     */
+    public int getEdgeCount()
     {
         throw new RuntimeException();
     }

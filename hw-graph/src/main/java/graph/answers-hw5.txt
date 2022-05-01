@@ -20,7 +20,8 @@ select the next node to visit.
 
 To edit the graph, the getNodes, getEdges, hasEdge, and hasNode methods are needed to know the existing nodes
 and edges such that the appropriate changes can be made with the renameNode, renameEdge, removeNode and removeEdge
-methods (which are used to rename the nodes, edges, or remove nodes or edges from the Graph respectively).
+methods (which are used to rename the nodes, edges, or remove nodes or edges from the Graph respectively). The
+getNodeCount and getEdgeCount methods are helpful for debugging the graph.
 
 ## Part 3
 ###########################################################################
