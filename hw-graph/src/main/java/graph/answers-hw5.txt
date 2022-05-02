@@ -8,20 +8,17 @@ interface to a graph. If your design includes multiple classes or interfaces, ex
 included each one; if not, explain whether you considered additional classes and why you decided
 not to include them.
 
-I included the operations I did to satisfy the operations needed to populate a graph from an empty graph,
-traverse the populated graph from any given node in the graph, and modify the graph after creation.
+I included the operations I did to satisfy the operations needed to populate a graph from an empty graph and
+traverse the populated graph from any given node in the graph.
 
 To populate the graph from an empty graph, the addNode and addEdge methods are needed to add nodes and edges
 to the graph.
 
 To traverse the graph a node to start from is needed, which could be selected from the getNodes method,
 which lists all the nodes in the Graph. Then for the current node, the getChildNodes method could be used to
-select the next node to visit.
+select the next node to visit. If I want to select paths based on label (for example based on distance), I could use
+the getEdges(n1, n2) method to get a list of labels of edges between n1 and n2.
 
-To edit the graph, the getNodes, getEdges, hasEdge, and hasNode methods are needed to know the existing nodes
-and edges such that the appropriate changes can be made with the renameNode, renameEdge, removeNode and removeEdge
-methods (which are used to rename the nodes, edges, or remove nodes or edges from the Graph respectively). The
-getNodeCount and getEdgeCount methods are helpful for debugging the graph.
 
 ## Part 3
 ###########################################################################
@@ -30,27 +27,17 @@ What was your testing strategy for this assignment? How do your script tests and
 differ from each other (if they do), and why?
 
 My testing strategy for this assignment is to test incremental additions of complexity for the cases of adding
-nodes and edges to the graph (script and JUnit tests), as well as testing the persistence of relations between
-nodes when nodes and edges are renamed, as well as the functionality of edge/node deletion and the cleanliness
-of node deletion, where cleanliness refers to node deletion removing any edges associated with the nodes
-deleted. (JUnit tests only).
+nodes and edges to the graph (script and JUnit tests), as well as testing the exceptions thrown
 
-When testing the addition of nodes to the graph, I did 0,1,2 testing (testing cases of 0, 1 and 2 nodes added
-to the graph) and ensuring the graph remembers the nodes entered into the graph, and then added more nodes and
-repeated. When testing the addition of edges to the graph, again I did 0,1,2 testing, where I tested cases of 0, 1,
-and 2 edges added to the graph (with 3 nodes) and then tested edge cases such as ensuring the edges are directed
-(just because there is a path from A to B does not mean vice-versa) and ensuring the graph supports reflexive edges
-(an edge pointing from a node to itself).
-
-When testing the persistence of relations between nodes when nodes and edges
-are renamed, I tried creating various edges between nodes, renaming the source or destination node, and checking if
-the renamed destination node is still a child node of the source node. Similarly I also tried renaming the edges between
-nodes and checking if the destination node is still a child node of the source node of the edges renamed. Finally
-I ensured deleting nodes was clean, meaning any edges that have the deleted node as a source or destination are also
-deleted.
+When testing the addition of nodes to the graph, I tested cases of 1, 2 and 3 nodes added
+to graphs w/ 0,1,2 existing nodes and ensured the graph remembers the nodes entered into the graph.
+When testing the addition of edges to the graph, I tested cases of 1, 2, and 3 edges added to the graph
+(with 1,2,3 nodes). I also tested what happens when edges are added to empty graphs (should throw exceptions) and
+what happens when duplicate nodes are added to graphs with 1 and 2 nodes and when duplicate edges are added to graphs
+with 1, 2, and 3 nodes.
 
 My script tests only include the cases of adding nodes and edges to the graph because the commands accepted by the
 script test format only accept adding nodes and edges and listing nodes and edges. My JUnit tests include both the
-contents of my script tests along with testing the persistence of relations between nodes when the nodes and edges
-are renamed and testing deletion of nodes/edges from the graph, because direct access to the Graph class lets me call
-the relevant functions required to rename/delete nodes and edges.
+contents of my script tests along with testing the exception throwing when adding duplicate edges between nodes
+with the same label and adding edges to nonexistent nodes/empty graphs, because direct access to the Graph class
+and JUnit lets me test exception throwing by catching it and passing the test.

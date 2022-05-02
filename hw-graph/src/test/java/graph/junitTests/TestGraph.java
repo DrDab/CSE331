@@ -1,6 +1,7 @@
 package graph.junitTests;
 
 import graph.Graph;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -9,6 +10,29 @@ import static org.junit.Assert.*;
 
 public class TestGraph
 {
+    private Graph g0; // empty graph
+    private Graph g1; // graph w/ 1 node
+    private Graph g2; // graph w/ 2 nodes
+    private Graph g3; // graph w/ 3 nodes
+
+    @Before
+    public void createSampleGraphs()
+    {
+        g0 = new Graph();
+        g1 = new Graph();
+        g2 = new Graph();
+        g3 = new Graph();
+
+        g1.addNode("ALPHA");
+
+        g2.addNode("ALPHA");
+        g2.addNode("BRAVO");
+
+        g3.addNode("ALPHA");
+        g3.addNode("BRAVO");
+        g3.addNode("CHARLIE");
+    }
+
     @Test
     public void testCreateEmptyGraph()
     {
@@ -18,301 +42,214 @@ public class TestGraph
         assertTrue(g.getNodes().isEmpty());
     }
 
-    private static final String[] ALPHABETICAL_NODES = new String[]{
-            "ALPHA",
-            "BRAVO",
-            "CHARLIE",
-            "DELTA",
-            "ECHO",
-            "FOXTROT",
-            "GOLF",
-            "HOTEL",
-            "INDIA",
-            "JULIET",
-            "KILO"
-    };
-
     @Test
-    public void testAddNodesToGraph()
+    public void testAddNodesToEmptyGraph()
     {
-        Graph g = new Graph();
+        g0.addNode("ALPHA");
+        assertEquals(1, g0.getNodeCount());
+        assertTrue(g0.hasNode("ALPHA"));
 
-        g.addNode("ALPHA");
+        g0.addNode("BRAVO");
+        assertEquals(2, g0.getNodeCount());
+        assertTrue(g0.hasNode("ALPHA"));
+        assertTrue(g0.hasNode("BRAVO"));
 
-        assertEquals(1, g.getNodeCount());
-        assertTrue(g.hasNode("ALPHA"));
-
-        g.addNode("BRAVO");
-
-        assertEquals(2, g.getNodeCount());
-        assertTrue(g.hasNode("BRAVO"));
-
-        g.addNode("CHARLIE");
-        g.addNode("DELTA");
-
-        assertEquals(4, g.getNodeCount());
-        assertTrue(g.hasNode("CHARLIE"));
-        assertTrue(g.hasNode("DELTA"));
-
-        g.addNode("ECHO");
-        g.addNode("FOXTROT");
-        g.addNode("GOLF");
-
-        assertEquals(7, g.getNodeCount());
-        assertTrue(g.hasNode("ECHO"));
-        assertTrue(g.hasNode("FOXTROT"));
-        assertTrue(g.hasNode("GOLF"));
-
-        g.addNode("HOTEL");
-        g.addNode("INDIA");
-        g.addNode("JULIET");
-        g.addNode("KILO");
-
-        assertEquals(11, g.getNodeCount());
-        assertTrue(g.hasNode("HOTEL"));
-        assertTrue(g.hasNode("INDIA"));
-        assertTrue(g.hasNode("JULIET"));
-        assertTrue(g.hasNode("KILO"));
-
-        List<String> nodes = g.getNodes();
-
-        for (String expectedNode : ALPHABETICAL_NODES)
-        {
-            assertTrue(g.hasNode(expectedNode));
-            assertTrue(nodes.contains(expectedNode));
-        }
+        g0.addNode("CHARLIE");
+        assertEquals(3, g0.getNodeCount());
+        assertTrue(g0.hasNode("ALPHA"));
+        assertTrue(g0.hasNode("BRAVO"));
+        assertTrue(g0.hasNode("CHARLIE"));
     }
 
     @Test
-    public void testAddEdgesToGraph()
+    public void testAddNodesTo1NodeGraph()
     {
-        Graph g = new Graph();
+        g1.addNode("BRAVO");
+        assertEquals(2, g1.getNodeCount());
+        assertTrue(g1.hasNode("ALPHA"));
+        assertTrue(g1.hasNode("BRAVO"));
 
-        g.addNode("ALPHA");
-        g.addNode("BRAVO");
-        g.addNode("CHARLIE");
+        g1.addNode("CHARLIE");
+        assertEquals(3, g1.getNodeCount());
+        assertTrue(g1.hasNode("ALPHA"));
+        assertTrue(g1.hasNode("BRAVO"));
+        assertTrue(g1.hasNode("CHARLIE"));
 
-        assertEquals(0, g.getEdgeCount());
-        assertFalse(g.hasEdge("ALPHA", "BRAVO", "ab1"));
-
-        g.addEdge("ALPHA", "BRAVO", "ab1");
-
-        assertEquals(1, g.getEdgeCount());
-        assertTrue(g.hasEdge("ALPHA", "BRAVO", "ab1"));
-        assertFalse(g.hasEdge("BRAVO", "ALPHA", "ab1"));
-
-        g.addEdge("ALPHA", "BRAVO", "ab2");
-        g.addEdge("ALPHA", "BRAVO", "ab3");
-
-        assertEquals(3, g.getEdgeCount());
-        assertTrue(g.hasEdge("ALPHA", "BRAVO", "ab2"));
-        assertTrue(g.hasEdge("ALPHA", "BRAVO", "ab3"));
-
-        assertFalse(g.hasEdge("BRAVO", "ALPHA", "ba1"));
-        assertFalse(g.hasEdge("BRAVO", "ALPHA", "ba2"));
-
-        g.addEdge("BRAVO", "ALPHA", "ba1");
-        g.addEdge("BRAVO", "ALPHA", "ba2");
-
-        assertEquals(5, g.getEdgeCount());
-        assertTrue(g.hasEdge("BRAVO", "ALPHA", "ba1"));
-        assertTrue(g.hasEdge("BRAVO", "ALPHA", "ba2"));
-
-        g.addEdge("ALPHA", "CHARLIE", "ac1");
-
-        assertEquals(6, g.getEdgeCount());
-        assertTrue(g.hasEdge("ALPHA", "CHARLIE", "ac1"));
-        assertTrue(g.hasEdge("CHARLIE", "ALPHA", "ac1"));
-
-        // test reflexive edge
-        g.addEdge("ALPHA", "ALPHA", "reflexiveAA");
-        assertEquals(7, g.getEdgeCount());
-        assertTrue(g.hasEdge("ALPHA", "ALPHA", "reflexiveAA"));
+        g1.addNode("DELTA");
+        assertEquals(4, g1.getNodeCount());
+        assertTrue(g1.hasNode("ALPHA"));
+        assertTrue(g1.hasNode("BRAVO"));
+        assertTrue(g1.hasNode("CHARLIE"));
+        assertTrue(g1.hasNode("DELTA"));
     }
 
     @Test
-    public void testRenameNodesFromGraph()
+    public void testAddNodesTo2NodeGraph()
     {
-        Graph g = new Graph();
+        g2.addNode("CHARLIE");
+        assertEquals(3, g2.getNodeCount());
+        assertTrue(g2.hasNode("ALPHA"));
+        assertTrue(g2.hasNode("BRAVO"));
+        assertTrue(g2.hasNode("CHARLIE"));
 
-        g.addNode("ALPHA");
-        g.addNode("BRAVO");
-        g.addNode("CHARLIE");
-        g.addNode("Dubs");
-        g.addNode("Harry");
+        g2.addNode("DELTA");
+        assertEquals(4, g2.getNodeCount());
+        assertTrue(g2.hasNode("ALPHA"));
+        assertTrue(g2.hasNode("BRAVO"));
+        assertTrue(g2.hasNode("CHARLIE"));
+        assertTrue(g2.hasNode("DELTA"));
 
-        g.addEdge("ALPHA", "Dubs", "applePen");
-        g.addEdge("ALPHA", "BRAVO", "bananaBoat");
-        g.addEdge("Harry", "Dubs", "huskies");
+        g2.addNode("ECHO");
+        assertEquals(5, g2.getNodeCount());
+        assertTrue(g2.hasNode("ALPHA"));
+        assertTrue(g2.hasNode("BRAVO"));
+        assertTrue(g2.hasNode("CHARLIE"));
+        assertTrue(g2.hasNode("DELTA"));
+        assertTrue(g2.hasNode("ECHO"));
+    }
 
-        g.renameNode("ALPHA", "Brody");
-        g.renameNode("BRAVO", "Elan");
-        g.renameNode("CHARLIE", "Logan");
-        g.renameNode("Dubs", "Doki");
-        g.renameNode("Harry", "Harry"); // test reflexive re-naming changes nothing
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddDuplicateNodeTo1NodeGraph()
+    {
+        g1.addNode("ALPHA");
+    }
 
-        assertFalse(g.hasNode("ALPHA"));
-        assertTrue(g.hasNode("Brody"));
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddDuplicateNodeTo2NodeGraph()
+    {
+        g2.addNode("ALPHA");
+    }
 
-        assertFalse(g.hasNode("BRAVO"));
-        assertTrue(g.hasNode("Elan"));
-
-        assertFalse(g.hasNode("CHARLIE"));
-        assertTrue(g.hasNode("Logan"));
-
-        assertFalse(g.hasNode("Dubs"));
-        assertTrue(g.hasNode("Doki"));
-
-        assertTrue(g.hasNode("Harry"));
-
-        assertFalse(g.hasEdge("ALPHA", "Dubs", "applePen"));
-        assertTrue(g.hasEdge("Brody", "Dubs", "applePen"));
-
-        assertFalse(g.hasEdge("ALPHA", "BRAVO", "bananaBoat"));
-        assertTrue(g.hasEdge("Brody", "Elan", "bananaBoat"));
-
-        assertFalse(g.hasEdge("Harry", "Dubs", "huskies"));
-        assertTrue(g.hasEdge("Harry", "Doki", "huskies"));
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddEdgesToEmptyGraph()
+    {
+        // test adding edges to empty graph to ensure IllegalArgumentException thrown.
+        g0.addEdge("ALPHA", "ALPHA", "aa1");
     }
 
     @Test
-    public void testDeleteNodesFromGraph()
+    public void testAddEdgesTo1NodeGraph()
     {
-        Graph g = new Graph();
-        g.addNode("ALPHA");
-        g.addNode("BRAVO");
-        g.addNode("CHARLIE");
-        g.addNode("Dubs");
-        g.addNode("Harry");
+        g1.addEdge("ALPHA", "ALPHA", "aa1");
+        assertEquals(1, g1.getEdgeCount());
+        assertTrue(g1.hasEdge("ALPHA", "ALPHA", "aa1"));
+        assertTrue(g1.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g1.getEdges("ALPHA", "ALPHA").contains("aa1"));
 
-        g.addEdge("ALPHA", "Dubs", "applePen");
-        g.addEdge("ALPHA", "BRAVO", "bananaBoat");
-        g.addEdge("Harry", "Dubs", "huskies");
+        g1.addEdge("ALPHA", "ALPHA", "aa2");
+        assertEquals(2, g1.getEdgeCount());
+        assertTrue(g1.hasEdge("ALPHA", "ALPHA", "aa1"));
+        assertTrue(g1.hasEdge("ALPHA", "ALPHA", "aa2"));
+        assertTrue(g1.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g1.getEdges("ALPHA", "ALPHA").contains("aa1"));
+        assertTrue(g1.getEdges("ALPHA", "ALPHA").contains("aa2"));
 
-        g.deleteNode("ALPHA");
-
-        assertFalse(g.hasNode("ALPHA"));
-        assertFalse(g.hasEdge("ALPHA", "Dubs", "applePen"));
-        assertFalse(g.hasEdge("ALPHA", "BRAVO", "bananaBoat"));
-
-        g.deleteNode("Dubs");
-        assertFalse(g.hasEdge("Harry", "Dubs", "huskies"));
+        g1.addEdge("ALPHA", "ALPHA", "aa3");
+        assertEquals(3, g1.getEdgeCount());
+        assertTrue(g1.hasEdge("ALPHA", "ALPHA", "aa1"));
+        assertTrue(g1.hasEdge("ALPHA", "ALPHA", "aa2"));
+        assertTrue(g1.hasEdge("ALPHA", "ALPHA", "aa3"));
+        assertTrue(g1.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g1.getEdges("ALPHA", "ALPHA").contains("aa1"));
+        assertTrue(g1.getEdges("ALPHA", "ALPHA").contains("aa2"));
+        assertTrue(g1.getEdges("ALPHA", "ALPHA").contains("aa3"));
     }
 
     @Test
-    public void testDetailedEdgeAccessors()
+    public void testAddEdgesTo2NodeGraph()
     {
-        Graph g = new Graph();
-        g.addNode("ALPHA");
-        g.addNode("BRAVO");
-        g.addNode("CHARLIE");
-        g.addNode("Dubs");
-        g.addNode("Harry");
+        g2.addEdge("ALPHA", "ALPHA", "aa1");
+        assertEquals(1, g2.getEdgeCount());
+        assertTrue(g2.hasEdge("ALPHA", "ALPHA", "aa1"));
+        assertTrue(g2.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g2.getEdges("ALPHA", "ALPHA").contains("aa1"));
 
-        g.addEdge("ALPHA", "Dubs", "applePen");
-        g.addEdge("ALPHA", "BRAVO", "bananaBoat");
-        g.addEdge("Harry", "Dubs", "huskies");
+        g2.addEdge("ALPHA", "BRAVO", "ab1");
+        assertEquals(2, g2.getEdgeCount());
+        assertTrue(g2.hasEdge("ALPHA", "ALPHA", "aa1"));
+        assertTrue(g2.hasEdge("ALPHA", "BRAVO", "ab1"));
+        assertTrue(g2.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g2.getChildNodes("ALPHA").contains("BRAVO"));
+        assertTrue(g2.getEdges("ALPHA", "ALPHA").contains("aa1"));
+        assertTrue(g2.getEdges("ALPHA", "BRAVO").contains("ab1"));
 
-        List<String> alphaChildNodes = g.getChildNodes("ALPHA");
-        assertTrue(alphaChildNodes.contains("Dubs"));
-        assertTrue(alphaChildNodes.contains("BRAVO"));
-        assertFalse(alphaChildNodes.contains("CHARLIE"));
-
-        List<String> harryChildNodes = g.getChildNodes("Harry");
-        assertTrue(alphaChildNodes.contains("Dubs"));
-        assertFalse(alphaChildNodes.contains("BRAVO"));
-        assertFalse(alphaChildNodes.contains("CHARLIE"));
-
-        List<String> alphaDubsEdges = g.getEdges("ALPHA", "Dubs");
-        assertTrue(alphaDubsEdges.contains("applePen"));
-        assertFalse(alphaDubsEdges.contains("bananaBoat"));
-
-        List<String> harryDubsEdges = g.getEdges("Harry", "Dubs");
-        assertTrue(harryDubsEdges.contains("huskies"));
-        assertFalse(alphaDubsEdges.contains("bananaBoat"));
-
-        List<String> alphaBravoEdges = g.getEdges("ALPHA", "BRAVO");
-        assertTrue(alphaBravoEdges.contains("bananaBoat"));
-        assertFalse(alphaChildNodes.contains("applePen"));
-        assertFalse(alphaChildNodes.contains("huskies"));
+        g2.addEdge("BRAVO", "ALPHA", "ba1");
+        assertEquals(3, g2.getEdgeCount());
+        assertTrue(g2.hasEdge("ALPHA", "ALPHA", "aa1"));
+        assertTrue(g2.hasEdge("ALPHA", "BRAVO", "ab1"));
+        assertTrue(g2.hasEdge("BRAVO", "ALPHA", "ba1"));
+        assertTrue(g2.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g2.getChildNodes("ALPHA").contains("BRAVO"));
+        assertTrue(g2.getChildNodes("BRAVO").contains("ALPHA"));
+        assertTrue(g2.getEdges("ALPHA", "ALPHA").contains("aa1"));
+        assertTrue(g2.getEdges("ALPHA", "BRAVO").contains("ab1"));
+        assertTrue(g2.getEdges("BRAVO", "ALPHA").contains("ba1"));
     }
 
     @Test
-    public void testRenamingEdges()
+    public void testAddEdgesTo3NodeGraph()
     {
-        Graph g = new Graph();
-        g.addNode("ALPHA");
-        g.addNode("BRAVO");
-        g.addNode("CHARLIE");
-        g.addNode("Dubs");
-        g.addNode("Harry");
+        g3.addEdge("ALPHA", "ALPHA", "aa1");
+        assertEquals(1, g3.getEdgeCount());
+        assertTrue(g3.hasEdge("ALPHA", "ALPHA", "aa1"));
+        assertTrue(g3.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g3.getEdges("ALPHA", "ALPHA").contains("aa1"));
 
-        g.addEdge("ALPHA", "Dubs", "applePen1");
-        g.addEdge("ALPHA", "BRAVO", "bananaBoat1");
-        g.addEdge("Harry", "Dubs", "huskies1");
+        g3.addEdge("ALPHA", "BRAVO", "ab1");
+        assertEquals(2, g3.getEdgeCount());
+        assertTrue(g3.hasEdge("ALPHA", "ALPHA", "aa1"));
+        assertTrue(g3.hasEdge("ALPHA", "BRAVO", "ab1"));
+        assertTrue(g3.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g3.getChildNodes("ALPHA").contains("BRAVO"));
+        assertTrue(g3.getEdges("ALPHA", "ALPHA").contains("aa1"));
+        assertTrue(g3.getEdges("ALPHA", "BRAVO").contains("ab1"));
 
-        g.renameEdge("ALPHA", "Dubs", "applePen1", "applePen");
-        g.renameEdge("ALPHA", "BRAVO", "bananaBoat1", "bananaBoat");
-        g.renameEdge("Harry", "Dubs", "huskies1", "huskies");
+        g3.addEdge("ALPHA", "CHARLIE", "ac1");
+        assertEquals(3, g3.getEdgeCount());
+        assertTrue(g3.hasEdge("ALPHA", "ALPHA", "aa1"));
+        assertTrue(g3.hasEdge("ALPHA", "BRAVO", "ab1"));
+        assertTrue(g3.hasEdge("ALPHA", "CHARLIE", "ac1"));
+        assertTrue(g3.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g3.getChildNodes("ALPHA").contains("BRAVO"));
+        assertTrue(g3.getChildNodes("ALPHA").contains("CHARLIE"));
+        assertTrue(g3.getEdges("ALPHA", "ALPHA").contains("aa1"));
+        assertTrue(g3.getEdges("ALPHA", "BRAVO").contains("ab1"));
+        assertTrue(g3.getEdges("ALPHA", "CHARLIE").contains("ac1"));
 
-        List<String> alphaChildNodes = g.getChildNodes("ALPHA");
-        assertTrue(alphaChildNodes.contains("Dubs"));
-        assertTrue(alphaChildNodes.contains("BRAVO"));
-        assertFalse(alphaChildNodes.contains("CHARLIE"));
-
-        List<String> harryChildNodes = g.getChildNodes("Harry");
-        assertTrue(alphaChildNodes.contains("Dubs"));
-        assertFalse(alphaChildNodes.contains("BRAVO"));
-        assertFalse(alphaChildNodes.contains("CHARLIE"));
-
-        List<String> alphaDubsEdges = g.getEdges("ALPHA", "Dubs");
-        assertTrue(alphaDubsEdges.contains("applePen"));
-        assertFalse(alphaDubsEdges.contains("bananaBoat"));
-
-        List<String> harryDubsEdges = g.getEdges("Harry", "Dubs");
-        assertTrue(harryDubsEdges.contains("huskies"));
-        assertFalse(alphaDubsEdges.contains("bananaBoat"));
-
-        List<String> alphaBravoEdges = g.getEdges("ALPHA", "BRAVO");
-        assertTrue(alphaBravoEdges.contains("bananaBoat"));
-        assertFalse(alphaChildNodes.contains("applePen"));
-        assertFalse(alphaChildNodes.contains("huskies"));
+        g3.addEdge("BRAVO", "CHARLIE", "bc1");
+        assertEquals(4, g3.getEdgeCount());
+        assertTrue(g3.hasEdge("ALPHA", "ALPHA", "aa1"));
+        assertTrue(g3.hasEdge("ALPHA", "BRAVO", "ab1"));
+        assertTrue(g3.hasEdge("ALPHA", "CHARLIE", "ac1"));
+        assertTrue(g3.hasEdge("BRAVO", "CHARLIE", "bc1"));
+        assertTrue(g3.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g3.getChildNodes("ALPHA").contains("BRAVO"));
+        assertTrue(g3.getChildNodes("ALPHA").contains("CHARLIE"));
+        assertTrue(g3.getChildNodes("BRAVO").contains("CHARLIE"));
+        assertTrue(g3.getEdges("ALPHA", "ALPHA").contains("aa1"));
+        assertTrue(g3.getEdges("ALPHA", "BRAVO").contains("ab1"));
+        assertTrue(g3.getEdges("ALPHA", "CHARLIE").contains("ac1"));
+        assertTrue(g3.getEdges("BRAVO", "CHARLIE").contains("bc1"));
     }
 
-    @Test
-    public void testDeleteEdge()
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddDuplicateEdgeTo1NodeGraph()
     {
-        Graph g = new Graph();
-        g.addNode("ALPHA");
-        g.addNode("BRAVO");
-        g.addNode("CHARLIE");
-        g.addNode("Dubs");
-        g.addNode("Harry");
+        g1.addEdge("ALPHA", "ALPHA", "aa1");
+        g1.addEdge("ALPHA", "ALPHA", "aa1");
+    }
 
-        g.addEdge("ALPHA", "Dubs", "applePen");
-        g.addEdge("ALPHA", "BRAVO", "bananaBoat");
-        g.addEdge("Harry", "Dubs", "huskies");
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddDuplicateEdgeTo2NodeGraph()
+    {
+        g2.addEdge("ALPHA", "BRAVO", "ab1");
+        g2.addEdge("ALPHA", "BRAVO", "ab1");
+    }
 
-        assertTrue(g.hasEdge("ALPHA", "Dubs", "applePen"));
-        assertTrue(g.hasEdge("ALPHA", "BRAVO", "bananaBoat"));
-        assertTrue(g.hasEdge("Harry", "Dubs", "huskies"));
-        assertEquals(3, g.getEdgeCount());
-
-        g.deleteEdge("ALPHA", "Dubs", "applePen");
-
-        assertFalse(g.hasEdge("ALPHA", "Dubs", "applePen"));
-        assertTrue(g.hasEdge("ALPHA", "BRAVO", "bananaBoat"));
-        assertTrue(g.hasEdge("Harry", "Dubs", "huskies"));
-        assertEquals(2, g.getEdgeCount());
-
-        g.deleteEdge("ALPHA", "BRAVO", "bananaBoat");
-
-        assertFalse(g.hasEdge("ALPHA", "BRAVO", "bananaBoat"));
-        assertTrue(g.hasEdge("Harry", "Dubs", "huskies"));
-        assertEquals(1, g.getEdgeCount());
-
-        g.deleteEdge("Harry", "Dubs", "huskies");
-        assertFalse(g.hasEdge("Harry", "Dubs", "huskies"));
-        assertEquals(0, g.getEdgeCount());
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddDuplicateEdgeTo3NodeGraph()
+    {
+        g2.addEdge("ALPHA", "CHARLIE", "ac1");
+        g2.addEdge("ALPHA", "CHARLIE", "ac1");
     }
 }

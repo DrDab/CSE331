@@ -1,63 +1,38 @@
-created graph g
+# Create graphs w/ 1, 2, 3 nodes.
+created graph g1
+added node ALPHA to g1
 
-added node ALPHA to g
-added node BRAVO to g
-added node CHARLIE to g
+created graph g2
+added node ALPHA to g2
+added node BRAVO to g2
 
-# All nodes should have no children yet, as there are no edges.
-the children of ALPHA in g are:
-the children of BRAVO in g are:
-the children of CHARLIE in g are:
+created graph g3
+added node ALPHA to g3
+added node BRAVO to g3
+added node CHARLIE to g3
 
-# Add edge "ab1" from nodes ALPHA to BRAVO
-added edge ab1 from ALPHA to BRAVO in g
+# Try adding 1, 2, 3 edges to graph w/ 1 node
+added edge aa1 from ALPHA to ALPHA in g1
+the children of ALPHA in g1 are: ALPHA(aa1)
+added edge aa2 from ALPHA to ALPHA in g1
+the children of ALPHA in g1 are: ALPHA(aa1) ALPHA(aa2)
+added edge aa3 from ALPHA to ALPHA in g1
+the children of ALPHA in g1 are: ALPHA(aa1) ALPHA(aa2) ALPHA(aa3)
 
-# Check ALPHA has path "ab1" to BRAVO but not vice-versa (as the graph is directed).
-the children of ALPHA in g are: BRAVO(ab1)
-the children of BRAVO in g are:
+# Try adding 1, 2, 3 edges to graph w/ 2 nodes
+added edge aa1 from ALPHA to ALPHA in g2
+the children of ALPHA in g2 are: ALPHA(aa1)
+added edge ab1 from ALPHA to BRAVO in g2
+the children of ALPHA in g2 are: ALPHA(aa1) BRAVO(ab1)
+added edge ba1 from BRAVO to ALPHA in g2
+the children of ALPHA in g2 are: ALPHA(aa1) BRAVO(ab1)
+the children of BRAVO in g2 are: ALPHA(ba1)
 
-# Add edge "ab2" from nodes ALPHA to BRAVO
-added edge ab2 from ALPHA to BRAVO in g
-
-# Check ALPHA now has paths "ab1", "ab2" to BRAVO but not vice-versa (as the graph is directed).
-the children of ALPHA in g are: BRAVO(ab1) BRAVO(ab2)
-the children of BRAVO in g are:
-
-# Add edge "ab3" from nodes ALPHA to BRAVO
-added edge ab3 from ALPHA to BRAVO in g
-
-# Check ALPHA now has paths "ab1", "ab2", "ab3" to BRAVO but not vice-versa (as the graph is directed).
-the children of ALPHA in g are: BRAVO(ab1) BRAVO(ab2) BRAVO(ab3)
-the children of BRAVO in g are:
-
-# Add edge "ba1" from nodes BRAVO to ALPHA
-added edge ba1 from BRAVO to ALPHA in g
-
-# Check ALPHA has paths "ab1", "ab2", "ab3" to BRAVO and BRAVO has path "ba1" to ALPHA.
-the children of ALPHA in g are: BRAVO(ab1) BRAVO(ab2) BRAVO(ab3)
-the children of BRAVO in g are: ALPHA(ba1)
-
-# Add edge "ba2" from nodes BRAVO to ALPHA
-added edge ba2 from BRAVO to ALPHA in g
-
-# Check ALPHA has paths "ab1", "ab2", "ab3" to BRAVO and BRAVO has paths "ba1", "ba2" to ALPHA.
-the children of ALPHA in g are: BRAVO(ab1) BRAVO(ab2) BRAVO(ab3)
-the children of BRAVO in g are: ALPHA(ba1) ALPHA(ba2)
-
-# Add edge "ac1" from nodes ALPHA to CHARLIE
-added edge ac1 from ALPHA to CHARLIE in g
-
-# Check ALPHA has paths "ab1", "ab2", "ab3" to BRAVO and BRAVO has paths "ba1", "ba2" to ALPHA, and
-# ALPHA has path "ac1" to CHARLIE and CHARLIE has no paths back to ALPHA.
-the children of ALPHA in g are: BRAVO(ab1) BRAVO(ab2) BRAVO(ab3) CHARLIE(ac1)
-the children of BRAVO in g are: ALPHA(ba1) ALPHA(ba2)
-the children of CHARLIE in g are:
-
-# Add a reflexive edge "reflexiveAA" from node ALPHA to ALPHA
-added edge reflexiveAA from ALPHA to ALPHA in g
-
-# Check ALPHA has paths "ab1", "ab2", "ab3" to BRAVO and BRAVO has paths "ba1", "ba2" to ALPHA, and
-# ALPHA has path "ac1" to CHARLIE and CHARLIE has no paths back to ALPHA, and ALPHA has path "reflexiveAA" to itself.
-the children of ALPHA in g are: ALPHA(reflexiveAA) BRAVO(ab1) BRAVO(ab2) BRAVO(ab3) CHARLIE(ac1)
-the children of BRAVO in g are: ALPHA(ba1) ALPHA(ba2)
-the children of CHARLIE in g are:
+# Try adding 1, 2, 3 edges to graph w/ 3 nodes
+added edge aa1 from ALPHA to ALPHA in g3
+the children of ALPHA in g3 are: ALPHA(aa1)
+added edge ab1 from ALPHA to BRAVO in g3
+the children of ALPHA in g3 are: ALPHA(aa1) BRAVO(ab1)
+added edge bc1 from BRAVO to CHARLIE in g3
+the children of ALPHA in g3 are: ALPHA(aa1) BRAVO(ab1)
+the children of BRAVO in g3 are: CHARLIE(bc1)
