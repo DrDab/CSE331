@@ -1,18 +1,33 @@
-created graph g
-graphName contains:
-added node ALPHA to g
-g contains: ALPHA
-added node BRAVO to g
-g contains: ALPHA BRAVO
-added node CHARLIE to g
-added node DELTA to g
-g contains: ALPHA BRAVO CHARLIE DELTA
-added node ECHO to g
-added node FOXTROT to g
-added node GOLF to g
-g contains: ALPHA BRAVO CHARLIE DELTA ECHO FOXTROT GOLF
-added node HOTEL to g
-added node INDIA to g
-added node JULIET to g
-added node KILO to g
-g contains: ALPHA BRAVO CHARLIE DELTA ECHO FOXTROT GOLF HOTEL INDIA JULIET KILO
+# Create graphs w/ 0, 1, 2 nodes.
+created graph g0
+
+created graph g1
+added node ALPHA to g1
+
+created graph g2
+added node ALPHA to g2
+added node BRAVO to g2
+
+# Try adding 1, 2, 3 edges to graph w/ 0 nodes
+added node ALPHA to g0
+g0 contains: ALPHA
+added node BRAVO to g0
+g0 contains: ALPHA BRAVO
+added node CHARLIE to g0
+g0 contains: ALPHA BRAVO CHARLIE
+
+# Try adding 1, 2, 3 edges to graph w/ 1 node
+added node BRAVO to g1
+g1 contains: ALPHA BRAVO
+added node CHARLIE to g1
+g1 contains: ALPHA BRAVO CHARLIE
+added node DELTA to g1
+g1 contains: ALPHA BRAVO CHARLIE DELTA
+
+# Try adding 1, 2, 3 edges to graph w/ 2 nodes
+added node CHARLIE to g2
+g2 contains: ALPHA BRAVO CHARLIE
+added node DELTA to g2
+g2 contains: ALPHA BRAVO CHARLIE DELTA
+AddNode g2 ECHO
+g2 contains: ALPHA BRAVO CHARLIE DELTA ECHO
