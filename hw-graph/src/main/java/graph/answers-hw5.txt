@@ -27,14 +27,16 @@ What was your testing strategy for this assignment? How do your script tests and
 differ from each other (if they do), and why?
 
 My testing strategy for this assignment is to test incremental additions of complexity for the cases of adding
-nodes and edges to the graph (script and JUnit tests), as well as testing the exceptions thrown
+nodes and edges to the graph and edge cases of adding edges (script and JUnit tests), as well as testing the
+exceptions thrown.
 
 When testing the addition of nodes to the graph, I tested cases of 1, 2 and 3 nodes added
 to graphs w/ 0,1,2 existing nodes and ensured the graph remembers the nodes entered into the graph.
 When testing the addition of edges to the graph, I tested cases of 1, 2, and 3 edges added to the graph
 (with 1,2,3 nodes). I also tested what happens when edges are added to empty graphs (should throw exceptions) and
 what happens when duplicate nodes are added to graphs with 1 and 2 nodes and when duplicate edges are added to graphs
-with 1, 2, and 3 nodes.
+with 1, 2, and 3 nodes. Finally I tested if the graph supports reflexive edges (on graphs of 1 and 2 nodes), and
+if the graph supports cyclic paths (on graphs of 2 and 3 nodes).
 
 My script tests only include the cases of adding nodes and edges to the graph because the commands accepted by the
 script test format only accept adding nodes and edges and listing nodes and edges. My JUnit tests include both the

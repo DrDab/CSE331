@@ -4,8 +4,6 @@ import graph.Graph;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class TestGraph
@@ -251,5 +249,47 @@ public class TestGraph
     {
         g2.addEdge("ALPHA", "CHARLIE", "ac1");
         g2.addEdge("ALPHA", "CHARLIE", "ac1");
+    }
+
+    @Test
+    public void testCyclicPathsAllowedOn2NodeGraph()
+    {
+        g2.addEdge("ALPHA", "BRAVO", "ab");
+        g2.addEdge("BRAVO", "ALPHA", "ab");
+        assertTrue(g2.getChildNodes("ALPHA").contains("BRAVO"));
+        assertTrue(g2.getChildNodes("BRAVO").contains("ALPHA"));
+    }
+
+    @Test
+    public void testCyclicPathsAllowedOn3NodeGraph()
+    {
+        g3.addEdge("ALPHA", "BRAVO", "ab");
+        g3.addEdge("BRAVO", "CHARLIE", "bc");
+        g3.addEdge("CHARLIE", "ALPHA", "ca");
+        assertTrue(g3.getChildNodes("ALPHA").contains("BRAVO"));
+        assertTrue(g3.getChildNodes("BRAVO").contains("CHARLIE"));
+        assertTrue(g3.getChildNodes("CHARLIE").contains("ALPHA"));
+    }
+
+    @Test
+    public void testReflexiveEdgeAllowedOn1NodeGraph()
+    {
+        g1.addEdge("ALPHA", "ALPHA", "aa");
+        assertTrue(g1.hasEdge("ALPHA", "ALPHA", "aa"));
+        assertTrue(g1.getEdges("ALPHA", "ALPHA").contains("aa"));
+        assertTrue(g1.getChildNodes("ALPHA").contains("ALPHA"));
+    }
+
+    @Test
+    public void testReflexiveEdgeAllowedOn2NodeGraph()
+    {
+        g2.addEdge("ALPHA", "ALPHA", "aa");
+        g2.addEdge("BRAVO", "BRAVO", "bb");
+        assertTrue(g2.hasEdge("ALPHA", "ALPHA", "aa"));
+        assertTrue(g2.getEdges("ALPHA", "ALPHA").contains("aa"));
+        assertTrue(g2.getChildNodes("ALPHA").contains("ALPHA"));
+        assertTrue(g2.hasEdge("BRAVO", "BRAVO", "bb"));
+        assertTrue(g2.getEdges("BRAVO", "BRAVO").contains("bb"));
+        assertTrue(g2.getChildNodes("BRAVO").contains("BRAVO"));
     }
 }

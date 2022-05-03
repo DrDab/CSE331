@@ -1,0 +1,14 @@
+# Create graphs w/ 1 and 2 nodes.
+CreateGraph g1
+AddNode g1 ALPHA
+
+CreateGraph g2
+AddNode g2 ALPHA
+AddNode g2 BRAVO
+
+# Add reflexive edge to graph with 1 node.
+AddEdge g1 ALPHA ALPHA aa
+
+# Add reflexive edge to graph with 2 nodes.
+AddEdge g1 ALPHA ALPHA aa
+AddEdge g2 BRAVO BRAVO bb

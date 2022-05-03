@@ -1,0 +1,23 @@
+# Create graphs w/ 2 and 3 nodes.
+CreateGraph g2
+AddNode g2 ALPHA
+AddNode g2 BRAVO
+
+CreateGraph g3
+AddNode g3 ALPHA
+AddNode g3 BRAVO
+AddNode g3 CHARLIE
+
+# Test cyclic paths are allowed on graph of 2 nodes.
+AddEdge g2 ALPHA BRAVO ab
+AddEdge g2 BRAVO ALPHA ba
+ListChildren g2 ALPHA
+ListChildren g2 BRAVO
+
+# Test cyclic paths are allowed on graph of 3 nodes.
+AddEdge g3 ALPHA BRAVO ab
+AddEdge g3 BRAVO CHARLIE bc
+AddEdge g3 CHARLIE ALPHA ca
+ListChildren g3 ALPHA
+ListChildren g3 BRAVO
+ListChildren g3 CHARLIE

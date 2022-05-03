@@ -1,0 +1,23 @@
+# Create graphs w/ 2 and 3 nodes.
+created graph g2
+added node ALPHA to g2
+added node BRAVO to g2
+
+created graph g3
+added node CHARLIE to g3
+added node CHARLIE to g3
+added node CHARLIE to g3
+
+# Test cyclic paths are allowed on graph of 2 nodes.
+added edge ab from ALPHA to BRAVO in g2
+added edge ba from BRAVO to ALPHA in g2
+the children of ALPHA in g2 are: BRAVO(ab)
+the children of BRAVO in g2 are: ALPHA(ba)
+
+# Test cyclic paths are allowed on graph of 3 nodes.
+added edge ab from ALPHA to BRAVO in g3
+added edge bc from BRAVO to CHARLIE in g3
+added edge ca from CHARLIE to ALPHA in g3
+the children of ALPHA in g3 are: BRAVO(ab)
+the children of BRAVO in g3 are: CHARLIE(bc)
+the children of CHARLIE in g3 are: ALPHA(ca)

@@ -1,0 +1,14 @@
+# Create graphs w/ 1 and 2 nodes.
+created graph g1
+added node ALPHA to g1
+
+created graph g2
+added node ALPHA to g2
+added node BRAVO to g2
+
+# Add reflexive edge to graph with 1 node.
+added edge aa from ALPHA to ALPHA in g1
+
+# Add reflexive edge to graph with 2 nodes.
+added edge aa from ALPHA to ALPHA in g2
+added edge bb from BRAVO to BRAVO in g2

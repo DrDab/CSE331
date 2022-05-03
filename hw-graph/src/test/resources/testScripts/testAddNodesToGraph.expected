@@ -8,7 +8,7 @@ created graph g2
 added node ALPHA to g2
 added node BRAVO to g2
 
-# Try adding 1, 2, 3 edges to graph w/ 0 nodes
+# Try adding 1, 2, 3 nodes to graph w/ 0 nodes
 added node ALPHA to g0
 g0 contains: ALPHA
 added node BRAVO to g0
@@ -16,7 +16,7 @@ g0 contains: ALPHA BRAVO
 added node CHARLIE to g0
 g0 contains: ALPHA BRAVO CHARLIE
 
-# Try adding 1, 2, 3 edges to graph w/ 1 node
+# Try adding 1, 2, 3 nodes to graph w/ 1 node
 added node BRAVO to g1
 g1 contains: ALPHA BRAVO
 added node CHARLIE to g1
@@ -24,7 +24,7 @@ g1 contains: ALPHA BRAVO CHARLIE
 added node DELTA to g1
 g1 contains: ALPHA BRAVO CHARLIE DELTA
 
-# Try adding 1, 2, 3 edges to graph w/ 2 nodes
+# Try adding 1, 2, 3 nodes to graph w/ 2 nodes
 added node CHARLIE to g2
 g2 contains: ALPHA BRAVO CHARLIE
 added node DELTA to g2
