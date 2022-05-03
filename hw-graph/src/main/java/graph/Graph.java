@@ -2,6 +2,12 @@ package graph;
 
 import java.util.List;
 
+/**
+ * Represents a mutable, directed labelled graph where a set of labelled nodes can be connected
+ * via directed, labelled edges (each edge connecting a parent node to a child node), and each edge
+ * has a unique name and there exists no two edges between any two parent and child nodes in the graph
+ * such that the edges have the same label.
+ */
 public class Graph
 {
 
