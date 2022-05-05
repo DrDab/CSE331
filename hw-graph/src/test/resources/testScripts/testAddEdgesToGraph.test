@@ -20,28 +20,6 @@ AddEdge g1 ALPHA ALPHA aa3
 ListChildren g1 ALPHA
 
 # Try adding 1, 2, 3 edges to graph w/ 2 nodes
-AddEdge g2 ALPHA A# Create graphs w/ 1, 2, 3 nodes.
-CreateGraph g1
-AddNode g1 ALPHA
-
-CreateGraph g2
-AddNode g2 ALPHA
-AddNode g2 BRAVO
-
-CreateGraph g3
-AddNode g3 ALPHA
-AddNode g3 BRAVO
-AddNode g3 CHARLIE
-
-# Try adding 1, 2, 3 edges to graph w/ 1 node
-AddEdge g1 ALPHA ALPHA aa1
-ListChildren g1 ALPHA
-AddEdge g1 ALPHA ALPHA aa2
-ListChildren g1 ALPHA
-AddEdge g1 ALPHA ALPHA aa3
-ListChildren g1 ALPHA
-
-# Try adding 1, 2, 3 edges to graph w/ 2 nodes
 AddEdge g2 ALPHA ALPHA aa1
 ListChildren g2 ALPHA
 AddEdge g2 ALPHA BRAVO ab1
