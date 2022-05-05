@@ -48,12 +48,18 @@ public class Edge
         throw new RuntimeException("Method not yet implemented!");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode()
     {
         throw new RuntimeException("Method not yet implemented!");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o)
     {
