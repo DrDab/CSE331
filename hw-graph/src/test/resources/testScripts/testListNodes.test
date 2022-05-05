@@ -1,0 +1,14 @@
+# Create graphs w/ 0, 1, 2 nodes.
+CreateGraph g0
+
+CreateGraph g1
+AddNode g1 ALPHA
+
+CreateGraph g2
+AddNode g2 ALPHA
+AddNode g2 BRAVO
+
+# Test listing nodes on graphs w/ 0, 1, 2 nodes.
+ListNodes g0
+ListNodes g1
+ListNodes g2

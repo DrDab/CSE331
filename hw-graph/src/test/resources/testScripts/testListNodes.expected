@@ -1,0 +1,14 @@
+# Create graphs w/ 0, 1, 2 nodes.
+created graph g0
+
+created graph g1
+added node ALPHA to g1
+
+created graph g2
+added node ALPHA to g2
+added node BRAVO to g2
+
+# Test listing nodes on graphs w/ 0, 1, 2 nodes.
+graphName contains:
+graphName contains: ALPHA
+graphName contains: ALPHA BRAVO
