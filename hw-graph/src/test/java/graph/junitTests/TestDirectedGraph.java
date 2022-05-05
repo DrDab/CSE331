@@ -274,8 +274,8 @@ public class TestDirectedGraph
     @Test(expected = IllegalArgumentException.class)
     public void testAddDuplicateEdgeTo3NodeGraph()
     {
-        g2.addEdge("ALPHA", "CHARLIE", "ac1");
-        g2.addEdge("ALPHA", "CHARLIE", "ac1");
+        g3.addEdge("ALPHA", "CHARLIE", "ac1");
+        g3.addEdge("ALPHA", "CHARLIE", "ac1");
     }
 
     @Test
