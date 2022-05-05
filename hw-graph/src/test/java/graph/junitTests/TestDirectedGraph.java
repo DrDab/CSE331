@@ -145,6 +145,46 @@ public class TestDirectedGraph
         g2.addNode("ALPHA");
     }
 
+    @Test
+    public void testListNodesInEmptyGraph()
+    {
+        assertTrue(g0.getNodes().isEmpty());
+        assertEquals(0, g0.getNodes().size());
+    }
+
+    @Test
+    public void testListNodesIn1NodeGraph()
+    {
+        assertFalse(g1.getNodes().isEmpty());
+        assertEquals(1, g1.getNodes().size());
+        assertTrue(g1.hasNode("ALPHA"));
+        assertTrue(g1.getNodes().contains("ALPHA"));
+    }
+
+    @Test
+    public void testListNodesIn2NodeGraph()
+    {
+        assertFalse(g2.getNodes().isEmpty());
+        assertEquals(2, g2.getNodes().size());
+        assertTrue(g2.hasNode("ALPHA"));
+        assertTrue(g2.hasNode("BRAVO"));
+        assertTrue(g2.getNodes().contains("ALPHA"));
+        assertTrue(g2.getNodes().contains("BRAVO"));
+    }
+
+    @Test
+    public void testListNodesIn3NodeGraph()
+    {
+        assertFalse(g3.getNodes().isEmpty());
+        assertEquals(3, g3.getNodes().size());
+        assertTrue(g3.hasNode("ALPHA"));
+        assertTrue(g3.hasNode("BRAVO"));
+        assertTrue(g3.hasNode("CHARLIE"));
+        assertTrue(g3.getNodes().contains("ALPHA"));
+        assertTrue(g3.getNodes().contains("BRAVO"));
+        assertTrue(g3.getNodes().contains("CHARLIE"));
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void testAddEdgesToEmptyGraph()
     {
