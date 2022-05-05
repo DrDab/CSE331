@@ -19,6 +19,12 @@ which lists all the nodes in the Graph. Then for the current node, the getChildN
 select the next node to visit. If I want to select paths based on label (for example based on distance), I could use
 the getEdges(n1, n2) method to get a list of labels of edges between n1 and n2.
 
+To represent a directed labeled graph, I decided creating a distinct Edge class would be useful as to pair the
+core information of an edge (source and destination node) with the label of the node. The edge class would be immutable
+as to prevent violations of representation invariant (when that is added to the Graph class eventually), and the fields
+of edge would be obtained through calling Edge's getter methods getSourceNode, getDestNode and getLabel. Since I might
+use a hashtable to store edges, I decided adding hashCode and equals method (stubs) for Edge might be useful for that
+possibility.
 
 ## Part 3
 ###########################################################################
@@ -28,7 +34,8 @@ differ from each other (if they do), and why?
 
 My testing strategy for this assignment is to test incremental additions of complexity for the cases of adding
 nodes and edges to the graph and edge cases of adding edges (script and JUnit tests), as well as testing the
-exceptions thrown.
+exceptions thrown. I also used JUnit tests to test the methods for the Edge class, which can't be done through
+the script tests.
 
 When testing the addition of nodes to the graph, I tested cases of 1, 2 and 3 nodes added
 to graphs w/ 0,1,2 existing nodes and ensured the graph remembers the nodes entered into the graph.
@@ -37,6 +44,10 @@ When testing the addition of edges to the graph, I tested cases of 1, 2, and 3 e
 what happens when duplicate nodes are added to graphs with 1 and 2 nodes and when duplicate edges are added to graphs
 with 1, 2, and 3 nodes. Finally I tested if the graph supports reflexive edges (on graphs of 1 and 2 nodes), and
 if the graph supports cyclic paths (on graphs of 2 and 3 nodes).
+
+When testing the Edge class I tested the getter methods are consistent with fields entered in the constructor,
+whether the constructor throws exceptions if any parameters are null, and whether the equals method works and
+whether the hashCode method behaves as expected (for a few cases).
 
 My script tests only include the cases of adding nodes and edges to the graph because the commands accepted by the
 script test format only accept adding nodes and edges and listing nodes and edges. My JUnit tests include both the

@@ -8,15 +8,15 @@ import java.util.List;
  * has a unique name and there exists no two edges between any two parent and child nodes in the graph
  * such that the edges have the same label.
  */
-public class Graph
+public class DirectedGraph
 {
 
     /**
      * Instantiates an empty Graph with no nodes and no edges.
      */
-    public Graph()
+    public DirectedGraph()
     {
-        throw new RuntimeException();
+        throw new RuntimeException("Constructor not yet implemented!");
     }
 
     /**
@@ -32,7 +32,7 @@ public class Graph
      */
     public void addNode(String name) throws IllegalArgumentException
     {
-        throw new RuntimeException();
+        throw new RuntimeException("Method not yet implemented!");
     }
 
     /**
@@ -45,7 +45,7 @@ public class Graph
      */
     public boolean hasNode(String name)
     {
-        throw new RuntimeException();
+        throw new RuntimeException("Method not yet implemented!");
     }
 
     /**
@@ -57,7 +57,7 @@ public class Graph
      */
     public List<String> getNodes()
     {
-        throw new RuntimeException();
+        throw new RuntimeException("Method not yet implemented!");
     }
 
     /**
@@ -73,7 +73,7 @@ public class Graph
      */
     public List<String> getChildNodes(String nodeName) throws IllegalArgumentException
     {
-        throw new RuntimeException();
+        throw new RuntimeException("Method not yet implemented!");
     }
 
     /**
@@ -83,7 +83,7 @@ public class Graph
      */
     public int getNodeCount()
     {
-        throw new RuntimeException();
+        throw new RuntimeException("Method not yet implemented!");
     }
 
     /**
@@ -105,7 +105,7 @@ public class Graph
      */
     public void addEdge(String n1, String n2, String label) throws IllegalArgumentException
     {
-        throw new RuntimeException();
+        throw new RuntimeException("Method not yet implemented!");
     }
 
     /**
@@ -121,23 +121,23 @@ public class Graph
      */
     public boolean hasEdge(String n1, String n2, String label)
     {
-        throw new RuntimeException();
+        throw new RuntimeException("Method not yet implemented!");
     }
 
     /**
-     * Returns the list of edges that start from node n1 and end
+     * Returns the list of edge names that start from node n1 and end
      * on node n2. If nodes n1 or n2 do not exist in the Graph,
      * this method will throw an IllegalArgumentException.
      *
      * @param n1 the name of the node the edges originate from
      * @param n2 the name of the node the edges terminate on.
      * @spec.requires n1, n2 != null and there exist nodes n1, n2 in this Graph.
-     * @return the list of edges that start from node n1 and end
+     * @return the list of edge names that start from node n1 and end
      *         on node n2.
      */
     public List<String> getEdges(String n1, String n2) throws IllegalArgumentException
     {
-        throw new RuntimeException();
+        throw new RuntimeException("Method not yet implemented!");
     }
 
     /**
@@ -147,6 +147,7 @@ public class Graph
      */
     public int getEdgeCount()
     {
-        throw new RuntimeException();
+        throw new RuntimeException("Method not yet implemented!");
     }
+
 }

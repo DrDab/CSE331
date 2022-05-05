@@ -1,25 +1,25 @@
 package graph.junitTests;
 
-import graph.Graph;
+import graph.DirectedGraph;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class TestGraph
+public class TestDirectedGraph
 {
-    private Graph g0; // empty graph
-    private Graph g1; // graph w/ 1 node
-    private Graph g2; // graph w/ 2 nodes
-    private Graph g3; // graph w/ 3 nodes
+    private DirectedGraph g0; // empty graph
+    private DirectedGraph g1; // graph w/ 1 node
+    private DirectedGraph g2; // graph w/ 2 nodes
+    private DirectedGraph g3; // graph w/ 3 nodes
 
     @Before
     public void createSampleGraphs()
     {
-        g0 = new Graph();
-        g1 = new Graph();
-        g2 = new Graph();
-        g3 = new Graph();
+        g0 = new DirectedGraph();
+        g1 = new DirectedGraph();
+        g2 = new DirectedGraph();
+        g3 = new DirectedGraph();
 
         g1.addNode("ALPHA");
 
@@ -34,7 +34,7 @@ public class TestGraph
     @Test
     public void testCreateEmptyGraph()
     {
-        Graph g = new Graph();
+        DirectedGraph g = new DirectedGraph();
         assertEquals(0, g.getNodeCount());
         assertEquals(0, g.getEdgeCount());
         assertTrue(g.getNodes().isEmpty());
@@ -46,17 +46,23 @@ public class TestGraph
         g0.addNode("ALPHA");
         assertEquals(1, g0.getNodeCount());
         assertTrue(g0.hasNode("ALPHA"));
+        assertTrue(g0.getNodes().contains("ALPHA"));
 
         g0.addNode("BRAVO");
         assertEquals(2, g0.getNodeCount());
         assertTrue(g0.hasNode("ALPHA"));
         assertTrue(g0.hasNode("BRAVO"));
+        assertTrue(g0.getNodes().contains("ALPHA"));
+        assertTrue(g0.getNodes().contains("BRAVO"));
 
         g0.addNode("CHARLIE");
         assertEquals(3, g0.getNodeCount());
         assertTrue(g0.hasNode("ALPHA"));
         assertTrue(g0.hasNode("BRAVO"));
         assertTrue(g0.hasNode("CHARLIE"));
+        assertTrue(g0.getNodes().contains("ALPHA"));
+        assertTrue(g0.getNodes().contains("BRAVO"));
+        assertTrue(g0.getNodes().contains("CHARLIE"));
     }
 
     @Test
@@ -66,12 +72,17 @@ public class TestGraph
         assertEquals(2, g1.getNodeCount());
         assertTrue(g1.hasNode("ALPHA"));
         assertTrue(g1.hasNode("BRAVO"));
+        assertTrue(g1.getNodes().contains("ALPHA"));
+        assertTrue(g1.getNodes().contains("BRAVO"));
 
         g1.addNode("CHARLIE");
         assertEquals(3, g1.getNodeCount());
         assertTrue(g1.hasNode("ALPHA"));
         assertTrue(g1.hasNode("BRAVO"));
         assertTrue(g1.hasNode("CHARLIE"));
+        assertTrue(g1.getNodes().contains("ALPHA"));
+        assertTrue(g1.getNodes().contains("BRAVO"));
+        assertTrue(g1.getNodes().contains("CHARLIE"));
 
         g1.addNode("DELTA");
         assertEquals(4, g1.getNodeCount());
@@ -79,6 +90,10 @@ public class TestGraph
         assertTrue(g1.hasNode("BRAVO"));
         assertTrue(g1.hasNode("CHARLIE"));
         assertTrue(g1.hasNode("DELTA"));
+        assertTrue(g1.getNodes().contains("ALPHA"));
+        assertTrue(g1.getNodes().contains("BRAVO"));
+        assertTrue(g1.getNodes().contains("CHARLIE"));
+        assertTrue(g1.getNodes().contains("DELTA"));
     }
 
     @Test
@@ -89,6 +104,9 @@ public class TestGraph
         assertTrue(g2.hasNode("ALPHA"));
         assertTrue(g2.hasNode("BRAVO"));
         assertTrue(g2.hasNode("CHARLIE"));
+        assertTrue(g2.getNodes().contains("ALPHA"));
+        assertTrue(g2.getNodes().contains("BRAVO"));
+        assertTrue(g2.getNodes().contains("CHARLIE"));
 
         g2.addNode("DELTA");
         assertEquals(4, g2.getNodeCount());
@@ -96,6 +114,10 @@ public class TestGraph
         assertTrue(g2.hasNode("BRAVO"));
         assertTrue(g2.hasNode("CHARLIE"));
         assertTrue(g2.hasNode("DELTA"));
+        assertTrue(g2.getNodes().contains("ALPHA"));
+        assertTrue(g2.getNodes().contains("BRAVO"));
+        assertTrue(g2.getNodes().contains("CHARLIE"));
+        assertTrue(g2.getNodes().contains("DELTA"));
 
         g2.addNode("ECHO");
         assertEquals(5, g2.getNodeCount());
@@ -104,6 +126,11 @@ public class TestGraph
         assertTrue(g2.hasNode("CHARLIE"));
         assertTrue(g2.hasNode("DELTA"));
         assertTrue(g2.hasNode("ECHO"));
+        assertTrue(g2.getNodes().contains("ALPHA"));
+        assertTrue(g2.getNodes().contains("BRAVO"));
+        assertTrue(g2.getNodes().contains("CHARLIE"));
+        assertTrue(g2.getNodes().contains("DELTA"));
+        assertTrue(g2.getNodes().contains("ECHO"));
     }
 
     @Test(expected = IllegalArgumentException.class)
