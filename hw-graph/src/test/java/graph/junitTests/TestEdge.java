@@ -94,23 +94,39 @@ public class TestEdge
     @Test
     public void testEdgeEquals()
     {
-        assertEquals(edge, edgeDup);
+        // test symmetry of equals
+        assertTrue(edge.equals(edgeDup));
+        assertTrue(edgeDup.equals(edge));
         // test equals is consistent.
         assertEquals(edge, edgeDup);
         Edge nonEqualEdge = new Edge("notMySrc", "notMyDest", "notMyLabel");
-        assertNotEquals(edge, nonEqualEdge);
+        // test symmetry of equals when false
+        assertFalse(edge.equals(nonEqualEdge));
+        assertFalse(nonEqualEdge.equals(edge));
         nonEqualEdge = new Edge("mySrc", "notMyDest", "notMyLabel");
-        assertNotEquals(edge, nonEqualEdge);
+        // test symmetry of equals when false
+        assertFalse(edge.equals(nonEqualEdge));
+        assertFalse(nonEqualEdge.equals(edge));
         nonEqualEdge = new Edge("notMySrc", "myDest", "notMyLabel");
-        assertNotEquals(edge, nonEqualEdge);
+        // test symmetry of equals when false
+        assertFalse(edge.equals(nonEqualEdge));
+        assertFalse(nonEqualEdge.equals(edge));
         nonEqualEdge = new Edge("notMySrc", "notMyDest", "myLabel");
-        assertNotEquals(edge, nonEqualEdge);
+        // test symmetry of equals when false
+        assertFalse(edge.equals(nonEqualEdge));
+        assertFalse(nonEqualEdge.equals(edge));
         nonEqualEdge = new Edge("mySrc", "myDest", "notMyLabel");
-        assertNotEquals(edge, nonEqualEdge);
+        // test symmetry of equals when false
+        assertFalse(edge.equals(nonEqualEdge));
+        assertFalse(nonEqualEdge.equals(edge));
         nonEqualEdge = new Edge("mySrc", "notMyDest", "myLabel");
-        assertNotEquals(edge, nonEqualEdge);
+        // test symmetry of equals when false
+        assertFalse(edge.equals(nonEqualEdge));
+        assertFalse(nonEqualEdge.equals(edge));
         nonEqualEdge = new Edge("notMySrc", "myDest", "myLabel");
-        assertNotEquals(edge, nonEqualEdge);
+        // test symmetry of equals when false
+        assertFalse(edge.equals(nonEqualEdge));
+        assertFalse(nonEqualEdge.equals(edge));
     }
 
     @Test
