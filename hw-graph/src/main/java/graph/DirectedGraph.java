@@ -1,6 +1,6 @@
 package graph;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a mutable, directed labelled graph where a set of labelled nodes can be connected
@@ -10,13 +10,59 @@ import java.util.List;
  */
 public class DirectedGraph
 {
+    public static final boolean DEBUG = true;
+
+    // Representation Invariant (RI): nodes != null, adjList != null,
+    //                                nodes has no nulls, adjList has no mappings to null Edges,
+    //                                adjList has a mapping to a set of Edges for each node in nodes,
+    //                                and numEdges is the total number of Edges in adjList.
+    //
+    // Abstraction Function:
+    //      AF(this) = a directed graph with the HashSet set of nodes "nodes" and
+    //                 an adjacency list "adjList" represented with a HashMap mapping
+    //                 the names of each source node to the outbound edges from that
+    //                 source node.
+    //
+    private Set<String> nodes;
+    private Map<String, Set<Edge>> adjList;
+    private int numEdges;
+
+    // Checks the RI of the class
+    private void checkRep()
+    {
+        assert nodes != null;
+        assert adjList != null;
+
+        if (DEBUG)
+        {
+            // run runtime-intensive tests if debugging
+            int actualEdgeCount = 0;
+
+            for (String sourceNode : nodes)
+            {
+                assert sourceNode != null;
+                assert adjList.containsKey(sourceNode);
+
+                for (Edge e : adjList.get(sourceNode))
+                {
+                    assert e != null;
+                    actualEdgeCount++;
+                }
+            }
+
+            assert actualEdgeCount == numEdges;
+        }
+    }
 
     /**
      * Instantiates an empty Graph with no nodes and no edges.
      */
     public DirectedGraph()
     {
-        throw new RuntimeException("Constructor not yet implemented!");
+        nodes = new HashSet<>();
+        adjList = new HashMap<>();
+        numEdges = 0;
+        checkRep();
     }
 
     /**
@@ -32,7 +78,16 @@ public class DirectedGraph
      */
     public void addNode(String name) throws IllegalArgumentException
     {
-        throw new RuntimeException("Method not yet implemented!");
+        checkRep();
+
+        if (nodes.contains(name))
+        {
+            throw new IllegalArgumentException();
+        }
+
+        nodes.add(name);
+        adjList.put(name, new HashSet<>());
+        checkRep();
     }
 
     /**
@@ -45,7 +100,7 @@ public class DirectedGraph
      */
     public boolean hasNode(String name)
     {
-        throw new RuntimeException("Method not yet implemented!");
+        return nodes.contains(name);
     }
 
     /**
@@ -57,7 +112,14 @@ public class DirectedGraph
      */
     public List<String> getNodes()
     {
-        throw new RuntimeException("Method not yet implemented!");
+        List<String> res = new ArrayList<>();
+
+        for (String node : nodes)
+        {
+            res.add(node);
+        }
+
+        return res;
     }
 
     /**
@@ -73,7 +135,15 @@ public class DirectedGraph
      */
     public List<String> getChildNodes(String nodeName) throws IllegalArgumentException
     {
-        throw new RuntimeException("Method not yet implemented!");
+        if (!nodes.contains(nodeName))
+            throw new IllegalArgumentException();
+
+        List<String> res = new ArrayList<>();
+
+        for (Edge e : adjList.get(nodeName))
+            res.add(e.getDestNode());
+
+        return res;
     }
 
     /**
@@ -83,7 +153,7 @@ public class DirectedGraph
      */
     public int getNodeCount()
     {
-        throw new RuntimeException("Method not yet implemented!");
+        return nodes.size();
     }
 
     /**
@@ -105,7 +175,19 @@ public class DirectedGraph
      */
     public void addEdge(String n1, String n2, String label) throws IllegalArgumentException
     {
-        throw new RuntimeException("Method not yet implemented!");
+        checkRep();
+        if (!nodes.contains(n1) || !nodes.contains(n2))
+            throw new IllegalArgumentException();
+
+        Set<Edge> edges = adjList.get(n1);
+        Edge e = new Edge(n1, n2, label);
+
+        if (edges.contains(e))
+            throw new IllegalArgumentException("");
+
+        adjList.get(n1).add(e);
+        numEdges++;
+        checkRep();
     }
 
     /**
@@ -121,7 +203,10 @@ public class DirectedGraph
      */
     public boolean hasEdge(String n1, String n2, String label)
     {
-        throw new RuntimeException("Method not yet implemented!");
+        if (!nodes.contains(n1) || !nodes.contains(n2))
+            return false;
+
+        return adjList.get(n1).contains(new Edge(n1, n2, label));
     }
 
     /**
@@ -137,7 +222,16 @@ public class DirectedGraph
      */
     public List<String> getEdges(String n1, String n2) throws IllegalArgumentException
     {
-        throw new RuntimeException("Method not yet implemented!");
+        List<String> res = new ArrayList<>();
+
+        if (!nodes.contains(n1) || !nodes.contains(n2))
+            throw new IllegalArgumentException();
+
+        for (Edge e : adjList.get(n1))
+            if (e.getDestNode().equals(n2))
+                res.add(e.getLabel());
+
+        return res;
     }
 
     /**
@@ -147,7 +241,7 @@ public class DirectedGraph
      */
     public int getEdgeCount()
     {
-        throw new RuntimeException("Method not yet implemented!");
+        return numEdges;
     }
 
 }

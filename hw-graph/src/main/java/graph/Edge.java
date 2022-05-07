@@ -6,6 +6,14 @@ package graph;
  */
 public class Edge
 {
+    // Representation Invariant (RI): sourceNode, destNode, label != null.
+    // Abstraction Function:
+    //      AF(this) = an Edge of a directed graph with source node name sourceNode,
+    //                 destination node name destNode, and label label.
+    private String sourceNode;
+    private String destNode;
+    private String label;
+
     /**
      * @param sourceNode the name of the node the edge starts from
      * @param destNode the name of the node the edge terminates on
@@ -15,7 +23,14 @@ public class Edge
      */
     public Edge(String sourceNode, String destNode, String label) throws IllegalArgumentException
     {
-        throw new RuntimeException("Constructor not yet implemented!");
+        if (sourceNode == null || destNode == null || label == null)
+        {
+            throw new IllegalArgumentException("");
+        }
+
+        this.sourceNode = sourceNode;
+        this.destNode = destNode;
+        this.label = label;
     }
 
     /**
@@ -25,7 +40,7 @@ public class Edge
      */
     public String getSourceNode()
     {
-        throw new RuntimeException("Method not yet implemented!");
+        return sourceNode;
     }
 
     /**
@@ -35,7 +50,7 @@ public class Edge
      */
     public String getDestNode()
     {
-        throw new RuntimeException("Method not yet implemented!");
+        return destNode;
     }
 
     /**
@@ -45,7 +60,7 @@ public class Edge
      */
     public String getLabel()
     {
-        throw new RuntimeException("Method not yet implemented!");
+        return label;
     }
 
     /**
@@ -54,7 +69,7 @@ public class Edge
     @Override
     public int hashCode()
     {
-        throw new RuntimeException("Method not yet implemented!");
+        return sourceNode.hashCode() ^ destNode.hashCode() ^ label.hashCode();
     }
 
     /**
@@ -63,6 +78,14 @@ public class Edge
     @Override
     public boolean equals(Object o)
     {
-        throw new RuntimeException("Method not yet implemented!");
+        if (o == null)
+            return false;
+
+        if (!(o instanceof Edge))
+            return false;
+
+        Edge e2 = (Edge) o;
+        return sourceNode.equals(e2.sourceNode) && destNode.equals(e2.destNode)
+                && label.equals(e2.label);
     }
 }

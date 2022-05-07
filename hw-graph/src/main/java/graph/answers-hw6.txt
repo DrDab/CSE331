@@ -17,14 +17,34 @@ A few examples of possible Graph representations:
 representations listed above (for example, in terms of runtime complexity, space
 complexity, or ease of implementation).
 
+An advantage of representation A is the simplicity of implementation, because a collection (i.e. list)
+of nodes and a collection of edges is simple to represent. A disadvantage of representation A is the runtime
+complexity of searching for edges from a given node to another node, as there is no direct association between
+the nodes and the edges between them, which warrants searching the collection of edges until the appropriate
+edge(s) are found, which can take up to linear time.
 
+An advantage of representation B is the simplicity of accessing a specific edge in the graph, which warrants
+finding the node the edge originates from, and searching the list of outgoing edges for that node. A disadvantage
+of representation B is the runtime complexity of searching for edges from a given node to another node, as all
+edges in the adjacency list from the source node must be searched until the appropriate edge(s) are found, which can
+again, take linear time like in representation A.
 
+An advantage of representation C is the runtime complexity of searching for edges between a source and destination
+node, which is constant (because we are checking the position of the matrix M[A][B] to get the edges from node A
+to node B. A disadvantage of representation C is the space complexity of an adjacency matrix, which has to store
+an instance of a data structure for each possible connection between source and destination nodes.
 
 2. In two to three sentences, describe the representation you chose and explain why you
 chose it. If you chose to use a different representation than one of the three we described
 above, be sure to list its advantages and disadvantages, too.
 
-
+I chose representation B because it strikes a good balance between runtime complexity and space complexity.
+Representation B has better runtime complexity than representation A, because when searching for the edge(s) from
+a given source node to a given destination node representation B will only search the edges in the adjacency list
+from the given source node, which reduces the searching time. Representation B has better space complexity than
+representation C because the space complexity of representation B is N+E (where N is the number of nodes and E
+is the number of edges in the graph), while the space complexity of representation C is N^2, where again N is the
+number of nodes in the graph.
 
 
 ## Part 4
