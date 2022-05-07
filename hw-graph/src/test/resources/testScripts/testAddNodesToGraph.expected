@@ -29,5 +29,5 @@ added node CHARLIE to g2
 g2 contains: ALPHA BRAVO CHARLIE
 added node DELTA to g2
 g2 contains: ALPHA BRAVO CHARLIE DELTA
-AddNode g2 ECHO
+added node ECHO to g2
 g2 contains: ALPHA BRAVO CHARLIE DELTA ECHO

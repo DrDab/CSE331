@@ -10,5 +10,5 @@ AddNode g2 BRAVO
 AddEdge g1 ALPHA ALPHA aa
 
 # Add reflexive edge to graph with 2 nodes.
-AddEdge g1 ALPHA ALPHA aa
+AddEdge g2 ALPHA ALPHA aa
 AddEdge g2 BRAVO BRAVO bb

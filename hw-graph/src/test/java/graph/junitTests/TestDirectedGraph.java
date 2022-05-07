@@ -3,12 +3,17 @@ package graph.junitTests;
 import graph.DirectedGraph;
 import graph.Edge;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 
 import static org.junit.Assert.*;
 
 public class TestDirectedGraph
 {
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
+
     private DirectedGraph g0; // empty graph
     private DirectedGraph g1; // graph w/ 1 node
     private DirectedGraph g2; // graph w/ 2 nodes

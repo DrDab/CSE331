@@ -4,8 +4,8 @@ added node ALPHA to g2
 added node BRAVO to g2
 
 created graph g3
-added node CHARLIE to g3
-added node CHARLIE to g3
+added node ALPHA to g3
+added node BRAVO to g3
 added node CHARLIE to g3
 
 # Test cyclic paths are allowed on graph of 2 nodes.

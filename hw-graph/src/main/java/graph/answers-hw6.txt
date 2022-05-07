@@ -55,11 +55,15 @@ number of nodes in the graph.
 1. Describe any new tests you added and why you added them, or why you feel that your original
 tests alone are sufficient.
 
-
-
+My original tests alone are sufficient because they test most of the risky subdomains likely to be encountered
+when using my directedGraph classes.
 
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
 If yes, describe your changes and why you made them.
+
+I modified my Graph spec to make the getChildNodes method return a Set of Strings instead of a List of Strings
+to ensure that there are no duplicate nodes returned (as the edge case of numerous reflexive edges
+can cause multiple duplicate child nodes to be returned.)
 
 
 

@@ -81,9 +81,7 @@ public class DirectedGraph
         checkRep();
 
         if (nodes.contains(name))
-        {
             throw new IllegalArgumentException();
-        }
 
         nodes.add(name);
         adjList.put(name, new HashSet<>());
@@ -115,35 +113,33 @@ public class DirectedGraph
         List<String> res = new ArrayList<>();
 
         for (String node : nodes)
-        {
             res.add(node);
-        }
 
         return res;
     }
 
     /**
-     * Returns a list of the names of the child nodes of a node
+     * Returns a set of the names of the child nodes of a node
      * with the given name nodeName in the Graph.
      *
      * @param nodeName the name of the node in the Graph to
      *                 return a list of child nodes of.
      * @spec.requires nodeName != null and contains only ASCII characters.
      * @throws IllegalArgumentException if the Graph has no node with the name nodeName.
-     * @return a list of the names of the child nodes of the node
+     * @return a set of the names of the child nodes of the node
      *          with the given name.
      */
-    public List<String> getChildNodes(String nodeName) throws IllegalArgumentException
+    public Set<String> getChildNodes(String nodeName) throws IllegalArgumentException
     {
         if (!nodes.contains(nodeName))
             throw new IllegalArgumentException();
 
-        List<String> res = new ArrayList<>();
+        Set<String> resSet = new HashSet<>();
 
         for (Edge e : adjList.get(nodeName))
-            res.add(e.getDestNode());
+            resSet.add(e.getDestNode());
 
-        return res;
+        return resSet;
     }
 
     /**
