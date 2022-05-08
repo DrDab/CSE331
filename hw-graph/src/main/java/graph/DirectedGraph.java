@@ -20,7 +20,7 @@ public class DirectedGraph
     // Abstraction Function:
     //      AF(this) = a directed graph with the HashSet set of nodes "nodes" and
     //                 an adjacency list "adjList" represented with a HashMap mapping
-    //                 the names of each source node to the outbound edges from that
+    //                 the names of each source node to the set of outbound edges from that
     //                 source node.
     //
     private Set<String> nodes;
