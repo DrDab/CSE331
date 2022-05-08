@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class DirectedGraph
 {
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
     // Representation Invariant (RI): nodes != null, adjList != null,
     //                                nodes has no nulls, adjList has no mappings to null Edges,
