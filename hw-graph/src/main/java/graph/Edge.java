@@ -18,7 +18,7 @@ public class Edge
      * @param sourceNode the name of the node the edge starts from
      * @param destNode the name of the node the edge terminates on
      * @param label the label of the edge from node sourceNode to destNode
-     * @throws IllegalArgumentException if sourceNode or destNode or label != null
+     * @throws IllegalArgumentException if sourceNode or destNode or label == null
      */
     public Edge(String sourceNode, String destNode, String label)
     {
