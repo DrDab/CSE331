@@ -18,14 +18,13 @@ public class Edge
      * @param sourceNode the name of the node the edge starts from
      * @param destNode the name of the node the edge terminates on
      * @param label the label of the edge from node sourceNode to destNode
-     * @spec.requires sourceNode, destNode, label != null
-     * @throws IllegalArgumentException if sourceNode == null or destNode == null or label == null
+     * @throws IllegalArgumentException if sourceNode or destNode or label != null
      */
-    public Edge(String sourceNode, String destNode, String label) throws IllegalArgumentException
+    public Edge(String sourceNode, String destNode, String label)
     {
         if (sourceNode == null || destNode == null || label == null)
         {
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("sourceNode, destNode, and label must be non-null!");
         }
 
         this.sourceNode = sourceNode;

@@ -27,7 +27,10 @@ public class DirectedGraph
     private Map<String, Set<Edge>> adjList;
     private int numEdges;
 
-    // Checks the RI of the class
+    /**
+     * Checks the representation invariant of this DirectedGraph to ensure rep invariant
+     * holds before and after this DirectedGraph is mutated.
+     */
     private void checkRep()
     {
         assert nodes != null;
@@ -76,12 +79,12 @@ public class DirectedGraph
      * @spec.requires name != null and contains only ASCII characters.
      * @spec.effects a node is added to the Graph with the name given.
      */
-    public void addNode(String name) throws IllegalArgumentException
+    public void addNode(String name)
     {
         checkRep();
 
         if (nodes.contains(name))
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(String.format("Node %s already exists in graph!", name));
 
         nodes.add(name);
         adjList.put(name, new HashSet<>());
@@ -129,10 +132,10 @@ public class DirectedGraph
      * @return a set of the names of the child nodes of the node
      *          with the given name.
      */
-    public Set<String> getChildNodes(String nodeName) throws IllegalArgumentException
+    public Set<String> getChildNodes(String nodeName)
     {
         if (!nodes.contains(nodeName))
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(String.format("Node %s doesn't exist in graph!", nodeName));
 
         Set<String> resSet = new HashSet<>();
 
@@ -161,25 +164,32 @@ public class DirectedGraph
      * @param n1 the name of the node the edge originates from
      * @param n2 the name of the node the edge terminates on.
      * @param label the label of the edge.
-     * @spec.requires n1, n2, label != null, and there exist nodes
-     *                with names n1, n2 in this Graph, and no edge in this Graph
-     *                starting from n1 and ending on n2 has the label, label.
+     * @spec.requires n1, n2, label != null.
      * @spec.effects an edge with start node n1, destination node n2, and
      *               label named label is added to this Graph.
      * @throws IllegalArgumentException if nodes with names n1, n2 don't exist in this Graph
      *         or Graph already has an edge from node n1 to node n2 with the given label.
      */
-    public void addEdge(String n1, String n2, String label) throws IllegalArgumentException
+    public void addEdge(String n1, String n2, String label)
     {
         checkRep();
+
         if (!nodes.contains(n1) || !nodes.contains(n2))
-            throw new IllegalArgumentException();
+        {
+            String nodesStr = (!nodes.contains(n1) && !nodes.contains(n2)) ?
+                    String.format("s %s and %s", n1, n2) :
+                    (!nodes.contains(n1)) ? " " + n1 : " " + n2;
+            throw new IllegalArgumentException(
+                    String.format("Node%s must exist in the graph!", nodesStr));
+        }
 
         Set<Edge> edges = adjList.get(n1);
         Edge e = new Edge(n1, n2, label);
 
         if (edges.contains(e))
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException(
+                    String.format("An edge from node %s to %s with label %s already exists!",
+                            n1, n2, label));
 
         adjList.get(n1).add(e);
         numEdges++;
@@ -221,7 +231,13 @@ public class DirectedGraph
         List<String> res = new ArrayList<>();
 
         if (!nodes.contains(n1) || !nodes.contains(n2))
-            throw new IllegalArgumentException();
+        {
+            String nodesStr = (!nodes.contains(n1) && !nodes.contains(n2)) ?
+                    String.format("s %s and %s", n1, n2) :
+                    (!nodes.contains(n1)) ? " " + n1 : " " + n2;
+            throw new IllegalArgumentException(
+                    String.format("Node%s must exist in the graph!", nodesStr));
+        }
 
         for (Edge e : adjList.get(n1))
             if (e.getDestNode().equals(n2))
