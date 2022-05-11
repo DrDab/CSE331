@@ -222,14 +222,13 @@ public class DirectedGraph
      *
      * @param n1 the name of the node the edges originate from
      * @param n2 the name of the node the edges terminate on.
-     * @spec.requires n1, n2 != null and there exist nodes n1, n2 in this Graph.
+     * @spec.requires n1, n2 != null
+     * @throws IllegalArgumentException if nodes n1, n2 don't exist in this Graph.
      * @return the list of edge names that start from node n1 and end
      *         on node n2.
      */
     public List<String> getEdges(String n1, String n2) throws IllegalArgumentException
     {
-        List<String> res = new ArrayList<>();
-
         if (!nodes.contains(n1) || !nodes.contains(n2))
         {
             String nodesStr = (!nodes.contains(n1) && !nodes.contains(n2)) ?
@@ -238,6 +237,8 @@ public class DirectedGraph
             throw new IllegalArgumentException(
                     String.format("Node%s must exist in the graph!", nodesStr));
         }
+
+        List<String> res = new ArrayList<>();
 
         for (Edge e : adjList.get(n1))
             if (e.getDestNode().equals(n2))
