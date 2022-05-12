@@ -82,3 +82,15 @@ pathfinder-validation:
   script: $RUNNER_SCRIPT hw-pathfinder validation
   only: ["hw7-final"]
   except: ["branches"]
+
+tasks-build:
+  stage: build
+  script: $RUNNER_SCRIPT hw-tasks build
+  only: ["hw7-final"]
+  except: ["branches"]
+
+tasks-validation:
+  stage: validation
+  script: $RUNNER_SCRIPT hw-tasks validation
+  only: ["hw7-final"]
+  except: ["branches"]
