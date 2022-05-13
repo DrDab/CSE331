@@ -13,8 +13,8 @@ public class DirectedGraph
     public static final boolean DEBUG = false;
 
     // Representation Invariant (RI): nodes != null, adjList != null,
-    //                                nodes has no nulls, adjList has no mappings to null Edges,
-    //                                adjList has a mapping to a set of Edges for each node in nodes,
+    //                                nodes has no nulls, adjList has no mappings to null sets or null Edges
+    //                                in the sets, adjList has a mapping to a set of Edges for each node in nodes,
     //                                and numEdges is the total number of Edges in adjList.
     //
     // Abstraction Function:
@@ -45,6 +45,7 @@ public class DirectedGraph
             {
                 assert sourceNode != null;
                 assert adjList.containsKey(sourceNode);
+                assert adjList.get(sourceNode) != null;
 
                 for (Edge e : adjList.get(sourceNode))
                 {
