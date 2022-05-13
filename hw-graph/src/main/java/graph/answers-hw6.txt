@@ -24,14 +24,14 @@ the nodes and the edges between them, which warrants searching the collection of
 edge(s) are found, which can take up to linear time.
 
 An advantage of representation B is the simplicity of accessing a specific edge in the graph, which warrants
-finding the node the edge originates from, and searching the list of outgoing edges for that node. A disadvantage
+finding the node the edge originates from, and searching the list of outgoing edges for that edge. A disadvantage
 of representation B is the runtime complexity of searching for edges from a given node to another node, as all
 edges in the adjacency list from the source node must be searched until the appropriate edge(s) are found, which can
 again, take linear time like in representation A.
 
 An advantage of representation C is the runtime complexity of searching for edges between a source and destination
 node, which is constant (because we are checking the position of the matrix M[A][B] to get the edges from node A
-to node B. A disadvantage of representation C is the space complexity of an adjacency matrix, which has to store
+to node B.) A disadvantage of representation C is the space complexity of an adjacency matrix, which has to store
 an instance of a data structure for each possible connection between source and destination nodes.
 
 2. In two to three sentences, describe the representation you chose and explain why you
