@@ -14,18 +14,18 @@ public class TestDirectedGraph
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
 
-    private DirectedGraph g0; // empty graph
-    private DirectedGraph g1; // graph w/ 1 node
-    private DirectedGraph g2; // graph w/ 2 nodes
-    private DirectedGraph g3; // graph w/ 3 nodes
+    private DirectedGraph<String, String> g0; // empty graph
+    private DirectedGraph<String, String> g1; // graph w/ 1 node
+    private DirectedGraph<String, String> g2; // graph w/ 2 nodes
+    private DirectedGraph<String, String> g3; // graph w/ 3 nodes
 
     @Before
     public void createSampleGraphs()
     {
-        g0 = new DirectedGraph();
-        g1 = new DirectedGraph();
-        g2 = new DirectedGraph();
-        g3 = new DirectedGraph();
+        g0 = new DirectedGraph<>();
+        g1 = new DirectedGraph<>();
+        g2 = new DirectedGraph<>();
+        g3 = new DirectedGraph<>();
 
         g1.addNode("ALPHA");
 
@@ -370,57 +370,57 @@ public class TestDirectedGraph
     @Test(expected = IllegalArgumentException.class)
     public void testNullSrcNodeEdgeConstructorThrowsException()
     {
-        Edge e = new Edge(null, "", "");
+        Edge<String, String> e = new Edge<>(null, "", "");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullDestNodeEdgeConstructorThrowsException()
     {
-        Edge e = new Edge("", null, "");
+        Edge<String, String> e = new Edge<>("", null, "");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullLabelEdgeConstructorThrowsException()
     {
-        Edge e = new Edge("", "", null);
+        Edge<String, String> e = new Edge<>("", "", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullSrcDestNodeEdgeConstructorThrowsException()
     {
-        Edge e = new Edge(null, null, "");
+        Edge<String, String> e = new Edge<>(null, null, "");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullDestLabelNodeEdgeConstructorThrowsException()
     {
-        Edge e = new Edge("", null, null);
+        Edge<String, String> e = new Edge<>("", null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullSrcLabelEdgeConstructorThrowsException()
     {
-        Edge e = new Edge(null, "", null);
+        Edge<String, String> e = new Edge<>(null, "", null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNullAllParamsConstructorThrowsException()
     {
-        Edge e = new Edge(null, null, null);
+        Edge<String, String> e = new Edge<>(null, null, null);
     }
 
-    private Edge edge;
-    private Edge edgeDup;
-    private Edge edge2;
-    private Edge edge2Dup;
+    private Edge<String, String> edge;
+    private Edge<String, String> edgeDup;
+    private Edge<String, String> edge2;
+    private Edge<String, String> edge2Dup;
 
     @Before
     public void initializeValidEdges()
     {
-        edge = new Edge("mySrc", "myDest", "myLabel");
-        edgeDup = new Edge("mySrc", "myDest", "myLabel");
-        edge2 = new Edge("mySrc2", "myDest2", "myLabel2");
-        edge2Dup = new Edge("mySrc2", "myDest2", "myLabel2");
+        edge = new Edge<>("mySrc", "myDest", "myLabel");
+        edgeDup = new Edge<>("mySrc", "myDest", "myLabel");
+        edge2 = new Edge<>("mySrc2", "myDest2", "myLabel2");
+        edge2Dup = new Edge<>("mySrc2", "myDest2", "myLabel2");
     }
 
     @Test
@@ -458,31 +458,31 @@ public class TestDirectedGraph
         assertTrue(edgeDup.equals(edge));
         // test equals is consistent.
         assertEquals(edge, edgeDup);
-        Edge nonEqualEdge = new Edge("notMySrc", "notMyDest", "notMyLabel");
+        Edge<String, String> nonEqualEdge = new Edge<>("notMySrc", "notMyDest", "notMyLabel");
         // test symmetry of equals when false
         assertFalse(edge.equals(nonEqualEdge));
         assertFalse(nonEqualEdge.equals(edge));
-        nonEqualEdge = new Edge("mySrc", "notMyDest", "notMyLabel");
+        nonEqualEdge = new Edge<>("mySrc", "notMyDest", "notMyLabel");
         // test symmetry of equals when false
         assertFalse(edge.equals(nonEqualEdge));
         assertFalse(nonEqualEdge.equals(edge));
-        nonEqualEdge = new Edge("notMySrc", "myDest", "notMyLabel");
+        nonEqualEdge = new Edge<>("notMySrc", "myDest", "notMyLabel");
         // test symmetry of equals when false
         assertFalse(edge.equals(nonEqualEdge));
         assertFalse(nonEqualEdge.equals(edge));
-        nonEqualEdge = new Edge("notMySrc", "notMyDest", "myLabel");
+        nonEqualEdge = new Edge<>("notMySrc", "notMyDest", "myLabel");
         // test symmetry of equals when false
         assertFalse(edge.equals(nonEqualEdge));
         assertFalse(nonEqualEdge.equals(edge));
-        nonEqualEdge = new Edge("mySrc", "myDest", "notMyLabel");
+        nonEqualEdge = new Edge<>("mySrc", "myDest", "notMyLabel");
         // test symmetry of equals when false
         assertFalse(edge.equals(nonEqualEdge));
         assertFalse(nonEqualEdge.equals(edge));
-        nonEqualEdge = new Edge("mySrc", "notMyDest", "myLabel");
+        nonEqualEdge = new Edge<>("mySrc", "notMyDest", "myLabel");
         // test symmetry of equals when false
         assertFalse(edge.equals(nonEqualEdge));
         assertFalse(nonEqualEdge.equals(edge));
-        nonEqualEdge = new Edge("notMySrc", "myDest", "myLabel");
+        nonEqualEdge = new Edge<>("notMySrc", "myDest", "myLabel");
         // test symmetry of equals when false
         assertFalse(edge.equals(nonEqualEdge));
         assertFalse(nonEqualEdge.equals(edge));

@@ -30,7 +30,7 @@ public class GraphTestDriver {
      * String -> Graph: maps the names of graphs to the actual graph
      **/
     // TODO for the student: Uncomment and parameterize the next line correctly:
-    private final Map<String, DirectedGraph> graphs = new HashMap<String, DirectedGraph>();
+    private final Map<String, DirectedGraph<String, String>> graphs = new HashMap<>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -115,7 +115,7 @@ public class GraphTestDriver {
     }
 
     private void createGraph(String graphName) {
-        graphs.put(graphName, new DirectedGraph());
+        graphs.put(graphName, new DirectedGraph<>());
         output.println("created graph " + graphName);
     }
 
@@ -131,7 +131,7 @@ public class GraphTestDriver {
     }
 
     private void addNode(String graphName, String nodeName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         graph.addNode(nodeName);
         output.printf("added node %s to %s%n", nodeName, graphName);
     }
@@ -151,7 +151,7 @@ public class GraphTestDriver {
 
     private void addEdge(String graphName, String parentName, String childName,
                          String edgeLabel) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         graph.addEdge(parentName, childName, edgeLabel);
         output.printf("added edge %s from %s to %s in %s%n", edgeLabel, parentName,
                 childName, graphName);
@@ -167,7 +167,7 @@ public class GraphTestDriver {
     }
 
     private void listNodes(String graphName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         List<String> nodes = graph.getNodes();
         Collections.sort(nodes);
 
@@ -191,7 +191,7 @@ public class GraphTestDriver {
     }
 
     private void listChildren(String graphName, String parentName) {
-        DirectedGraph graph = graphs.get(graphName);
+        DirectedGraph<String, String> graph = graphs.get(graphName);
         Set<String> nodeSet = graph.getChildNodes(parentName);
         List<String> nodes = new ArrayList<>(nodeSet);
         Collections.sort(nodes);

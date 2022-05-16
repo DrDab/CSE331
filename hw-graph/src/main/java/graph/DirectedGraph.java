@@ -3,12 +3,12 @@ package graph;
 import java.util.*;
 
 /**
- * Represents a mutable, directed labelled graph where a set of labelled nodes can be connected
- * via directed, labelled edges (each edge connecting a parent node to a child node), and each edge
- * has a unique name and there exists no two edges between any two parent and child nodes in the graph
- * such that the edges have the same label.
+ * Represents a mutable, directed labelled graph where a set of nodes of type N can be connected
+ * via directed edges labelled with type E (each edge connecting a parent node to a child node), and there
+ * exist no two edges in the graph between any two parent and child nodes such that the edges
+ * have the same label.
  */
-public class DirectedGraph
+public class DirectedGraph<N, E>
 {
     public static final boolean DEBUG = false;
 
@@ -20,11 +20,11 @@ public class DirectedGraph
     // Abstraction Function:
     //      AF(this) = a directed graph with the HashSet set of nodes "nodes" and
     //                 an adjacency list "adjList" represented with a HashMap mapping
-    //                 the names of each source node to the set of outbound edges from that
+    //                 each source node to the set of outbound edges from that
     //                 source node.
     //
-    private Set<String> nodes;
-    private Map<String, Set<Edge>> adjList;
+    private Set<N> nodes;
+    private Map<N, Set<Edge<N, E>>> adjList;
     private int numEdges;
 
     /**
@@ -41,7 +41,7 @@ public class DirectedGraph
             // run runtime-intensive tests if debugging
             int actualEdgeCount = 0;
 
-            for (String sourceNode : nodes)
+            for (N sourceNode : nodes)
             {
                 assert sourceNode != null;
                 assert adjList.containsKey(sourceNode);
@@ -59,7 +59,7 @@ public class DirectedGraph
     }
 
     /**
-     * Instantiates an empty Graph with no nodes and no edges.
+     * Instantiates an empty graph with no nodes and no edges.
      */
     public DirectedGraph()
     {
@@ -70,78 +70,76 @@ public class DirectedGraph
     }
 
     /**
-     * Adds a node with the given name, name, to the Graph.
-     * If a node with the given name already exists in the Graph, throws
+     * Adds a given node, targetNode, to the graph.
+     * If node targetNode already exists in the graph, throws
      * IllegalArgumentException
      *
-     * @param name the name of the node to add to the graph.
-     * @throws IllegalArgumentException if a node with the given name
-     *          already exists in the Graph.
-     * @spec.requires name != null and contains only ASCII characters.
-     * @spec.effects a node is added to the Graph with the name given.
+     * @param targetNode the node to add to the graph.
+     * @throws IllegalArgumentException if the node targetNode
+     *          already exists in this graph.
+     * @spec.requires targetNode != null and contains only ASCII characters.
+     * @spec.effects targetNode is added to this graph.
      */
-    public void addNode(String name)
+    public void addNode(N targetNode)
     {
         checkRep();
 
-        if (nodes.contains(name))
-            throw new IllegalArgumentException(String.format("Node %s already exists in graph!", name));
+        if (nodes.contains(targetNode))
+            throw new IllegalArgumentException(String.format("Node %s already exists in graph!", targetNode));
 
-        nodes.add(name);
-        adjList.put(name, new HashSet<>());
+        nodes.add(targetNode);
+        adjList.put(targetNode, new HashSet<>());
         checkRep();
     }
 
     /**
-     * Returns whether a node with the given name, name, exists in the Graph.
-     * If name is null, throws IllegalArgumentException.
+     * Returns whether a given node targetNode exists in the graph.
      *
-     * @param name the name of the node to check the existence of in the Graph.
-     * @spec.requires name != null and contains only ASCII characters.
-     * @return true iff a node exists in the graph with the name given
+     * @param targetNode the node to check the existence of in the graph.
+     * @spec.requires targetNode != null and contains only ASCII characters.
+     * @return true iff the node targetNode exists in this graph.
      */
-    public boolean hasNode(String name)
+    public boolean hasNode(N targetNode)
     {
-        return nodes.contains(name);
+        return nodes.contains(targetNode);
     }
 
     /**
-     * Returns a list of the names of all nodes in the Graph.
-     * If the Graph has no nodes, returns an empty list.
+     * Returns a list of the all nodes in the graph.
+     * If the graph has no nodes, returns an empty list.
      *
-     * @return a list of the names of all nodes in the Graph,
-     *         or an empty list if the Graph has no nodes.
+     * @return a list of all nodes in the graph,
+     *         or an empty list if the graph has no nodes.
      */
-    public List<String> getNodes()
+    public List<N> getNodes()
     {
-        List<String> res = new ArrayList<>();
+        List<N> res = new ArrayList<>();
 
-        for (String node : nodes)
+        for (N node : nodes)
             res.add(node);
 
         return res;
     }
 
     /**
-     * Returns a set of the names of the child nodes of a node
-     * with the given name nodeName in the Graph.
+     * Returns a set of the child nodes of node sourceNode in the graph.
      *
-     * @param nodeName the name of the node in the Graph to
+     * @param sourceNode the node in the Graph to
      *                 return a list of child nodes of.
-     * @spec.requires nodeName != null and contains only ASCII characters.
-     * @throws IllegalArgumentException if the Graph has no node with the name nodeName.
-     * @return a set of the names of the child nodes of the node
-     *          with the given name.
+     * @spec.requires sourceNode != null and contains only ASCII characters.
+     * @throws IllegalArgumentException if the graph has no node sourceNode
+     * @return a set of the child nodes of the node sourceNode.
      */
-    public Set<String> getChildNodes(String nodeName)
+    @SuppressWarnings("unchecked")
+    public Set<N> getChildNodes(N sourceNode)
     {
-        if (!nodes.contains(nodeName))
-            throw new IllegalArgumentException(String.format("Node %s doesn't exist in graph!", nodeName));
+        if (!nodes.contains(sourceNode))
+            throw new IllegalArgumentException(String.format("Node %s doesn't exist in graph!", sourceNode));
 
-        Set<String> resSet = new HashSet<>();
+        Set<N> resSet = new HashSet<>();
 
-        for (Edge e : adjList.get(nodeName))
-            resSet.add(e.getDestNode());
+        for (Edge e : adjList.get(sourceNode))
+            resSet.add((N) e.getDestNode());
 
         return resSet;
     }
@@ -157,93 +155,95 @@ public class DirectedGraph
     }
 
     /**
-     * Adds a directed edge with the given String label, label, to the Graph
-     * from the node named n1 to the node named n2. If node n1 or node n2
-     * doesn't exist, or there exists an edge from node n1 to node n2 with
+     * Adds a directed edge with the given label, label, to the Graph
+     * from the node sourceNode to the node destNode. If node sourceNode or destNode
+     * don't exist in this graph, or there already exists an edge from sourceNode to destNode with
      * the given label, then this method throws IllegalArgumentException.
      *
-     * @param n1 the name of the node the edge originates from
-     * @param n2 the name of the node the edge terminates on.
+     * @param sourceNode the node the edge originates from
+     * @param destNode the node the edge terminates on.
      * @param label the label of the edge.
-     * @spec.requires n1, n2, label != null.
-     * @spec.effects an edge with start node n1, destination node n2, and
-     *               label named label is added to this Graph.
-     * @throws IllegalArgumentException if nodes with names n1, n2 don't exist in this Graph
-     *         or Graph already has an edge from node n1 to node n2 with the given label.
+     * @spec.requires sourceNode, destNode, label != null.
+     * @spec.effects an edge with start node sourceNode, destination node destNode, and
+     *               given label is added to this Graph.
+     * @throws IllegalArgumentException if nodes sourceNode, destNode don't exist in this Graph
+     *         or Graph already has an edge from sourceNode to destNode with the given label.
      */
-    public void addEdge(String n1, String n2, String label)
+    @SuppressWarnings("unchecked")
+    public void addEdge(N sourceNode, N destNode, E label)
     {
         checkRep();
 
-        if (!nodes.contains(n1) || !nodes.contains(n2))
+        if (!nodes.contains(sourceNode) || !nodes.contains(destNode))
         {
-            String nodesStr = (!nodes.contains(n1) && !nodes.contains(n2)) ?
-                    String.format("s %s and %s", n1, n2) :
-                    (!nodes.contains(n1)) ? " " + n1 : " " + n2;
+            String nodesStr = (!nodes.contains(sourceNode) && !nodes.contains(destNode)) ?
+                    String.format("s %s and %s", sourceNode, destNode) :
+                    (!nodes.contains(sourceNode)) ? " " + sourceNode : " " + destNode;
             throw new IllegalArgumentException(
                     String.format("Node%s must exist in the graph!", nodesStr));
         }
 
-        Set<Edge> edges = adjList.get(n1);
-        Edge e = new Edge(n1, n2, label);
+        Set<Edge<N, E>> edges = adjList.get(sourceNode);
+        Edge e = new Edge(sourceNode, destNode, label);
 
         if (edges.contains(e))
             throw new IllegalArgumentException(
                     String.format("An edge from node %s to %s with label %s already exists!",
-                            n1, n2, label));
+                            sourceNode, destNode, label));
 
-        adjList.get(n1).add(e);
+        adjList.get(sourceNode).add(e);
         numEdges++;
         checkRep();
     }
 
     /**
-     * Returns whether an edge exists in the Graph that starts from node n1,
-     * ends on node n2, and has the label, label.
+     * Returns whether an edge exists in the Graph that starts from node sourceNode,
+     * ends on node destNode, and has the label, label.
      *
-     * @param n1 the name of the node the edge originates from
-     * @param n2 the name of the node the edge terminates on.
+     * @param sourceNode the node the edge originates from
+     * @param destNode the node the edge terminates on.
      * @param label the label of the edge to check the existence of.
      * @spec.requires n1, n2, label != null
-     * @return whether an edge exists in the Graph that starts from node n1,
-     *         ends on node n2, and has the label, label.
+     * @return whether an edge exists in the Graph that starts from node sourceNode,
+     *         ends on node destNode, and has the label, label.
      */
-    public boolean hasEdge(String n1, String n2, String label)
+    public boolean hasEdge(N sourceNode, N destNode, E label)
     {
-        if (!nodes.contains(n1) || !nodes.contains(n2))
+        if (!nodes.contains(sourceNode) || !nodes.contains(destNode))
             return false;
 
-        return adjList.get(n1).contains(new Edge(n1, n2, label));
+        return adjList.get(sourceNode).contains(new Edge<N, E>(sourceNode, destNode, label));
     }
 
     /**
-     * Returns the list of edge names that start from node n1 and end
-     * on node n2. If nodes n1 or n2 do not exist in the Graph,
+     * Returns the list of edges that start from node sourceNode and end
+     * on node destNode. If nodes sourceNode or destNode do not exist in the Graph,
      * this method will throw an IllegalArgumentException.
      *
-     * @param n1 the name of the node the edges originate from
-     * @param n2 the name of the node the edges terminate on.
-     * @spec.requires n1, n2 != null
-     * @throws IllegalArgumentException if nodes n1, n2 don't exist in this Graph.
-     * @return the list of edge names that start from node n1 and end
-     *         on node n2.
+     * @param sourceNode the node the edges originate from
+     * @param destNode the node the edges terminate on.
+     * @spec.requires sourceNode, destNode != null
+     * @throws IllegalArgumentException if nodes sourceNode, destNode don't exist in this Graph.
+     * @return the list of edges that start from node sourceNode and end
+     *         on node destNode.
      */
-    public List<String> getEdges(String n1, String n2) throws IllegalArgumentException
+    @SuppressWarnings("unchecked")
+    public List<E> getEdges(N sourceNode, N destNode) throws IllegalArgumentException
     {
-        if (!nodes.contains(n1) || !nodes.contains(n2))
+        if (!nodes.contains(sourceNode) || !nodes.contains(destNode))
         {
-            String nodesStr = (!nodes.contains(n1) && !nodes.contains(n2)) ?
-                    String.format("s %s and %s", n1, n2) :
-                    (!nodes.contains(n1)) ? " " + n1 : " " + n2;
+            String nodesStr = (!nodes.contains(sourceNode) && !nodes.contains(destNode)) ?
+                    String.format("s %s and %s", sourceNode, destNode) :
+                    (!nodes.contains(sourceNode)) ? " " + sourceNode : " " + destNode;
             throw new IllegalArgumentException(
                     String.format("Node%s must exist in the graph!", nodesStr));
         }
 
-        List<String> res = new ArrayList<>();
+        List<E> res = new ArrayList<>();
 
-        for (Edge e : adjList.get(n1))
-            if (e.getDestNode().equals(n2))
-                res.add(e.getLabel());
+        for (Edge e : adjList.get(sourceNode))
+            if (e.getDestNode().equals(destNode))
+                res.add((E) e.getLabel());
 
         return res;
     }

@@ -4,15 +4,15 @@ package graph;
  * Represents an immutable edge in a graph from a given source node to
  * a given destination node and with a given label.
  */
-public class Edge
+public class Edge<N, E>
 {
     // Representation Invariant (RI): sourceNode, destNode, label != null.
     // Abstraction Function:
     //      AF(this) = an Edge of a directed graph with source node name sourceNode,
     //                 destination node name destNode, and label label.
-    private String sourceNode;
-    private String destNode;
-    private String label;
+    private N sourceNode;
+    private N destNode;
+    private E label;
 
     /**
      * @param sourceNode the name of the node the edge starts from
@@ -20,7 +20,7 @@ public class Edge
      * @param label the label of the edge from node sourceNode to destNode
      * @throws IllegalArgumentException if sourceNode or destNode or label == null
      */
-    public Edge(String sourceNode, String destNode, String label)
+    public Edge(N sourceNode, N destNode, E label)
     {
         if (sourceNode == null || destNode == null || label == null)
         {
@@ -37,7 +37,7 @@ public class Edge
      *
      * @return the name of the node the edge originates from.
      */
-    public String getSourceNode()
+    public N getSourceNode()
     {
         return sourceNode;
     }
@@ -47,7 +47,7 @@ public class Edge
      *
      * @return the name of the node the edge terminates on.
      */
-    public String getDestNode()
+    public N getDestNode()
     {
         return destNode;
     }
@@ -57,7 +57,7 @@ public class Edge
      *
      * @return the label of the edge.
      */
-    public String getLabel()
+    public E getLabel()
     {
         return label;
     }
@@ -80,10 +80,10 @@ public class Edge
         if (o == null)
             return false;
 
-        if (!(o instanceof Edge))
+        if (!(o instanceof Edge<?, ?>))
             return false;
 
-        Edge e2 = (Edge) o;
+        Edge<?, ?> e2 = (Edge<?, ?>) o;
         return sourceNode.equals(e2.sourceNode) && destNode.equals(e2.destNode)
                 && label.equals(e2.label);
     }
