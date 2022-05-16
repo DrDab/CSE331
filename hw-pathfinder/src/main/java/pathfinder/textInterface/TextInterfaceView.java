@@ -12,6 +12,7 @@
 package pathfinder.textInterface;
 
 import pathfinder.datastructures.Path;
+import pathfinder.datastructures.Point;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -137,19 +138,19 @@ public class TextInterfaceView {
      * @param end   The long name of the building at the end of the path.
      * @param path  The path to show to the user.
      */
-    public void showPath(String start, String end, Path path) {
+    public void showPath(String start, String end, Path<Point> path) {
         System.out.println("Path from " + start + " to " + end + ":");
-        for(Path.Segment pathSegment : path) {
+        for(Path<Point>.Segment<Point> pathSegment : path) {
             Direction dir = Direction.resolveDirection(pathSegment.getStart().getX(),
-                                                       pathSegment.getStart().getY(),
-                                                       pathSegment.getEnd().getX(),
-                                                       pathSegment.getEnd().getY(),
+                                                        pathSegment.getStart().getY(),
+                                                        pathSegment.getEnd().getX(),
+                                                        pathSegment.getEnd().getY(),
                                                        CoordinateProperties.INCREASING_DOWN_RIGHT);
             System.out.printf("\tWalk %.0f feet %s to (%.0f, %.0f)",
-                              pathSegment.getCost(),
-                              dir.name(),
-                              pathSegment.getEnd().getX(),
-                              pathSegment.getEnd().getY());
+                                pathSegment.getCost(),
+                                dir.name(),
+                                pathSegment.getEnd().getX(),
+                                pathSegment.getEnd().getY());
             System.out.println();
         }
         System.out.printf("Total distance: %.0f feet", path.getCost());
