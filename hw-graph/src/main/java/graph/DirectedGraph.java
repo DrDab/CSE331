@@ -169,7 +169,6 @@ public class DirectedGraph<N, E>
      * @throws IllegalArgumentException if nodes sourceNode, destNode don't exist in this Graph
      *         or Graph already has an edge from sourceNode to destNode with the given label.
      */
-    @SuppressWarnings("unchecked")
     public void addEdge(N sourceNode, N destNode, E label)
     {
         checkRep();
@@ -184,7 +183,7 @@ public class DirectedGraph<N, E>
         }
 
         Set<Edge<N, E>> edges = adjList.get(sourceNode);
-        Edge e = new Edge(sourceNode, destNode, label);
+        Edge<N, E> e = new Edge<>(sourceNode, destNode, label);
 
         if (edges.contains(e))
             throw new IllegalArgumentException(
@@ -227,7 +226,6 @@ public class DirectedGraph<N, E>
      * @return the list of edges that start from node sourceNode and end
      *         on node destNode.
      */
-    @SuppressWarnings("unchecked")
     public List<E> getEdges(N sourceNode, N destNode) throws IllegalArgumentException
     {
         if (!nodes.contains(sourceNode) || !nodes.contains(destNode))
@@ -241,7 +239,7 @@ public class DirectedGraph<N, E>
 
         List<E> res = new ArrayList<>();
 
-        for (Edge e : adjList.get(sourceNode))
+        for (Edge<N, E> e : adjList.get(sourceNode))
             if (e.getDestNode().equals(destNode))
                 res.add((E) e.getLabel());
 
