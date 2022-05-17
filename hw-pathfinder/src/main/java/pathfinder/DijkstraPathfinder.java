@@ -48,7 +48,7 @@ public class DijkstraPathfinder<T>
             Path<T> minPath = active.remove();
             T minDest = minPath.getEnd();
 
-            if (minDest.equals(sourceNode))
+            if (minDest.equals(destNode))
                 return minPath;
 
             if (finished.contains(minDest))

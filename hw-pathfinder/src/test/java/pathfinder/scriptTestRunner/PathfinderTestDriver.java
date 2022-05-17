@@ -123,7 +123,7 @@ public class PathfinderTestDriver
             DijkstraPathfinder<String> finder = new DijkstraPathfinder<>(graph);
             Path<String> path = finder.getShortestPath(sourceNode, destNode);
 
-            output.printf("path from %s to %s:%n");
+            output.printf("path from %s to %s:%n", sourceNode, destNode);
 
             if (path == null)
             {
