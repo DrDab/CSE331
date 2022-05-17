@@ -22,9 +22,7 @@ public class DijkstraPathfinder<T>
         Double shortest = null;
 
         for (double distance : graph.getEdges(sourceNode, destNode))
-        {
             shortest = shortest == null ? distance : Math.min(distance, shortest);
-        }
 
         return shortest;
     }
