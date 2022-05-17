@@ -20,6 +20,7 @@ public class DijkstraPathfinder<T>
     private Double getShortestDistance(T sourceNode, T destNode)
     {
         Double shortest = null;
+
         for (double distance : graph.getEdges(sourceNode, destNode))
         {
             shortest = shortest == null ? distance : Math.min(distance, shortest);
