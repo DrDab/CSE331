@@ -116,7 +116,11 @@ public class PathfinderTestDriver
 
         if (!graph.hasNode(sourceNode) || !graph.hasNode(destNode))
         {
-            output.println("unknown: node");
+            if (!graph.hasNode(sourceNode))
+                output.println("unknown: " + sourceNode);
+
+            if (!graph.hasNode(destNode))
+                output.println("unknown: " + destNode);
         }
         else
         {
