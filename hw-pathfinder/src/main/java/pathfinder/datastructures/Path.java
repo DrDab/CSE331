@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This represents an immutable path between two cartesian coordinate points, particularly
+ * This represents an immutable path between two points of type T, particularly
  * Path#getStart() and Path#getEnd(). Also contains a cached
  * version of the total cost along this path, for efficient repeated access.
  */
