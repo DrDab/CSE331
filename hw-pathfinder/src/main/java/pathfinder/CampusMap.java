@@ -24,13 +24,12 @@ import java.util.Map;
 
 public class CampusMap implements ModelAPI
 {
-    private DirectedGraph<Point, Double> graph;
     private DijkstraPathfinder<Point> pFinder;
     private Map<String, CampusBuilding> shortNameBldgMap;
 
     public CampusMap()
     {
-        graph = new DirectedGraph<>();
+        DirectedGraph<Point, Double> graph = new DirectedGraph<>();
         shortNameBldgMap = new HashMap<>();
 
         List<CampusBuilding> buildings =
