@@ -68,7 +68,5 @@ public interface ModelAPI {
      *                                  this campus map.
      */
     public Path<Point> findShortestPath(String startShortName, String endShortName);
-    // You'll need to change this return type to use the generic Path once you've
-    // updated the Path ADT to be generic.
 
 }

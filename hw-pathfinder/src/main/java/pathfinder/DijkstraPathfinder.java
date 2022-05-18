@@ -16,6 +16,8 @@ import java.util.Set;
  */
 public class DijkstraPathfinder<T>
 {
+    // This class does not represent an ADT.
+
     // the graph on which to use pathfinding, where the edges are non-negative
     // Double costs to travel between nodes.
     private DirectedGraph<T, Double> graph;
