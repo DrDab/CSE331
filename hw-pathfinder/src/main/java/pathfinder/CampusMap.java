@@ -22,9 +22,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class provides a representation of a campus map which
+ * allows checking for the existence of buildings with a given
+ * shorthand name, getting the corresponding long name for a building,
+ * getting the mappings of all buildings' short names to long names,
+ * and getting the shortest path from one building to another.
+ */
 public class CampusMap implements ModelAPI
 {
+    // This class does not represent an ADT.
+
+    // the pathfinding utility used to find shortest route from building to building
     private DijkstraPathfinder<Point> pFinder;
+
+    // maps the short names of buildings to the corresponding CampusBuilding class
     private Map<String, CampusBuilding> shortNameBldgMap;
 
     public CampusMap()
