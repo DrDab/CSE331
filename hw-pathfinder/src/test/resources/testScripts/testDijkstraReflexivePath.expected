@@ -1,0 +1,11 @@
+# Test if Dijkstra produces correct output on graph with reflexive path
+
+# Create graph g
+created graph g
+
+# Add city names to graph g
+added node LosSantos to g
+
+# Test pathfinding
+path from LosSantos to LosSantos:
+total cost: 0.000

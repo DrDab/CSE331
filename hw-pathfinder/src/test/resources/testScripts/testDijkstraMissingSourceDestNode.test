@@ -1,0 +1,21 @@
+# Test if Dijkstra produces correct output on graph with invalid source and destination nodes.
+
+# Create graph g
+CreateGraph g
+
+# Add city names to graph g
+AddNode g LosSantos
+AddNode g SanAndreas
+AddNode g SanFierro
+AddNode g LasVenturas
+AddNode g Ludendorff
+AddNode g Vice
+AddNode g Liberty
+AddNode g Alderney
+
+# Add edges to graph g
+AddEdge g LosSantos SanAndreas 50.0
+
+# Test pathfinding
+FindPath g Phoenix Seattle
+

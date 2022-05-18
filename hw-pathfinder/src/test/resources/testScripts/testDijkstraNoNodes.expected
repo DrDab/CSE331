@@ -1,0 +1,8 @@
+# Test if Dijkstra produces correct output on graph with no nodes.
+
+# Create graph g
+created graph g
+
+# Test pathfinding
+unknown: Seattle
+unknown: LosSantos

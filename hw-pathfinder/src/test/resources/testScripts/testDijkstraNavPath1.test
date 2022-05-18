@@ -1,0 +1,26 @@
+# Test Dijkstra algo correct
+
+# Create graph g
+CreateGraph g
+
+# Add city names to graph g
+AddNode g LosSantos
+AddNode g SanAndreas
+AddNode g SanFierro
+AddNode g LasVenturas
+AddNode g Ludendorff
+AddNode g Vice
+AddNode g Liberty
+AddNode g Alderney
+
+# Add edges to graph g
+AddEdge g LosSantos SanAndreas 50.0
+AddEdge g LosSantos SanFierro 300
+AddEdge g SanAndreas LosSantos 50
+AddEdge g SanAndreas SanFierro 200
+AddEdge g SanFierro Ludendorff 1500
+AddEdge g Ludendorff Alderney 2000
+AddEdge g Alderney Liberty 30
+
+# Test pathfinding
+FindPath g LosSantos Liberty

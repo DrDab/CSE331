@@ -1,0 +1,20 @@
+# Test if graph with invalid source node produces correct output.
+
+# Create graph g
+created graph g
+
+# Add city names to graph g
+added node LosSantos to g
+added node SanAndreas to g
+added node SanFierro to g
+added node LasVenturas to g
+added node Ludendorff to g
+added node Vice to g
+added node Liberty to g
+added node Alderney to g
+
+# Add edges to graph g
+added edge 50.000 from LosSantos to SanAndreas in g
+
+# Test pathfinding
+unknown: Seattle

@@ -1,0 +1,10 @@
+# Test if Dijkstra produces correct output on graph with reflexive path
+
+# Create graph g
+CreateGraph g
+
+# Add city names to graph g
+AddNode g LosSantos
+
+# Test pathfinding
+FindPath g LosSantos LosSantos
