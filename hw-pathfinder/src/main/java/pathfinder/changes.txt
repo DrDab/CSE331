@@ -1,2 +1,3 @@
 Briefly list any changes you made to your graph class during hw-pathfinder, and why you made those changes.
 
+N/A; other than making my graph class generic, I made no other changes to my graph class or test code.
