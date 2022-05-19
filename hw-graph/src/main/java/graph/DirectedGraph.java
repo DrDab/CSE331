@@ -47,7 +47,7 @@ public class DirectedGraph<N, E>
                 assert adjList.containsKey(sourceNode);
                 assert adjList.get(sourceNode) != null;
 
-                for (Edge e : adjList.get(sourceNode))
+                for (Edge<N, E> e : adjList.get(sourceNode))
                 {
                     assert e != null;
                     actualEdgeCount++;
@@ -138,7 +138,7 @@ public class DirectedGraph<N, E>
 
         Set<N> resSet = new HashSet<>();
 
-        for (Edge e : adjList.get(sourceNode))
+        for (Edge<N, E> e : adjList.get(sourceNode))
             resSet.add((N) e.getDestNode());
 
         return resSet;
