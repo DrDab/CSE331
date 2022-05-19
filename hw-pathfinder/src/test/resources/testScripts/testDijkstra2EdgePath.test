@@ -1,0 +1,21 @@
+# Test if graph with invalid destination node produces correct output.
+
+# Create graph g
+CreateGraph g
+
+# Add city names to graph g
+AddNode g LosSantos
+AddNode g SanAndreas
+AddNode g SanFierro
+AddNode g LasVenturas
+AddNode g Ludendorff
+AddNode g Vice
+AddNode g Liberty
+AddNode g Alderney
+
+# Add edges to graph g
+AddEdge g LosSantos SanAndreas 1.23
+AddEdge g SanAndreas Vice 65.4326
+
+# Test pathfinding
+FindPath g LosSantos Vice
