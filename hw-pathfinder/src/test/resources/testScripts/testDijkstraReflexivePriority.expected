@@ -1,4 +1,4 @@
-# Test if graph with invalid destination node produces correct output.
+# Test if Dijkstra prioritizes the reflexive edge over a cyclic path for a given node.
 
 # Create graph g
 created graph g

@@ -1,4 +1,4 @@
-# Test if graph with invalid source node produces correct output.
+# Test if Dijkstra implementation provides correct output on graph with missing source node.
 
 # Create graph g
 CreateGraph g

@@ -1,4 +1,4 @@
-# Test if graph with invalid destination node produces correct output.
+# Test if Dijkstra implementation provides correct output navigating 1-edge graph
 
 # Create graph g
 CreateGraph g

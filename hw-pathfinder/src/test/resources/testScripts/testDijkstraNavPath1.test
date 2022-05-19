@@ -1,4 +1,4 @@
-# Test Dijkstra algo correct
+# Test if Dijkstra implementation provides correct output navigating complex graph.
 
 # Create graph g
 CreateGraph g
