@@ -3,8 +3,8 @@ package graph;
 import java.util.*;
 
 /**
- * Represents a mutable, directed labelled graph where a set of nodes of type N can be connected
- * via directed edges labelled with type E (each edge connecting a parent node to a child node), and there
+ * Represents a mutable, directed labelled graph where a set of immutable nodes of type N can be connected
+ * via immutable directed edges labelled with type E (each edge connecting a parent node to a child node), and there
  * exist no two edges in the graph between any two parent and child nodes such that the edges
  * have the same label.
  */

@@ -1,3 +1,6 @@
 Briefly list any changes you made to your graph class during hw-pathfinder, and why you made those changes.
 
-N/A; other than making my graph class generic, I made no other changes to my graph class or test code.
+- made graph class spec require immutable nodes and edges as getter methods returning generics can
+  cause a risk of representation exposure if the generics are mutable.
+
+other than that I made no other changes to my graph class or test code.

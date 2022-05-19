@@ -37,7 +37,7 @@ public class DijkstraPathfinder<T>
     }
 
     /**
-     * Helper method to get the shortest distance in the graph between
+     * Gets the shortest distance in the graph between
      * a given source node and a given destination node. Returns null if
      * there are no paths between the source and destination node.
      *
@@ -47,7 +47,7 @@ public class DijkstraPathfinder<T>
      * @return the shortest distance between sourceNode and destNode, or null
      *         if there are no paths from sourceNode to destNode.
      */
-    private Double getShortestDistance(T sourceNode, T destNode)
+    public Double getShortestDistance(T sourceNode, T destNode)
     {
         Double shortest = null;
 

@@ -1,0 +1,31 @@
+# Test Dijkstra algo correct
+
+# Create graph g
+created graph g
+
+# Add city names to graph g
+added node LosSantos to g
+added node SanAndreas to g
+added node SanFierro to g
+added node LasVenturas to g
+added node Ludendorff to g
+added node Vice to g
+added node Liberty to g
+added node Alderney to g
+
+# Add edges to graph g
+added edge 0.500 from LosSantos to SanAndreas in g
+added edge 3.000 from LosSantos to SanFierro in g
+added edge 0.050 from SanAndreas to LosSantos in g
+added edge 3.000 from SanAndreas to SanFierro in g
+added edge 150.500 from SanFierro to Ludendorff in g
+added edge 2000.240 from Ludendorff to Alderney in g
+added edge 30.360 from Alderney to Liberty in g
+
+# Test pathfinding
+path from LosSantos to Liberty:
+LosSantos to SanFierro with weight 3.000
+SanFierro to Ludendorff with weight 150.500
+Ludendorff to Alderney with weight 2000.240
+Alderney to Liberty with weight 30.360
+total cost: 2184.100
