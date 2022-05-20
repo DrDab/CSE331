@@ -31,7 +31,9 @@ import java.util.Map;
  */
 public class CampusMap implements ModelAPI
 {
-    // AF(this): a campus "map" where each shorthand building name is mapped
+    public static final boolean DEBUG = false;
+
+    // AF(this): an immutable campus "map" where each shorthand building name is mapped
     //           to the building's respective name and map coordinates in the
     //           HashMap "shortNameBldgMap", and there is a DirectedGraph "graph" of Points
     //           corresponding to geographic locations on campus connected by
@@ -43,10 +45,10 @@ public class CampusMap implements ModelAPI
     //
 
     // the pathfinding utility used to find shortest route from building to building
-    private DirectedGraph<Point, Double> graph;
+    private final DirectedGraph<Point, Double> graph;
 
     // maps the short names of buildings to the corresponding CampusBuilding class
-    private Map<String, CampusBuilding> shortNameBldgMap;
+    private final Map<String, CampusBuilding> shortNameBldgMap;
 
     public CampusMap()
     {
@@ -79,7 +81,26 @@ public class CampusMap implements ModelAPI
             // assuming no duplicate paths, this is valid :)
             graph.addEdge(srcPoint, destPoint, cp.getDistance());
         }
+
+        checkRep();
     }
+
+    // checks the RI of the class
+    private void checkRep()
+    {
+        assert graph != null;
+        assert shortNameBldgMap != null;
+        assert !shortNameBldgMap.containsKey(null);
+
+        if (DEBUG)
+        {
+            for (String shortName : shortNameBldgMap.keySet())
+            {
+                assert shortNameBldgMap.get(shortName) != null;
+            }
+        }
+    }
+
 
     @Override
     public boolean shortNameExists(String shortName)

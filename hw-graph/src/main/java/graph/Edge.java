@@ -10,9 +10,9 @@ public class Edge<N, E>
     // Abstraction Function:
     //      AF(this) = an Edge of a directed graph with source node name sourceNode,
     //                 destination node name destNode, and label label.
-    private N sourceNode;
-    private N destNode;
-    private E label;
+    private final N sourceNode;
+    private final N destNode;
+    private final E label;
 
     /**
      * @param sourceNode the name of the node the edge starts from
