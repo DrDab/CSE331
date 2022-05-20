@@ -31,8 +31,6 @@ import java.util.Map;
  */
 public class CampusMap implements ModelAPI
 {
-    public static final boolean DEBUG = false;
-
     // AF(this): a campus "map" where each shorthand building name is mapped
     //           to the building's respective name and map coordinates in the
     //           HashMap "shortNameBldgMap", and there is a DirectedGraph "graph" of Points
