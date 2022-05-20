@@ -16,19 +16,19 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This represents an immutable path between two points of type T, particularly
+ * This represents an immutable path between two immutable nodes of type T, particularly
  * Path#getStart() and Path#getEnd(). Also contains a cached
  * version of the total cost along this path, for efficient repeated access.
  */
 public class Path<T> implements Iterable<Path<T>.Segment<T>> {
 
     // AF(this) =
-    //      first point in the path => start
-    //      each "step" along the path between points => elements of list path, where
-    //          path.get(0) is the first step from the start point to an intermediate point, and
-    //          path.get(path.size() - 1) is the final step from an intermediate point to the end
+    //      first node in the path => start
+    //      each "step" along the path between nodes => elements of list path, where
+    //          path.get(0) is the first step from the start node to an intermediate node, and
+    //          path.get(path.size() - 1) is the final step from an intermediate node to the end
     //      total cost along the path => cost
-    //      the destination point in this path, opposite the start point => getEnd()
+    //      the destination node in this path, opposite the start node => getEnd()
 
     // Rep Invariant:
     //      cost >= 0 &&
@@ -43,20 +43,20 @@ public class Path<T> implements Iterable<Path<T>.Segment<T>> {
     private double cost;
 
     /**
-     * The point at the beginning of this path.
+     * The node at the beginning of this path.
      */
     private T start;
 
     /**
-     * The ordered sequence of segments representing a path between points.
+     * The ordered sequence of segments representing a path between nodes.
      */
     private List<Segment<T>> path;
 
     /**
-     * Creates a new, empty path containing a start point. Essentially this represents a path
-     * from the start point to itself with a total cost of "0".
+     * Creates a new, empty path containing a start node. Essentially this represents a path
+     * from the start node to itself with a total cost of "0".
      *
-     * @param start The starting point of the path.
+     * @param start The starting node of the path.
      */
     public Path(T start) {
         this.start = start;
@@ -66,13 +66,13 @@ public class Path<T> implements Iterable<Path<T>.Segment<T>> {
     }
 
     /**
-     * Appends a new single segment to the end of this path, originating at the current last point
+     * Appends a new single segment to the end of this path, originating at the current last node
      * in this path and terminating at {@code newEnd}. The cost of adding this additional segment
      * to the existing path is {@code segmentCost}. Thus, the returned Path represents a path
      * from {@code this.getStart()} to {@code newEnd}, with a cost of {@code this.getCost() +
      * segmentCost}.
      *
-     * @param newEnd      The point being added at the end of the segment being appended to this path
+     * @param newEnd      The node being added at the end of the segment being appended to this path
      * @param segmentCost The cost of the segment being added to the end of this path.
      * @return A new path representing the current path with the given segment appended to the end.
      */
@@ -98,15 +98,15 @@ public class Path<T> implements Iterable<Path<T>.Segment<T>> {
     }
 
     /**
-     * @return The point at the beginning of this path.
+     * @return The node at the beginning of this path.
      */
     public T getStart() {
         return start;
     }
 
     /**
-     * @return The point at the end of this path, which may be the start point if this path
-     * contains no segments (i.e. this path is from the start point to itself).
+     * @return The node at the end of this path, which may be the start node if this path
+     * contains no segments (i.e. this path is from the start node to itself).
      */
     public T getEnd() {
         if(path.size() == 0) {
@@ -117,8 +117,8 @@ public class Path<T> implements Iterable<Path<T>.Segment<T>> {
 
     /**
      * @return An iterator of the segments in this path, in order, beginning from the starting
-     * point and ending at the end point. In the case that this path represents a path between
-     * the start point and itself, this iterator contains no elements. This iterator does not
+     * node and ending at the end node. In the case that this path represents a path between
+     * the start node and itself, this iterator contains no elements. This iterator does not
      * support the optional Iterator#remove() operation and will throw an
      * UnsupportedOperationException if Iterator#remove() is called.
      */
@@ -163,7 +163,7 @@ public class Path<T> implements Iterable<Path<T>.Segment<T>> {
     /**
      * Checks this path for equality with another object. Two paths are equal if and only if
      * they contain exactly the same sequence of segments in the same order. In the case that
-     * both paths are empty, they are only equal if their starting point is equal.
+     * both paths are empty, they are only equal if their starting node is equal.
      *
      * @param obj The object to compare with {@code this}.
      * @return {@literal true} if and only if {@code obj} is equal to {@code this}.
@@ -210,9 +210,10 @@ public class Path<T> implements Iterable<Path<T>.Segment<T>> {
     }
 
     /**
-     * Segment represents a single segment as part of a longer, more complex path between points.
+     * Segment represents a single segment as part of a longer, more complex path between immutable
+     * nodes of type T.
      * Segments are immutable parts of a larger path that cannot be instantiated directly, and
-     * are created as part of larger paths by calling Path#extend(Point, double).
+     * are created as part of larger paths by calling Path#extend(T, double).
      */
     public class Segment<T> {
 
@@ -242,15 +243,15 @@ public class Path<T> implements Iterable<Path<T>.Segment<T>> {
         /**
          * Constructs a new segment with the provided characteristics.
          *
-         * @param start The starting point of this segment.
-         * @param end   The ending point of this segment.
+         * @param start The starting node of this segment.
+         * @param end   The ending node of this segment.
          * @param cost  The cost of travelling this segment.
-         * @throws NullPointerException     if either point is null.
+         * @throws NullPointerException     if either node is null.
          * @throws IllegalArgumentException if cost is infinite or NaN
          */
         private Segment(T start, T end, double cost) {
             if(start == null || end == null) {
-                throw new NullPointerException("Segments cannot have null points.");
+                throw new NullPointerException("Segments cannot have null nodes.");
             }
             if(!Double.isFinite(cost)) {
                 throw new IllegalArgumentException("Segment cost may not be NaN or infinite.");
@@ -264,15 +265,14 @@ public class Path<T> implements Iterable<Path<T>.Segment<T>> {
         }
 
         /**
-         * @return The beginning point of this segment.
+         * @return The beginning node of this segment.
          */
         public T getStart() {
-            // Note: Since Points are immutable, this isn't rep exposure.
             return this.start;
         }
 
         /**
-         * @return The ending point of this segment.
+         * @return The ending node of this segment.
          */
         public T getEnd() {
             return this.end;
