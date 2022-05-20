@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class provides a representation of a campus map which
+ * This class provides an immutable representation of a campus map which
  * allows checking for the existence of buildings with a given
  * shorthand name, getting the corresponding long name for a building,
  * getting the mappings of all buildings' short names to long names,
@@ -31,17 +31,28 @@ import java.util.Map;
  */
 public class CampusMap implements ModelAPI
 {
-    // This class does not represent an ADT.
+    public static final boolean DEBUG = false;
+
+    // AF(this): a campus "map" where each shorthand building name is mapped
+    //           to the building's respective name and map coordinates in the
+    //           HashMap "shortNameBldgMap", and there is a DirectedGraph "graph" of Points
+    //           corresponding to geographic locations on campus connected by
+    //           Double edges representing the distance in feet between Points
+    //           on campus.
+    //
+    // Representation Invariant (RI): shortNameBldgMap != null, has no null keys, and
+    //                                no null CampusBuilding mappings. graph != null.
+    //
 
     // the pathfinding utility used to find shortest route from building to building
-    private DijkstraPathfinder<Point> pFinder;
+    private DirectedGraph<Point, Double> graph;
 
     // maps the short names of buildings to the corresponding CampusBuilding class
     private Map<String, CampusBuilding> shortNameBldgMap;
 
     public CampusMap()
     {
-        DirectedGraph<Point, Double> graph = new DirectedGraph<>();
+        graph = new DirectedGraph<>();
         shortNameBldgMap = new HashMap<>();
 
         List<CampusBuilding> buildings =
@@ -70,8 +81,6 @@ public class CampusMap implements ModelAPI
             // assuming no duplicate paths, this is valid :)
             graph.addEdge(srcPoint, destPoint, cp.getDistance());
         }
-
-        pFinder = new DijkstraPathfinder<>(graph);
     }
 
     @Override
@@ -128,6 +137,7 @@ public class CampusMap implements ModelAPI
         Point srcPoint = new Point(srcBldg.getX(), srcBldg.getY());
         Point destPoint = new Point(destBldg.getX(), destBldg.getY());
 
+        DijkstraPathfinder<Point> pFinder = new DijkstraPathfinder<>(graph);
         return pFinder.getShortestPath(srcPoint, destPoint);
     }
 
