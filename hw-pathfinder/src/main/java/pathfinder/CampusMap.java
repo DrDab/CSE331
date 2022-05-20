@@ -40,8 +40,10 @@ public class CampusMap implements ModelAPI
     //           Double edges representing the distance in feet between Points
     //           on campus.
     //
-    // Representation Invariant (RI): shortNameBldgMap != null, has no null keys, and
-    //                                no null CampusBuilding mappings. graph != null.
+    // Representation Invariant (RI): shortNameBldgMap != null, has no null keys,
+    //                                no null CampusBuilding mappings, and all mapped
+    //                                CampusBuildings have getShortName() equal to
+    //                                the corresponding key. graph != null.
     //
 
     // the pathfinding utility used to find shortest route from building to building
@@ -96,7 +98,9 @@ public class CampusMap implements ModelAPI
         {
             for (String shortName : shortNameBldgMap.keySet())
             {
-                assert shortNameBldgMap.get(shortName) != null;
+                CampusBuilding cb = shortNameBldgMap.get(shortName);
+                assert cb != null;
+                assert cb.getShortName().equals(shortName);
             }
         }
     }
