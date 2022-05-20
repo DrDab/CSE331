@@ -43,7 +43,8 @@ public class CampusMap implements ModelAPI
     // Representation Invariant (RI): shortNameBldgMap != null, has no null keys,
     //                                no null CampusBuilding mappings, and all mapped
     //                                CampusBuildings have getShortName() equal to
-    //                                the corresponding key. graph != null.
+    //                                the corresponding key and a Point(getX(), getY())
+    //                                that exists in graph, and also graph != null.
     //
 
     // the pathfinding utility used to find shortest route from building to building
@@ -101,6 +102,7 @@ public class CampusMap implements ModelAPI
                 CampusBuilding cb = shortNameBldgMap.get(shortName);
                 assert cb != null;
                 assert cb.getShortName().equals(shortName);
+                assert graph.hasNode(new Point(cb.getX(), cb.getY()));
             }
         }
     }
