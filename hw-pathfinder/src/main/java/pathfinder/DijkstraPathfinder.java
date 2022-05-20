@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
- * A pathfinding utility that takes in a DirectedGraph<T, Double> of immutable node type T connected
+ * A pathfinding utility that takes in a DirectedGraph of immutable node type T connected
  * by edges of non-negative Doubles representing the cost to travel from a given node to another, and
  * uses Dijkstra's shortest-path algorithm to find the shortest path from a given source
  * node in the graph to a given destination node.
@@ -29,7 +29,7 @@ public class DijkstraPathfinder<T>
      *
      * @param graph, the graph mapping nodes of type T to double edges of distance
      *               between nodes.
-     * @spec.requires graph != null and has no edges < 0
+     * @spec.requires graph != null and has no edges &lt; 0
      */
     public DijkstraPathfinder(DirectedGraph<T, Double> graph)
     {
