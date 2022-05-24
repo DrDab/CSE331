@@ -34,13 +34,10 @@ class App extends Component<{}, AppState> { // <- {} means no props.
       <div>
         <h1 id="app-title">Line Mapper!</h1>
         <div>
-          {/* TODO: define props in the Map component and pass them in here */}
           <Map myEdges={this.state.myEdges} />
         </div>
         <EdgeList
           onChange={(edges) => {
-            // TODO: Modify this onChange callback to store the edges in the state
-            console.log("EdgeList onChange", edges);
             this.setState({myEdges: edges});
           }}
         />

@@ -21,8 +21,6 @@ import EdgeList, { Edge } from "./EdgeList";
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
 
 interface MapProps {
-  // TODO: Define the props of this component. You will want to pass down edges
-  // so you can render them here
   myEdges:Edge[]
 }
 
@@ -50,10 +48,6 @@ class Map extends Component<MapProps, MapState> {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {
-            // TODO: Render map lines here using the MapLine component. E.g.
-            // <MapLine key={key1} color="red" x1={1000} y1={1000} x2={2000} y2={2000}/>
-            // will draw a red line from the point 1000,1000 to 2000,2000 on the
-
             edges.map(function (e) 
             {
               return <MapLine key={e.id} color={e.color} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}/>
