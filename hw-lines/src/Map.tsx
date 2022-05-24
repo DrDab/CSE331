@@ -15,6 +15,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MapLine from "./MapLine";
 import { UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER } from "./Constants";
+import EdgeList, { Edge } from "./EdgeList";
 
 // This defines the location of the map. These are the coordinates of the UW Seattle campus
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
@@ -22,7 +23,7 @@ const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
 interface MapProps {
   // TODO: Define the props of this component. You will want to pass down edges
   // so you can render them here
-  myEdges:any[]
+  myEdges:Edge[]
 }
 
 interface MapState {
@@ -55,7 +56,7 @@ class Map extends Component<MapProps, MapState> {
 
             edges.map(function (e) 
             {
-              return <MapLine key={e["id"]} color={e["color"]} x1={e["x1"]} y1={e["y1"]} x2={e["x2"]} y2={e["y2"]}/>
+              return <MapLine key={e.id} color={e.color} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}/>
             })
           }
         </MapContainer>

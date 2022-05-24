@@ -10,14 +10,14 @@
  */
 
 import React, { Component } from "react";
-import EdgeList from "./EdgeList";
+import EdgeList, { Edge } from "./EdgeList";
 import Map from "./Map";
 
 // Allows us to write CSS styles inside App.css, any styles will apply to all components inside <App />
 import "./App.css";
 
 interface AppState {
-  myEdges:any[]
+  myEdges:Edge[]
 }
 
 class App extends Component<{}, AppState> { // <- {} means no props.

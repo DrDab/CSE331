@@ -15,7 +15,7 @@ interface EdgeListProps {
     onChange(edges: Edge[]): void;
 }
 
-interface Edge {
+export interface Edge {
   id: string;
   color: string;
   x1: number;
