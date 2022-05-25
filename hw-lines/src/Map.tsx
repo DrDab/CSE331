@@ -31,7 +31,8 @@ interface MapState {
   distState: number,
   distP1Lat: number,
   distP1Lng: number,
-  distMsg: string
+  distMsg: string,
+  cursor: string
 }
 
 export interface Point
@@ -59,7 +60,7 @@ class Map extends Component<MapProps, MapState>
   {
     super(props);
     this.state = { myPoints: [], pointAddX: "", pointAddY: "", distState: 0, distP1Lat: 0, 
-                    distP1Lng: 0, distMsg: "Waiting for button press :3" };
+                    distP1Lng: 0, distMsg: "Waiting for button press :3", cursor: "grab" };
   }
 
   render() 
@@ -79,11 +80,12 @@ class Map extends Component<MapProps, MapState>
     };
 
     return (
-      <div id="map">
+      <div id="map" style={{ cursor: this.state.cursor }}>
         <MapContainer
           center={position}
           zoom={15}
           scrollWheelZoom={false}
+          style={{cursor: "inherit"}}
         >
 
           <TileLayer
@@ -103,7 +105,7 @@ class Map extends Component<MapProps, MapState>
               let distance = this.getDistance(this.state.distP1Lat, this.state.distP1Lng, lat, lng);
               let distanceFreedom = distance / (.0254 * 12.0);
               this.setState({distState: 3, distMsg: "Distance: " + distance.toFixed(1) + " m (" + 
-                            distanceFreedom.toFixed(1) + " ft)"});
+                            distanceFreedom.toFixed(1) + " ft)", cursor: "grab"});
             }
           }} />
 
@@ -197,9 +199,10 @@ class Map extends Component<MapProps, MapState>
         &nbsp;
         ]
         <br/>
-        <button onClick={() => 
+        <button 
+        onClick={() => 
             {
-              this.setState({ distMsg: "Please click source point on map.", distState: 1 });
+              this.setState({ distMsg: "Please click source point on map.", distState: 1, cursor:"crosshair" });
             }}>
           Measure Distance
         </button>
