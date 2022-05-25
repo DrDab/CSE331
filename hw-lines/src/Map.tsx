@@ -11,7 +11,7 @@
 
 import L, { LatLngExpression } from "leaflet";
 import React, { Component } from "react";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MapLine from "./MapLine";
 import { UW_LATITUDE, UW_LATITUDE_CENTER, UW_LATITUDE_OFFSET, UW_LATITUDE_SCALE, UW_LONGITUDE, UW_LONGITUDE_CENTER, UW_LONGITUDE_OFFSET, UW_LONGITUDE_SCALE } from "./Constants";
@@ -22,12 +22,6 @@ const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
 
 interface MapProps {
   myEdges: Edge[]
-  myPoints: Point[]
-
-  onAddPointClicked(points: Point) : void;
-  onUndoPointClicked() : void;
-  onClearAllPointsClicked() : void;
-  onMeasureDistClicked() : void;
 }
 
 interface MapState {
@@ -47,11 +41,22 @@ const meow = new Audio("meow.mp3");
 const bruh = new Audio("bruh.mp3");
 const pipe = new Audio("pipe.mp3");
 
+// custom icon for point w/ offset correction added
 const pointIcon = L.icon({
   iconUrl: 'marker_blue.png',
   iconSize: [32,32],
   iconAnchor: [15,32]
 });
+
+// click handler to get lat/lon of clicked position on map
+const LocationFinderDummy = () => {
+  const map = useMapEvents({
+      click(e) {
+          console.log(e.latlng);
+      },
+  });
+  return null;
+};
 
 class Map extends Component<MapProps, MapState> 
 {
@@ -65,7 +70,7 @@ class Map extends Component<MapProps, MapState>
   {
     console.log("Map render called");
     let edges = this.props.myEdges;
-    let points = this.props.myPoints;
+    let points = this.state.myPoints;
 
     return (
       <div id="map">
@@ -74,6 +79,8 @@ class Map extends Component<MapProps, MapState>
           zoom={15}
           scrollWheelZoom={false}
         >
+          <LocationFinderDummy />
+
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -93,11 +100,6 @@ class Map extends Component<MapProps, MapState>
               return <Marker position={{ lat: UW_LATITUDE + (point.y - UW_LATITUDE_OFFSET) * UW_LATITUDE_SCALE, lng:
                 UW_LONGITUDE + (point.x - UW_LONGITUDE_OFFSET) * UW_LONGITUDE_SCALE}}
                 icon={pointIcon}
-                eventHandlers={{
-                  click: (e) => {
-                    console.log('marker clicked', e)
-                  },
-                }}
               />;
             })
           }
@@ -156,8 +158,7 @@ class Map extends Component<MapProps, MapState>
 
         <button onClick={() => 
             {
-              this.props.onUndoPointClicked();
-              bruh.play();
+              this.undoLastPoint();
             }}>
           Undo Previous
         </button>
@@ -167,8 +168,7 @@ class Map extends Component<MapProps, MapState>
 
         <button onClick={() => 
             {
-              this.props.onClearAllPointsClicked();
-              pipe.play();
+              this.clearAllPoints();
             }}>
           Clear All Points
         </button>
@@ -186,6 +186,31 @@ class Map extends Component<MapProps, MapState>
         {this.state.myPoints}
       </div>
     );
+  }
+
+  clearAllPoints()
+  {
+    let points = this.state.myPoints;
+    if (points.length > 0)
+    {
+      this.setState({myPoints : []});
+      pipe.play();
+    }
+  }
+
+  undoLastPoint()
+  {
+    let points = this.state.myPoints;
+    if (points.length > 0)
+    {
+      let removed:Point|undefined = points.pop();
+      if (removed !== undefined)
+      {
+        console.log("Removed point (" + removed.x + "," + removed.y + ") from points");
+        this.setState({myPoints : points});
+        bruh.play();
+      }
+    }
   }
 
   addPoint()
@@ -219,7 +244,11 @@ class Map extends Component<MapProps, MapState>
       return;
     }
 
-    this.props.onAddPointClicked({x:newX, y:newY});
+    let points = this.state.myPoints;
+    points.push({x:newX, y:newY});
+    console.log("Added point (" + newX + "," + newY + ") to points");
+    this.setState({myPoints : points});
+
     meow.play();
   }
 }
