@@ -206,7 +206,7 @@ class Map extends Component<MapProps, MapState>
               }
               else
               {
-                this.setState({ distState: 0 });
+                this.setState({ distMsg: "Waiting for button press :3", distState: 0 });
               }
             }}>
           Measure Distance
