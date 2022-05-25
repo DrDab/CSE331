@@ -36,7 +36,7 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
         this.state = { tBoxText: "" };
     }
 
-    getValidatedEdge(x1r:any, y1r:any, x2r:any, y2r:any, color:any, index:any)
+    getValidatedEdge(x1r:any, y1r:any, x2r:any, y2r:any, color:any, index:any) : Edge | null
     {
         let lx1:number = +x1r;
         let ly1:number = +y1r;
@@ -105,17 +105,18 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
 
         lines.every(e => 
         {
-            let splitParts = e.trim().split(" ");
+            let trimmedLn = e.trim();
+            let splitParts = trimmedLn.split(" ");
 
             // validate line length.
             if (splitParts.length !== 5)
             {
-                console.log("Invalid line found: \"%s\"", e);
                 alert("Each line must be formatted as follows: <x1> <y1> <x2> <y2> <color>");
                 errFound = true;
                 return false;
             }
 
+            // validate line fields.
             let edge = this.getValidatedEdge(splitParts[0], splitParts[1], splitParts[2], 
                 splitParts[3], splitParts[4], index);
 
@@ -126,12 +127,15 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
             }
 
             edges.push(edge);
-
             index++;
             return true;
         });
 
-        if (!errFound)
+        if (errFound)
+        {
+            console.log("Invalid input found");
+        }
+        else
         {
             console.log("Input validated, dispatching EdgeListProps onChange!");
             this.props.onChange(edges);

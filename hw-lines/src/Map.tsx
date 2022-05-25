@@ -9,13 +9,13 @@
  * author.
  */
 
-import { LatLngExpression, map } from "leaflet";
+import { LatLngExpression } from "leaflet";
 import React, { Component } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MapLine from "./MapLine";
 import { UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER } from "./Constants";
-import EdgeList, { Edge } from "./EdgeList";
+import { Edge } from "./EdgeList";
 
 // This defines the location of the map. These are the coordinates of the UW Seattle campus
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
@@ -27,13 +27,10 @@ interface MapProps {
 interface MapState {
 }
 
-class Map extends Component<MapProps, MapState> {
-  constructor(props:any)
+class Map extends Component<MapProps, MapState> 
+{
+  render() 
   {
-    super(props);
-  }
-
-  render() {
     console.log("Map render called");
     let edges = this.props.myEdges;
     return (
@@ -54,10 +51,11 @@ class Map extends Component<MapProps, MapState> {
             })
           }
         </MapContainer>
+
         <button onClick={() => 
             {
               console.log("Save clicked");
-              
+              window.print();
             }}>
           Save Image
           </button>
