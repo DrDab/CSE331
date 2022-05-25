@@ -29,12 +29,11 @@ interface MapState {
   pointAddX: string,
   pointAddY: string,
   distState: number,
-  distLastLat: number,
-  distLastLng: number,
   distP1Lat: number,
   distP1Lng: number,
   distP2Lat: number,
-  distP2Lng: number
+  distP2Lng: number,
+  distMsg: string
 }
 
 export interface Point
@@ -62,7 +61,8 @@ class Map extends Component<MapProps, MapState>
   {
     super(props);
     this.state = { myPoints: [], pointAddX: "", pointAddY: "", distState: 0, distP1Lat: 0, 
-                    distP1Lng: 0, distP2Lat: 0, distP2Lng: 0, distLastLat: 0, distLastLng: 0 };
+                    distP1Lng: 0, distP2Lat: 0, distP2Lng: 0, 
+                    distMsg: "Waiting for button press :3" };
   }
 
   render() 
@@ -96,7 +96,15 @@ class Map extends Component<MapProps, MapState>
 
           <LocationFinderDummy onClick={(lat, lng) => {
             console.log("Map coordinates clicked: Lat=" + lat + ", Lng=" + lng);
-            this.setState({distLastLat: lat, distLastLng: lng})
+            let distState = this.state.distState;
+            if (distState == 1)
+            {
+              this.setState({distP1Lat: lat, distP1Lng: lng, distState: 2, distMsg: "Please click dest point on map."});
+            }
+            else if (distState == 2)
+            {
+              this.setState({distP2Lat: lat, distP2Lng: lng, distState: 3, distMsg: "OwO"});
+            }
           }} />
 
           {
@@ -194,7 +202,7 @@ class Map extends Component<MapProps, MapState>
               let distState = this.state.distState;
               if (distState == 0)
               {
-                this.setState({ distState: 1 });
+                this.setState({ distMsg: "Please click source point on map.", distState: 1 });
               }
               else
               {
@@ -204,9 +212,8 @@ class Map extends Component<MapProps, MapState>
           Measure Distance
         </button>
         &nbsp;
-        {this.state.distState}
+        {this.state.distMsg}
         &nbsp;
-        {this.state.distLastLat + "," + this.state.distLastLng}
       </div>
     );
   }
