@@ -36,6 +36,46 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
         this.state = { tBoxText: "" };
     }
 
+    render() 
+    {
+        return (
+            <div id="edge-list">
+                Edges <br/>
+
+                <textarea
+                    rows={5}
+                    cols={30}
+                    onChange={(e) => {
+                        this.setState({
+                            tBoxText: e.target.value
+                        })
+                    }}
+                    value={this.state.tBoxText}
+                /> 
+
+                <br/>
+
+                <button onClick={() => 
+                    {
+                        this.onDrawClicked();
+                    }}>
+                        Draw Edges
+                        </button>
+
+                <button onClick={
+                    () => 
+                    {
+                        this.setState({ tBoxText: "" })
+                        this.props.onChange([]);
+                    }
+                }
+                >
+                    Clear Edges
+                </button>
+            </div>
+        );
+    }
+
     getValidatedEdge(x1r:any, y1r:any, x2r:any, y2r:any, color:any, index:any) : Edge | null
     {
         let lx1:number = +x1r;
@@ -140,46 +180,6 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
             console.log("Input validated, dispatching EdgeListProps onChange!");
             this.props.onChange(edges);
         }
-    }
-
-    render() 
-    {
-        return (
-            <div id="edge-list">
-                Edges <br/>
-
-                <textarea
-                    rows={5}
-                    cols={30}
-                    onChange={(e) => {
-                        this.setState({
-                            tBoxText: e.target.value
-                        })
-                    }}
-                    value={this.state.tBoxText}
-                /> 
-
-                <br/>
-
-                <button onClick={() => 
-                    {
-                        this.onDrawClicked();
-                    }}>
-                        Draw Edges
-                        </button>
-
-                <button onClick={
-                    () => 
-                    {
-                        this.setState({ tBoxText: "" })
-                        this.props.onChange([]);
-                    }
-                }
-                >
-                    Clear Edges
-                </button>
-            </div>
-        );
     }
 }
 

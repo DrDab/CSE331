@@ -27,6 +27,7 @@ interface MapProps {
   onAddPointClicked(points: Point) : void;
   onUndoPointClicked() : void;
   onClearAllPointsClicked() : void;
+  onMeasureDistClicked() : void;
 }
 
 interface MapState {
@@ -41,6 +42,17 @@ export interface Point
   y:number
 }
 
+// sound effects for point operations
+const meow = new Audio("meow.mp3");
+const bruh = new Audio("bruh.mp3");
+const pipe = new Audio("pipe.mp3");
+
+const pointIcon = L.icon({
+  iconUrl: 'marker_blue.png',
+  iconSize: [32,32],
+  iconAnchor: [15,32]
+});
+
 class Map extends Component<MapProps, MapState> 
 {
   constructor(props: any)
@@ -54,16 +66,6 @@ class Map extends Component<MapProps, MapState>
     console.log("Map render called");
     let edges = this.props.myEdges;
     let points = this.props.myPoints;
-
-    const myIcon = L.icon({
-      iconUrl: 'marker_blue.png',
-      iconSize: [32,32],
-      iconAnchor: [15,32]
-    });
-
-    let meow = new Audio("meow.mp3");
-    let bruh = new Audio("bruh.mp3");
-    let pipe = new Audio("pipe.mp3");
 
     return (
       <div id="map">
@@ -90,7 +92,12 @@ class Map extends Component<MapProps, MapState>
               console.log("(" + point.x + "," + point.y + ")");
               return <Marker position={{ lat: UW_LATITUDE + (point.y - UW_LATITUDE_OFFSET) * UW_LATITUDE_SCALE, lng:
                 UW_LONGITUDE + (point.x - UW_LONGITUDE_OFFSET) * UW_LONGITUDE_SCALE}}
-                icon={myIcon}
+                icon={pointIcon}
+                eventHandlers={{
+                  click: (e) => {
+                    console.log('marker clicked', e)
+                  },
+                }}
               />;
             })
           }
@@ -139,37 +146,7 @@ class Map extends Component<MapProps, MapState>
 
         <button onClick={() => 
             {
-              let xText = this.state.pointAddX;
-              let yText = this.state.pointAddY;
-              let newX:number = +xText;
-              let newY:number = +yText;
-
-              if (isNaN(newX))
-              {
-                alert("Point X must be a number!");
-                return;
-              }
-
-              if (isNaN(newY))
-              {
-                alert("Point Y must be a number!");
-                return;
-              }
-
-              if (newX < 0 || newX > 4000)
-              {
-                alert("Point X must be in range [0, 4000]!");
-                return;
-              }
-
-              if (newY < 0 || newY > 4000)
-              {
-                alert("Point Y must be in range [0, 4000]!");
-                return;
-              }
-
-              this.props.onAddPointClicked({x:newX, y:newY});
-              meow.play();
+              this.addPoint();
             }}>
           Add Point
         </button>
@@ -198,8 +175,52 @@ class Map extends Component<MapProps, MapState>
 
         &nbsp;
         ]
+        <br/>
+        <button onClick={() => 
+            {
+              
+            }}>
+          Measure Distance
+        </button>
+        &nbsp;
+        {this.state.myPoints}
       </div>
     );
+  }
+
+  addPoint()
+  {
+    let xText = this.state.pointAddX;
+    let yText = this.state.pointAddY;
+    let newX:number = +xText;
+    let newY:number = +yText;
+
+    if (isNaN(newX))
+    {
+      alert("Point X must be a number!");
+      return;
+    }
+
+    if (isNaN(newY))
+    {
+      alert("Point Y must be a number!");
+      return;
+    }
+
+    if (newX < 0 || newX > 4000)
+    {
+      alert("Point X must be in range [0, 4000]!");
+      return;
+    }
+
+    if (newY < 0 || newY > 4000)
+    {
+      alert("Point Y must be in range [0, 4000]!");
+      return;
+    }
+
+    this.props.onAddPointClicked({x:newX, y:newY});
+    meow.play();
   }
 }
 

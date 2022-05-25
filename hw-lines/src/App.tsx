@@ -62,6 +62,10 @@ class App extends Component<{}, AppState> { // <- {} means no props.
                 onClearAllPointsClicked = {() => {
                   this.setState({myPoints : []});
                 }}
+
+                onMeasureDistClicked = {() => {
+
+                }}
                />
         </div>
         <EdgeList
