@@ -138,9 +138,15 @@ class Map extends Component<MapProps, MapState>
         
         &nbsp;
         &nbsp;
+        <div style={{fontFamily: "monospace", display: "inline-block", fontSize:20}}>
         [
+        </div>
         &nbsp;
+
+        <div style={{fontFamily: "monospace", display: "inline-block", fontSize:20}}>
         Point X:
+        </div>
+        
         <textarea
             rows={1}
             cols={5} 
@@ -154,7 +160,9 @@ class Map extends Component<MapProps, MapState>
 
         &nbsp;
         &nbsp;
+        <div style={{fontFamily: "monospace", display: "inline-block", fontSize:20}}>
         Point Y:
+        </div>
         <textarea
             rows={1}
             cols={5} 
@@ -197,7 +205,9 @@ class Map extends Component<MapProps, MapState>
         </button>
 
         &nbsp;
+        <div style={{fontFamily: "monospace", display: "inline-block", fontSize:20}}>
         ]
+        </div>
         <br/>
         <button 
         onClick={() => 
@@ -207,7 +217,9 @@ class Map extends Component<MapProps, MapState>
           Measure Distance
         </button>
         &nbsp;
+        <div style={{fontFamily: "monospace", display: "inline-block", fontSize:14}}>
         {this.state.distMsg}
+        </div>
         &nbsp;
       </div>
     );
