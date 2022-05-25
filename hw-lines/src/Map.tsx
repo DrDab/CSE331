@@ -9,30 +9,58 @@
  * author.
  */
 
-import { LatLngExpression } from "leaflet";
+import L, { LatLngExpression } from "leaflet";
 import React, { Component } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MapLine from "./MapLine";
-import { UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER } from "./Constants";
+import { UW_LATITUDE, UW_LATITUDE_CENTER, UW_LATITUDE_OFFSET, UW_LATITUDE_SCALE, UW_LONGITUDE, UW_LONGITUDE_CENTER, UW_LONGITUDE_OFFSET, UW_LONGITUDE_SCALE } from "./Constants";
 import { Edge } from "./EdgeList";
 
 // This defines the location of the map. These are the coordinates of the UW Seattle campus
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
 
 interface MapProps {
-  myEdges:Edge[]
+  myEdges: Edge[]
+  myPoints: Point[]
+
+  onAddPointClicked(points: Point) : void;
+  onUndoPointClicked() : void;
+  onClearAllPointsClicked() : void;
 }
 
 interface MapState {
+  myPoints: Point[],
+  pointAddX: string,
+  pointAddY: string
+}
+
+export interface Point
+{
+  x:number,
+  y:number
 }
 
 class Map extends Component<MapProps, MapState> 
 {
+  constructor(props: any)
+  {
+    super(props);
+    this.state = { myPoints: [], pointAddX : "", pointAddY : "" };
+  }
+
   render() 
   {
     console.log("Map render called");
     let edges = this.props.myEdges;
+    let points = this.props.myPoints;
+
+    const myIcon = L.icon({
+      iconUrl: 'marker_blue.png',
+      iconSize: [32,32],
+      iconAnchor: [15,32]
+    });
+
     return (
       <div id="map">
         <MapContainer
@@ -44,10 +72,22 @@ class Map extends Component<MapProps, MapState>
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+
           {
-            edges.map(function (e) 
+            edges.map(function (edge) 
             {
-              return <MapLine key={e.id} color={e.color} x1={e.x1} y1={e.y1} x2={e.x2} y2={e.y2}/>
+              return <MapLine key={edge.id} color={edge.color} x1={edge.x1} y1={edge.y1} x2={edge.x2} y2={edge.y2}/>
+            })
+          }
+
+          {
+            points.map(function (point)
+            {
+              console.log("(" + point.x + "," + point.y + ")");
+              return <Marker position={{ lat: UW_LATITUDE + (point.y - UW_LATITUDE_OFFSET) * UW_LATITUDE_SCALE, lng:
+                UW_LONGITUDE + (point.x - UW_LONGITUDE_OFFSET) * UW_LONGITUDE_SCALE}}
+                icon={myIcon}
+              />;
             })
           }
         </MapContainer>
@@ -58,7 +98,99 @@ class Map extends Component<MapProps, MapState>
               window.print();
             }}>
           Save Image
-          </button>
+        </button>
+        
+        &nbsp;
+        &nbsp;
+        [
+        &nbsp;
+        Point X:
+        <textarea
+            rows={1}
+            cols={5} 
+            style={{resize: "none"}}
+            onChange={(e) => {
+              this.setState({
+                  pointAddX: e.target.value
+              })
+            }}
+            value={this.state.pointAddX}/> 
+
+        &nbsp;
+        &nbsp;
+        Point Y:
+        <textarea
+            rows={1}
+            cols={5} 
+            style={{resize: "none"}}
+            onChange={(e) => {
+              this.setState({
+                pointAddY: e.target.value
+              })
+            }}
+            value={this.state.pointAddY}/> 
+
+        &nbsp;
+        &nbsp;
+
+        <button onClick={() => 
+            {
+              let xText = this.state.pointAddX;
+              let yText = this.state.pointAddY;
+              let newX:number = +xText;
+              let newY:number = +yText;
+
+              if (isNaN(newX))
+              {
+                alert("Point X must be a number!");
+                return;
+              }
+
+              if (isNaN(newY))
+              {
+                alert("Point Y must be a number!");
+                return;
+              }
+
+              if (newX < 0 || newX > 4000)
+              {
+                alert("Point X must be in range [0, 4000]!");
+                return;
+              }
+
+              if (newY < 0 || newY > 4000)
+              {
+                alert("Point Y must be in range [0, 4000]!");
+                return;
+              }
+
+              this.props.onAddPointClicked({x:newX, y:newY});
+            }}>
+          Add Point
+        </button>
+
+        &nbsp;
+        &nbsp;
+
+        <button onClick={() => 
+            {
+              this.props.onUndoPointClicked();
+            }}>
+          Undo Previous
+        </button>
+
+        &nbsp;
+        &nbsp;
+
+        <button onClick={() => 
+            {
+              this.props.onClearAllPointsClicked();
+            }}>
+          Clear Points
+        </button>
+
+        &nbsp;
+        ]
       </div>
     );
   }

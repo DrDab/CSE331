@@ -93,7 +93,7 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
 
     onDrawClicked()
     {
-        let tBoxText = this.state.tBoxText;
+        let tBoxText = this.state.tBoxText.trim();
         console.log("Draw Clicked!\nEdgeList raw text:\n\"%s\"", tBoxText)
 
         // split text in textBox by lines
@@ -165,7 +165,7 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
                     {
                         this.onDrawClicked();
                     }}>
-                        Draw
+                        Draw Edges
                         </button>
 
                 <button onClick={
@@ -176,7 +176,7 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
                     }
                 }
                 >
-                    Clear
+                    Clear Edges
                 </button>
             </div>
         );
