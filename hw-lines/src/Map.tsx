@@ -20,19 +20,25 @@ import { Edge, Point } from "./GeoConstructs";
 // This defines the location of the map. These are the coordinates of the UW Seattle campus
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
 
+// constant values for distance measurement tool states
+const DT_IDLE = 0;
+const DT_AWAIT_SRC_POINT = 1;
+const DT_AWAIT_DEST_POINT = 2;
+const DT_FINISHED = 3;
+
 interface MapProps {
   myEdges: Edge[]
 }
 
 interface MapState {
-  myPoints: Point[],
-  pointAddX: string,
-  pointAddY: string,
-  distState: number,
-  distP1Lat: number,
-  distP1Lng: number,
-  distMsg: string,
-  cursor: string
+  myPoints: Point[], // the list of user-added 2D Points, in Line Mapper coordinates.
+  pointAddX: string, // string contents of X-coordinate textbox of point addition form.
+  pointAddY: string, // string contents of Y-coordinate textbox of point addition form.
+  distState: number, // the "state" of the distance measurement tool's state machine. can be DT_IDLE, DT_AWAIT_SRC_POINT, DT_AWAIT_DEST_POINT, DT_FINISHED.
+  distP1Lat: number, // the latitude of the selected source point when measuring distance from a source point.
+  distP1Lng: number, // the longitude of the selected source point when measuring distance from a source point.
+  distMsg: string,   // the message to show the user in the distance measurement tool prompt.
+  cursor: string     // the CSS name of the cursor to be used within the map.
 }
 
 // sound effects for point operations
@@ -58,12 +64,6 @@ const LocationFinderDummy = (props: {onClick(lat:number, lng:number) : void}) =>
   return null;
 };
 
-// constant values for distance measurement tool states
-const DT_IDLE = 0;
-const DT_AWAIT_SRC_POINT = 1;
-const DT_AWAIT_DEST_POINT = 2;
-const DT_FINISHED = 3;
-
 class Map extends Component<MapProps, MapState> 
 {
   constructor(props: any)
@@ -80,15 +80,23 @@ class Map extends Component<MapProps, MapState>
 
     if (distState == DT_AWAIT_SRC_POINT)
     {
+      // if waiting for the source point to be clicked, now the source point's
+      // coordinates have been received. store them and update state to awaiting
+      // the destination point to be clicked.
       this.setState({distP1Lat: lat, distP1Lng: lng, distState: DT_AWAIT_DEST_POINT, 
                      distMsg: "Please click dest point on map."});
     }
     else if (distState == DT_AWAIT_DEST_POINT)
     {
+      // the destination point has been clicked! compute the distance between the two
+      // points' coordinates.
       let distance = this.getDistance(this.state.distP1Lat, this.state.distP1Lng, lat, lng);
+      // distance is in meters can be converted to feet using formula: feet = meters / [ (.0254 meters / inch) * (12 inch / foot) ]
       let distanceFreedom = distance / (.0254 * 12.0);
-      this.setState({distState: DT_FINISHED, distMsg: "Distance: " + distance.toFixed(1) + " m (" + 
-                     distanceFreedom.toFixed(1) + " ft)", cursor: "grab"});
+      let distanceRounded = this.round(distance, 1);
+      let distanceFreedomRounded = this.round(distanceFreedom, 1);
+      this.setState({distState: DT_FINISHED, distMsg: "Distance: " + distanceRounded + " m (" + 
+                     distanceFreedomRounded + " ft)", cursor: "grab"});
     }
   }
 
@@ -135,6 +143,8 @@ class Map extends Component<MapProps, MapState>
             })
           }
         </MapContainer>
+
+        { /* Other miscellaneous UI elements for adding points/measuring distance/saving image of map follow. */ }
 
         <button onClick={() => 
             {
@@ -237,6 +247,7 @@ class Map extends Component<MapProps, MapState>
     );
   }
 
+  // clears all points in the state (if any) and plays a sound effect if any points were removed.
   clearAllPoints()
   {
     let points = this.state.myPoints;
@@ -247,6 +258,8 @@ class Map extends Component<MapProps, MapState>
     }
   }
 
+  // removes the most recently added point in the state, if any, and plays a sound effect if a point was removed.
+  // otherwise, ignores call.
   undoLastPoint()
   {
     let points = this.state.myPoints;
@@ -262,6 +275,9 @@ class Map extends Component<MapProps, MapState>
     }
   }
 
+  // adds a point with the text entered in the point addition form, and plays a sound effect.
+  // aborts and creates an alert popup if the values entered are not numbers,
+  // or not in range [0,4000].
   addPoint()
   {
     let xText = this.state.pointAddX;
@@ -301,11 +317,14 @@ class Map extends Component<MapProps, MapState>
     meow.play();
   }
 
+  // returns the radian equivalent of an angle in degrees.
   toRadians(deg : number) : number
   {
     return deg * Math.PI / 180.0;
   }
 
+  // gets the distance in meters between two Earth coordinate pairs (lat, lng) in degrees, from (lat1, lng1) to (lat2, lng2),
+  // using the Haversine algorithm.
   getDistance(lat1: number, lng1: number, lat2: number, lng2: number) : number
   {
     let dLat = this.toRadians(lat2 - lat1);
@@ -314,11 +333,17 @@ class Map extends Component<MapProps, MapState>
     let lat1_rad = this.toRadians(lat1);
     let lat2_rad = this.toRadians(lat2);
 
-    let a = Math.pow(Math.sin(dLat / 2.0), 2) + Math.pow(Math.sin(dLon / 2.0), 2) * Math.cos(lat1) * Math.cos(lat2);
+    let a = Math.pow(Math.sin(dLat / 2.0), 2) + Math.pow(Math.sin(dLon / 2.0), 2) * Math.cos(lat1_rad) * Math.cos(lat2_rad);
     let rad = 6371000.0; // radius of earth in meters.
     let c = 2 * Math.asin(Math.sqrt(a));
 
     return rad * c;
+  }
+
+  // rounds a number with value 'value' to 'precision' digits of precision, where precision is an integer.
+  round(value:number, precision:number) {
+    var multiplier = Math.pow(10.0, precision);
+    return Math.round(value * multiplier) / multiplier;
   }
 }
 
