@@ -31,8 +31,6 @@ interface MapState {
   distState: number,
   distP1Lat: number,
   distP1Lng: number,
-  distP2Lat: number,
-  distP2Lng: number,
   distMsg: string
 }
 
@@ -61,8 +59,7 @@ class Map extends Component<MapProps, MapState>
   {
     super(props);
     this.state = { myPoints: [], pointAddX: "", pointAddY: "", distState: 0, distP1Lat: 0, 
-                    distP1Lng: 0, distP2Lat: 0, distP2Lng: 0, 
-                    distMsg: "Waiting for button press :3" };
+                    distP1Lng: 0, distMsg: "Waiting for button press :3" };
   }
 
   render() 
@@ -103,7 +100,10 @@ class Map extends Component<MapProps, MapState>
             }
             else if (distState == 2)
             {
-              this.setState({distP2Lat: lat, distP2Lng: lng, distState: 3, distMsg: "OwO"});
+              let distance = this.getDistance(this.state.distP1Lat, this.state.distP1Lng, lat, lng);
+              let distanceFreedom = distance / (.0254 * 12.0);
+              this.setState({distState: 3, distMsg: "Distance: " + distance.toFixed(1) + " m (" + 
+                            distanceFreedom.toFixed(1) + " ft)"});
             }
           }} />
 
@@ -280,6 +280,26 @@ class Map extends Component<MapProps, MapState>
     this.setState({myPoints : points});
 
     meow.play();
+  }
+
+  toRadians(deg : number) : number
+  {
+    return deg * Math.PI / 180.0;
+  }
+
+  getDistance(lat1: number, lng1: number, lat2: number, lng2: number) : number
+  {
+    let dLat = this.toRadians(lat2 - lat1);
+    let dLon = this.toRadians(lng2 - lng1);
+
+    let lat1_rad = this.toRadians(lat1);
+    let lat2_rad = this.toRadians(lat2);
+
+    let a = Math.pow(Math.sin(dLat / 2.0), 2) + Math.pow(Math.sin(dLon / 2.0), 2) * Math.cos(lat1) * Math.cos(lat2);
+    let rad = 6371000.0; // radius of earth in meters.
+    let c = 2 * Math.asin(Math.sqrt(a));
+
+    return rad * c;
   }
 }
 
