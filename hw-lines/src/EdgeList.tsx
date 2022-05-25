@@ -93,7 +93,7 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
 
     onDrawClicked()
     {
-        let tBoxText = this.state.tBoxText.trim();
+        let tBoxText = this.state.tBoxText;
         console.log("Draw Clicked!\nEdgeList raw text:\n\"%s\"", tBoxText)
 
         // split text in textBox by lines
@@ -105,7 +105,7 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
 
         lines.every(e => 
         {
-            let splitParts = e.split(" ");
+            let splitParts = e.trim().split(" ");
 
             // validate line length.
             if (splitParts.length !== 5)

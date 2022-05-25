@@ -9,7 +9,7 @@
  * author.
  */
 
-import { LatLngExpression } from "leaflet";
+import { LatLngExpression, map } from "leaflet";
 import React, { Component } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -54,6 +54,13 @@ class Map extends Component<MapProps, MapState> {
             })
           }
         </MapContainer>
+        <button onClick={() => 
+            {
+              console.log("Save clicked");
+              
+            }}>
+          Save Image
+          </button>
       </div>
     );
   }
