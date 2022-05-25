@@ -199,15 +199,7 @@ class Map extends Component<MapProps, MapState>
         <br/>
         <button onClick={() => 
             {
-              let distState = this.state.distState;
-              if (distState == 0)
-              {
-                this.setState({ distMsg: "Please click source point on map.", distState: 1 });
-              }
-              else
-              {
-                this.setState({ distMsg: "Waiting for button press :3", distState: 0 });
-              }
+              this.setState({ distMsg: "Please click source point on map.", distState: 1 });
             }}>
           Measure Distance
         </button>
