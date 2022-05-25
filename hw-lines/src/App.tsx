@@ -10,8 +10,9 @@
  */
 
 import React, { Component } from "react";
-import EdgeList, { Edge } from "./EdgeList";
-import Map, { Point } from "./Map";
+import EdgeList from "./EdgeList";
+import Map from "./Map";
+import { Edge } from "./GeoConstructs";
 
 // Allows us to write CSS styles inside App.css, any styles will apply to all components inside <App />
 import "./App.css";
