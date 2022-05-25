@@ -47,14 +47,49 @@ const pointIcon = L.icon({
   iconAnchor: [15,32]
 });
 
+// click handler to get latitude/longitude of mouse click on map
+const LocationFinderDummy = (props: {onClick(lat:number, lng:number) : void}) => {
+  const map = useMapEvents({
+      click(e) {
+        let latLng = e.latlng;
+        props.onClick(latLng.lat, latLng.lng);
+      },
+  });
+  return null;
+};
+
+// constant values for distance measurement tool states
+const DT_IDLE = 0;
+const DT_AWAIT_SRC_POINT = 1;
+const DT_AWAIT_DEST_POINT = 2;
+const DT_FINISHED = 3;
+
 class Map extends Component<MapProps, MapState> 
 {
-
   constructor(props: any)
   {
     super(props);
-    this.state = { myPoints: [], pointAddX: "", pointAddY: "", distState: 0, distP1Lat: 0, 
-                    distP1Lng: 0, distMsg: "Waiting for button press :3", cursor: "grab" };
+    this.state = { myPoints: [], pointAddX: "", pointAddY: "", distState: DT_IDLE, distP1Lat: 0, 
+                    distP1Lng: 0, distMsg: "Click \"Measure Distance\" to start.", cursor: "grab" };
+  }
+
+  handleMapClick(lat:number, lng:number)
+  {
+    console.log("Map coordinates clicked: Lat=" + lat + ", Lng=" + lng);
+    let distState = this.state.distState;
+
+    if (distState == DT_AWAIT_SRC_POINT)
+    {
+      this.setState({distP1Lat: lat, distP1Lng: lng, distState: DT_AWAIT_DEST_POINT, 
+                     distMsg: "Please click dest point on map."});
+    }
+    else if (distState == DT_AWAIT_DEST_POINT)
+    {
+      let distance = this.getDistance(this.state.distP1Lat, this.state.distP1Lng, lat, lng);
+      let distanceFreedom = distance / (.0254 * 12.0);
+      this.setState({distState: DT_FINISHED, distMsg: "Distance: " + distance.toFixed(1) + " m (" + 
+                     distanceFreedom.toFixed(1) + " ft)", cursor: "grab"});
+    }
   }
 
   render() 
@@ -62,16 +97,6 @@ class Map extends Component<MapProps, MapState>
     console.log("Map render called");
     let edges = this.props.myEdges;
     let points = this.state.myPoints;
-
-    const LocationFinderDummy = (props: {onClick(lat:number, lng:number) : void}) => {
-      const map = useMapEvents({
-          click(e) {
-            let latLng = e.latlng;
-            props.onClick(latLng.lat, latLng.lng);
-          },
-      });
-      return null;
-    };
 
     return (
       <div id="map" style={{ cursor: this.state.cursor }}>
@@ -87,20 +112,9 @@ class Map extends Component<MapProps, MapState>
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          <LocationFinderDummy onClick={(lat, lng) => {
-            console.log("Map coordinates clicked: Lat=" + lat + ", Lng=" + lng);
-            let distState = this.state.distState;
-            if (distState == 1)
-            {
-              this.setState({distP1Lat: lat, distP1Lng: lng, distState: 2, distMsg: "Please click dest point on map."});
-            }
-            else if (distState == 2)
-            {
-              let distance = this.getDistance(this.state.distP1Lat, this.state.distP1Lng, lat, lng);
-              let distanceFreedom = distance / (.0254 * 12.0);
-              this.setState({distState: 3, distMsg: "Distance: " + distance.toFixed(1) + " m (" + 
-                            distanceFreedom.toFixed(1) + " ft)", cursor: "grab"});
-            }
+          <LocationFinderDummy onClick={(lat, lng) => 
+          {
+            this.handleMapClick(lat, lng);
           }} />
 
           {
@@ -203,13 +217,17 @@ class Map extends Component<MapProps, MapState>
         ]
         </div>
         <br/>
+
         <button 
         onClick={() => 
             {
-              this.setState({ distMsg: "Please click source point on map.", distState: 1, cursor:"crosshair" });
+              // when "Measure Distance" is clicked, set state of distance measurement tool to await source point being clicked.
+              // also set the cursor to a crosshair for precise targeting (important when specifying point for distance measurement.)
+              this.setState({ distMsg: "Please click source point on map.", distState: DT_AWAIT_SRC_POINT, cursor:"crosshair" });
             }}>
           Measure Distance
         </button>
+
         &nbsp;
         <div style={{fontFamily: "monospace", display: "inline-block", fontSize:14}}>
         {this.state.distMsg}
