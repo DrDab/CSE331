@@ -61,6 +61,10 @@ class Map extends Component<MapProps, MapState>
       iconAnchor: [15,32]
     });
 
+    let meow = new Audio("meow.mp3");
+    let bruh = new Audio("bruh.mp3");
+    let pipe = new Audio("pipe.mp3");
+
     return (
       <div id="map">
         <MapContainer
@@ -165,6 +169,7 @@ class Map extends Component<MapProps, MapState>
               }
 
               this.props.onAddPointClicked({x:newX, y:newY});
+              meow.play();
             }}>
           Add Point
         </button>
@@ -175,6 +180,7 @@ class Map extends Component<MapProps, MapState>
         <button onClick={() => 
             {
               this.props.onUndoPointClicked();
+              bruh.play();
             }}>
           Undo Previous
         </button>
@@ -185,8 +191,9 @@ class Map extends Component<MapProps, MapState>
         <button onClick={() => 
             {
               this.props.onClearAllPointsClicked();
+              pipe.play();
             }}>
-          Clear Points
+          Clear All Points
         </button>
 
         &nbsp;
