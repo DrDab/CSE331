@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name><![CDATA[Gender Neutral & Accessible Restrooms]]></name>
+    <Style id="icon-503-DB4436-normal">
+      <IconStyle>
+        <color>ff3644db</color>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="16" xunits="pixels" y="32" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-503-DB4436-highlight">
+      <IconStyle>
+        <color>ff3644db</color>
+        <scale>1.1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="16" xunits="pixels" y="32" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1.1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-503-DB4436">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-503-DB4436-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-503-DB4436-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Placemark>
+      <name>Aerospace Engineering Research Building (AERB)</name>
+      <description>Gender neutral bathroom in basement, single stall with lock</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3058236,47.6539482,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Anderson Building (AND)</name>
+      <description>2nd floor, single stall, labeled “Private Faculty/Staff Bathroom”</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3075993,47.6517478,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Architecture Hall (ARC)</name>
+      <description>2nd floor, 1 stall, wheelchair accessible</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3108286,47.6546312,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Art Building (ART)</name>
+      <description>1st floor, Room 111; Basement, one near Stair #4 and one near Room 9</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3065799,47.6582518,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Benson Hall (BNS)</name>
+      <description>3rd floor rest area, 2 single stalls</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3095036,47.6530954,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Brooklyn Building: Accessible Unisex Restroom</name>
+      <description>Most accessible restroom is the unisex restroom 129 located on the 1st floor.</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.314675,47.656738,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Burke Museum: Accessible Unisex Restroom</name>
+      <description>An accessible unisex restroom is located on the main exhibit floor.</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.310528,47.660738,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Communications Building (CMU)</name>
+      <description>Basement, 1 urinal and 1 stall</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3052549,47.6570485,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Cunningham Hall: Accessible Unisex Restroom</name>
+      <description>Accessible Unisex Restrooms- rooms 102, 201</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.310834,47.657424,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Denny Hall (DEN)</name>
+      <description>Gender neutral bathroom</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3088169,47.6583891,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Eagleson Hall (EGL)</name>
+      <description><![CDATA[Gendered bathrooms that could be converted to gender neutral; 1st floor, Room 168, single stall, labeled women's; 3rd floor, Room 309, single stall, labeled women's]]></description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.312344,47.6581072,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Engineering Library: Unisex Bathroom</name>
+      <description>One unisex bathroom on the 3rd floor</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.304418,47.654671,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Fishery Science Building (FSH)</name>
+      <description>1st, 2nd, and 3rd floors; 2 single stalls on each</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3163271,47.653305,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Gould Hall</name>
+      <description>Basement, single occupancy with changing station</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3126632,47.6548805,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Gowen Hall</name>
+      <description>Gender-neutral bathroom on the 2nd floor (in the hallway near the staircase that leads to Floor 2M)</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.30783,47.656528,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Hall Health</name>
+      <description>Ground floor, 1st floor; 2 single occupancy gender neutral bathrooms on each</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.304096,47.656217,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Health Sciences Building (HSB)</name>
+      <description>2nd floor, T-wing, 3 single occupancy rooms with locks</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3090047,47.6506635,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Hughes Penthouse Theatre (HPT)</name>
+      <description>Most accessible restroom is unisex; 20H (off lobby)</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.308109,47.660756,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Husky Union Building</name>
+      <description>Gender-neutral bathroom on the 3rd floor, single stall.</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.305212,47.655553,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Hutchinson Hall (HUT)</name>
+      <description>There are two gender-neutral bathrooms on the second floor.</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.306553,47.659643,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Isaacson Hall (ISA)</name>
+      <description>2 single stalls, not wheelchair accessible</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.2899851,47.6578995,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Mackenzie Hall (MKZ)</name>
+      <description>Room 340, 1 stall and 1 urinal with lock on door</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3072988,47.6587431,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>McCarty Hall</name>
+      <description>Accessible Unisex Restroom- lobby area on the 1st floor</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.30489,47.660654,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Meany Hall</name>
+      <description><![CDATA[Two unisex restrooms.<br>One single occupancy.<br>One public with two stalls.<br><br>Both are located on east end of the dance studio hall by the water fountain.]]></description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.310362,47.655574,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Mechanical Engineering Building (MEB)</name>
+      <description>Faculty gender neutral restroom</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3047507,47.6535508,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Mercer Hall</name>
+      <description>Accessible unisex restrooms - 1st floor of both east and west buildings.</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.316992,47.654151,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ocean Sciences Building (OCN)</name>
+      <description>2nd floor, single stall with lock, wheelchair accessible, labeled gender neutral</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3127222,47.6513826,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Ocean Teaching Building (OTB)</name>
+      <description><![CDATA[1st floor, single stall, labeled women's; Basement, 2 single stalls, labeled male and female, wheelchair accessible]]></description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3123521,47.6501142,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Oceanography Building (OCE)</name>
+      <description>1st floor, single stall, wheelchair accessible; 3rd floor, 2 stalls</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.310576,47.649157,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Physical Plant Office</name>
+      <description>Unisex restroom on the ground floor</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.304107,47.655119,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Plant Laboratory (PLT)</name>
+      <description>Accessible Unisex Restroom- 1st floor</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.309455,47.652076,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Samuel. E. Kelly Ethnic Cultural Center (ECC)</name>
+      <description>1st, 2nd, and 3rd floors; 1 single stall on each</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3148251,47.6550901,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Savery Hall (SAV)</name>
+      <description>2nd floor Mezzanine, single stall; 3rd floor Mezzanine, single stall</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3083663,47.6571461,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>School of Social Work (SSW)</name>
+      <description>Most accessible restroom is the unisex restroom located on the 2nd floor.</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.312368,47.657309,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Suzzallo Library</name>
+      <description>Ground floor, G-050D</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3080981,47.6557333,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Sports Medical Clinic</name>
+      <description>Unisex for public. Two unisex bathrooms in therapy area.</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.302111,47.652568,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>William H. Gates Hall (LAW)</name>
+      <description>Single stall, open til 5pm; multi-stall gender neutral bathroom</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3107588,47.6592165,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>Wilson Annex (WLA)</name>
+      <description>Most accessible restroom is unisex, on the first floor.</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.30511,47.651509,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>eScience Studio - WRF Data Science Studio</name>
+      <description>6th floor, 2 single stall unisex bathrooms with locks</description>
+      <styleUrl>#icon-503-DB4436</styleUrl>
+      <Point>
+        <coordinates>
+          -122.3117781,47.6533954,0
+        </coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>

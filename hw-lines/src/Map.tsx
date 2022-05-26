@@ -16,6 +16,7 @@ import "leaflet/dist/leaflet.css";
 import MapLine from "./MapLine";
 import { UW_LATITUDE, UW_LATITUDE_CENTER, UW_LATITUDE_OFFSET, UW_LATITUDE_SCALE, UW_LONGITUDE, UW_LONGITUDE_CENTER, UW_LONGITUDE_OFFSET, UW_LONGITUDE_SCALE } from "./Constants";
 import { Edge, Point } from "./GeoConstructs";
+import ReactLeafletKml from 'react-leaflet-kml'; // react-leaflet-kml must be loaded AFTER react-leaflet
 
 // This defines the location of the map. These are the coordinates of the UW Seattle campus
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
@@ -31,16 +32,19 @@ interface MapProps {
 }
 
 interface MapState {
-  myPoints: Point[], // the list of user-added 2D Points, in Line Mapper coordinates.
-  pointAddX: string, // string contents of X-coordinate textbox of point addition form.
-  pointAddY: string, // string contents of Y-coordinate textbox of point addition form.
-  distState: number, // the "state" of the distance measurement tool's state machine. can be DT_IDLE, DT_AWAIT_SRC_POINT, DT_AWAIT_DEST_POINT, DT_FINISHED.
-  distP1Lat: number, // the latitude of the selected source point when measuring distance from a source point.
-  distP1Lng: number, // the longitude of the selected source point when measuring distance from a source point.
-  distP2Lat: number, // the latitude of the selected dest point when measuring distance from a source point.
-  distP2Lng: number, // the longitude of the selected dest point when measuring distance from a source point.
-  distMsg: string,   // the message to show the user in the distance measurement tool prompt.
-  cursor: string     // the CSS name of the cursor to be used within the map.
+  myPoints: Point[],    // the list of user-added 2D Points, in Line Mapper coordinates.
+  pointAddX: string,    // string contents of X-coordinate textbox of point addition form.
+  pointAddY: string,    // string contents of Y-coordinate textbox of point addition form.
+  distState: number,    // the "state" of the distance measurement tool's state machine. can be DT_IDLE, DT_AWAIT_SRC_POINT, DT_AWAIT_DEST_POINT, DT_FINISHED.
+  distP1Lat: number,    // the latitude of the selected source point when measuring distance from a source point.
+  distP1Lng: number,    // the longitude of the selected source point when measuring distance from a source point.
+  distP2Lat: number,    // the latitude of the selected dest point when measuring distance from a source point.
+  distP2Lng: number,    // the longitude of the selected dest point when measuring distance from a source point.
+  distMsg: string,      // the message to show the user in the distance measurement tool prompt.
+  cursor: string        // the CSS name of the cursor to be used within the map.
+  showToilets: boolean  // whether to show the toilets on campus
+  toiletsLoaded:boolean // whether the toilets KML file has been loaded yet
+  toiletsKML:string     // the KML string of toilets on campus
 }
 
 // sound effects for point operations
@@ -87,7 +91,8 @@ class Map extends Component<MapProps, MapState>
     super(props);
     this.state = { myPoints: [], pointAddX: "", pointAddY: "", distState: DT_IDLE, distP1Lat: 0, 
                     distP1Lng: 0, distP2Lat: 0, distP2Lng:0, 
-                    distMsg: "Click \"Measure Distance\" to start.", cursor: "grab" };
+                    distMsg: "Click \"Measure Distance\" to start.", cursor: "grab", showToilets:false,
+                    toiletsLoaded:false, toiletsKML:'' };
   }
 
   handleMapClick(lat:number, lng:number)
@@ -123,6 +128,13 @@ class Map extends Component<MapProps, MapState>
     console.log("Map render called");
     let edges = this.props.myEdges;
     let points = this.state.myPoints;
+
+    fetch('./toilets.kml')
+    .then(response => response.text())
+    .then(data => {
+      this.setState({toiletsKML: data, toiletsLoaded: true});
+    });
+    
 
     return (
       <div id="map" style={{ cursor: this.state.cursor }}>
@@ -170,6 +182,12 @@ class Map extends Component<MapProps, MapState>
                   <Marker position={{ lat: this.state.distP2Lat, lng:
                     this.state.distP2Lng}} icon={finishIcon} />]
           }
+
+          {
+            this.state.showToilets && this.state.toiletsLoaded ? <ReactLeafletKml kml={
+              new DOMParser().parseFromString(this.state.toiletsKML, 'text/xml')} /> : []
+          }
+
         </MapContainer>
 
         { /* Other miscellaneous UI elements for adding points/measuring distance/saving image of map follow. */ }
@@ -271,6 +289,18 @@ class Map extends Component<MapProps, MapState>
         {this.state.distMsg}
         </div>
         &nbsp;
+
+        <br/>
+        <button 
+        onClick={() => 
+            {
+              // Locate gender neutral toilets on campus
+              this.setState({showToilets:!this.state.showToilets});
+            }}>
+              
+            {this.state.showToilets ? "Hide gender neutral toilets" : 
+              "Show gender neutral toilets"}
+        </button>
       </div>
     );
   }
