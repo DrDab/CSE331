@@ -37,6 +37,8 @@ interface MapState {
   distState: number, // the "state" of the distance measurement tool's state machine. can be DT_IDLE, DT_AWAIT_SRC_POINT, DT_AWAIT_DEST_POINT, DT_FINISHED.
   distP1Lat: number, // the latitude of the selected source point when measuring distance from a source point.
   distP1Lng: number, // the longitude of the selected source point when measuring distance from a source point.
+  distP2Lat: number, // the latitude of the selected dest point when measuring distance from a source point.
+  distP2Lng: number, // the longitude of the selected dest point when measuring distance from a source point.
   distMsg: string,   // the message to show the user in the distance measurement tool prompt.
   cursor: string     // the CSS name of the cursor to be used within the map.
 }
@@ -51,6 +53,20 @@ const pointIcon = L.icon({
   iconUrl: 'marker_blue.png',
   iconSize: [32,32],
   iconAnchor: [15,32]
+});
+
+// custom icon for start flag w/ offset correction added
+const startIcon = L.icon({
+  iconUrl: 'start_flag.png',
+  iconSize: [32,32],
+  iconAnchor: [4.5,31]
+});
+
+// custom icon for end flag w/ offset correction added
+const finishIcon = L.icon({
+  iconUrl: 'finish_flag.png',
+  iconSize: [32,32],
+  iconAnchor: [3.5,31]
 });
 
 // click handler to get latitude/longitude of mouse click on map
@@ -70,7 +86,8 @@ class Map extends Component<MapProps, MapState>
   {
     super(props);
     this.state = { myPoints: [], pointAddX: "", pointAddY: "", distState: DT_IDLE, distP1Lat: 0, 
-                    distP1Lng: 0, distMsg: "Click \"Measure Distance\" to start.", cursor: "grab" };
+                    distP1Lng: 0, distP2Lat: 0, distP2Lng:0, 
+                    distMsg: "Click \"Measure Distance\" to start.", cursor: "grab" };
   }
 
   handleMapClick(lat:number, lng:number)
@@ -88,15 +105,16 @@ class Map extends Component<MapProps, MapState>
     }
     else if (distState === DT_AWAIT_DEST_POINT)
     {
-      // the destination point has been clicked! compute the distance between the two
-      // points' coordinates.
+      // the destination point has been clicked! 
+      // first, store the destination coordinate's points in the state
+      // compute the distance between the two points' coordinates.
       let distance = this.getDistance(this.state.distP1Lat, this.state.distP1Lng, lat, lng);
       // distance is in meters can be converted to feet using formula: feet = meters / [ (.0254 meters / inch) * (12 inch / foot) ]
       let distanceFreedom = distance / (.0254 * 12.0);
       let distanceRounded = this.round(distance, 1);
       let distanceFreedomRounded = this.round(distanceFreedom, 1);
       this.setState({distState: DT_FINISHED, distMsg: "Distance: " + distanceRounded + " m (" + 
-                     distanceFreedomRounded + " ft)", cursor: "grab"});
+                     distanceFreedomRounded + " ft)", cursor: "grab", distP2Lat: lat, distP2Lng: lng});
     }
   }
 
@@ -141,6 +159,17 @@ class Map extends Component<MapProps, MapState>
                 icon={pointIcon}
               />;
             })
+          }
+
+          {
+            this.state.distState === DT_IDLE || this.state.distState === DT_AWAIT_SRC_POINT ? [] : 
+              this.state.distState === DT_AWAIT_DEST_POINT ?
+              <Marker position={{ lat: this.state.distP1Lat, lng:
+                this.state.distP1Lng}} icon={startIcon} /> :
+                [<Marker position={{ lat: this.state.distP1Lat, lng:
+                  this.state.distP1Lng}} icon={startIcon} />,
+                  <Marker position={{ lat: this.state.distP2Lat, lng:
+                    this.state.distP2Lng}} icon={finishIcon} />]
           }
         </MapContainer>
 
