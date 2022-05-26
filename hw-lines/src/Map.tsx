@@ -93,6 +93,13 @@ class Map extends Component<MapProps, MapState>
                     distP1Lng: 0, distP2Lat: 0, distP2Lng:0, 
                     distMsg: "Click \"Measure Distance\" to start.", cursor: "grab", showToilets:false,
                     toiletsLoaded:false, toiletsKMLDoc:null };
+    
+    fetch('./toilets.kml')
+      .then(response => response.text())
+      .then(data => {
+        this.setState({toiletsKMLDoc: new DOMParser().parseFromString(data, 'text/xml'), 
+                      toiletsLoaded: true});
+      });
   }
 
   handleMapClick(lat:number, lng:number)
@@ -128,14 +135,6 @@ class Map extends Component<MapProps, MapState>
     console.log("Map render called");
     let edges = this.props.myEdges;
     let points = this.state.myPoints;
-
-    fetch('./toilets.kml')
-    .then(response => response.text())
-    .then(data => {
-      this.setState({toiletsKMLDoc: new DOMParser().parseFromString(data, 'text/xml'), 
-                    toiletsLoaded: true});
-    });
-    
 
     return (
       <div id="map" style={{ cursor: this.state.cursor }}>
