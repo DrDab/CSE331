@@ -44,7 +44,7 @@ interface MapState {
   cursor: string        // the CSS name of the cursor to be used within the map.
   showToilets: boolean  // whether to show the toilets on campus
   toiletsLoaded:boolean // whether the toilets KML file has been loaded yet
-  toiletsKML:string     // the KML string of toilets on campus
+  toiletsKMLDoc:Document|null // KML document of toilets on campus
 }
 
 // sound effects for point operations
@@ -92,7 +92,7 @@ class Map extends Component<MapProps, MapState>
     this.state = { myPoints: [], pointAddX: "", pointAddY: "", distState: DT_IDLE, distP1Lat: 0, 
                     distP1Lng: 0, distP2Lat: 0, distP2Lng:0, 
                     distMsg: "Click \"Measure Distance\" to start.", cursor: "grab", showToilets:false,
-                    toiletsLoaded:false, toiletsKML:'' };
+                    toiletsLoaded:false, toiletsKMLDoc:null };
   }
 
   handleMapClick(lat:number, lng:number)
@@ -132,7 +132,8 @@ class Map extends Component<MapProps, MapState>
     fetch('./toilets.kml')
     .then(response => response.text())
     .then(data => {
-      this.setState({toiletsKML: data, toiletsLoaded: true});
+      this.setState({toiletsKMLDoc: new DOMParser().parseFromString(data, 'text/xml'), 
+                    toiletsLoaded: true});
     });
     
 
@@ -184,8 +185,8 @@ class Map extends Component<MapProps, MapState>
           }
 
           {
-            this.state.showToilets && this.state.toiletsLoaded ? <ReactLeafletKml kml={
-              new DOMParser().parseFromString(this.state.toiletsKML, 'text/xml')} /> : []
+            this.state.showToilets && this.state.toiletsLoaded && this.state.toiletsKMLDoc != null ? 
+            <ReactLeafletKml kml={this.state.toiletsKMLDoc} /> : []
           }
 
         </MapContainer>

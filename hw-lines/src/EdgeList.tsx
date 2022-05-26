@@ -163,7 +163,7 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
             }
 
             // validate line fields.
-            let edge = this.getValidatedEdge(e, splitParts[0], splitParts[1], splitParts[2], 
+            let edge: Edge|null = this.getValidatedEdge(e, splitParts[0], splitParts[1], splitParts[2], 
                 splitParts[3], splitParts[4], index);
 
             if (edge == null)

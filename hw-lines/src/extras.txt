@@ -16,3 +16,7 @@ waypoint added, or clear all the waypoints on the map.
 
 - Added distance measurement tool which lets the user measure the (approximate) distance between
 two points (that the user specifies graphically by clicking on the map) in meters, using Haversine's formula.
+
+- Added utility to list gender-neutral toilets on campus from data provided by the UW Q Center (Google Maps exported
+to KML format which was then converted into react-leaflet components using the react-leaflet-kml library from
+https://github.com/aviklai/react-leaflet-kml)
