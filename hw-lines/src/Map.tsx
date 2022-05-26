@@ -55,7 +55,7 @@ const pointIcon = L.icon({
 
 // click handler to get latitude/longitude of mouse click on map
 const LocationFinderDummy = (props: {onClick(lat:number, lng:number) : void}) => {
-  const map = useMapEvents({
+  useMapEvents({
       click(e) {
         let latLng = e.latlng;
         props.onClick(latLng.lat, latLng.lng);
@@ -78,7 +78,7 @@ class Map extends Component<MapProps, MapState>
     console.log("Map coordinates clicked: Lat=" + lat + ", Lng=" + lng);
     let distState = this.state.distState;
 
-    if (distState == DT_AWAIT_SRC_POINT)
+    if (distState === DT_AWAIT_SRC_POINT)
     {
       // if waiting for the source point to be clicked, now the source point's
       // coordinates have been received. store them and update state to awaiting
@@ -86,7 +86,7 @@ class Map extends Component<MapProps, MapState>
       this.setState({distP1Lat: lat, distP1Lng: lng, distState: DT_AWAIT_DEST_POINT, 
                      distMsg: "Please click dest point on map."});
     }
-    else if (distState == DT_AWAIT_DEST_POINT)
+    else if (distState === DT_AWAIT_DEST_POINT)
     {
       // the destination point has been clicked! compute the distance between the two
       // points' coordinates.
