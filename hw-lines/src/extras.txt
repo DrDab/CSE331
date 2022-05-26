@@ -1,10 +1,18 @@
 CSE 331 Homework.  Answers to written questions.
 Edit this file to supply your answers.
 
-Name:  <replace this with your name>
+Name:  Victor Du
 
 Describe any additional functionality you added to your application, or any
 significant changes you made to the starter code beyond the basic requirements
 of the assignment, below:
 
+- Added button which prints the contents of the page when clicked.
 
+- Added graphical waypoint management to the line mapper so that the user can specify
+a location on the map (in line-mapper coordinates, not latitude/longitude) to add
+to the map and a waypoint will be added accordingly at the location, remove the last
+waypoint added, or clear all the waypoints on the map. 
+
+- Added distance measurement tool which lets the user measure the (approximate) distance between
+two points (that the user specifies graphically by clicking on the map) in meters, using Haversine's formula.
