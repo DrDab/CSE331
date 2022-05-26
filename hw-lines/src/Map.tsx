@@ -153,7 +153,6 @@ class Map extends Component<MapProps, MapState>
           {
             points.map((point) =>
             {
-              console.log("(" + point.x + "," + point.y + ")");
               return <Marker position={{ lat: UW_LATITUDE + (point.y - UW_LATITUDE_OFFSET) * UW_LATITUDE_SCALE, lng:
                 UW_LONGITUDE + (point.x - UW_LONGITUDE_OFFSET) * UW_LONGITUDE_SCALE}}
                 icon={pointIcon}
