@@ -71,7 +71,7 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
     spawnErrorBox(reason: string, offendingLine: string, lineNum: number)
     {
         alert(reason + "\n" + 
-              "Error on line " + (lineNum + 1)  + ": \"" + offendingLine + "\"");
+              "Error on line " + (lineNum)  + ": \"" + offendingLine + "\"");
     }
 
     getValidatedEdge(e:any, x1r:any, y1r:any, x2r:any, y2r:any, color:any, index:any) : Edge | null
