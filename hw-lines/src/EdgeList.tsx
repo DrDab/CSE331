@@ -13,7 +13,7 @@ import React, { Component } from 'react';
 import { Edge } from './GeoConstructs';
 
 interface EdgeListProps {
-    onChange(edges: Edge[]): void;
+    onChange(edges: Edge[]): void; // called when the Draw Edges is pressed to pass Edge data to map.
 }
 
 /**
@@ -68,12 +68,17 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
         );
     }
 
+    // helper method to open an error box pre-formatted with error reason and the offending line/line number
+    // of edge input that caused th eerror.
     spawnErrorBox(reason: string, offendingLine: string, lineNum: number)
     {
         alert(reason + "\n" + 
               "Error on line " + (lineNum)  + ": \"" + offendingLine + "\"");
     }
 
+    // returns an Edge instance of the line with the following arguments if all the
+    // numeric arguments are valid (i.e. they are numbers and in range [0,4000]).
+    // otherwise, spawns an error alert dialogue and returns null.
     getValidatedEdge(e:any, x1r:any, y1r:any, x2r:any, y2r:any, color:any, index:any) : Edge | null
     {
         let lx1:number = +x1r;
@@ -129,6 +134,8 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
         return resEdge;
     }
 
+    // parses the contents of the edge text box when the "Draw Edges" button is clicked.
+    // and passes the Edges (if valid) to Map.
     onDrawClicked()
     {
         let tBoxText = this.state.tBoxText.trim();
