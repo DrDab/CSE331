@@ -68,7 +68,13 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
         );
     }
 
-    getValidatedEdge(x1r:any, y1r:any, x2r:any, y2r:any, color:any, index:any) : Edge | null
+    spawnErrorBox(reason: string, offendingLine: string, lineNum: number)
+    {
+        alert(reason + "\n" + 
+              "Error on line " + (lineNum + 1)  + ": \"" + offendingLine + "\"");
+    }
+
+    getValidatedEdge(e:any, x1r:any, y1r:any, x2r:any, y2r:any, color:any, index:any) : Edge | null
     {
         let lx1:number = +x1r;
         let ly1:number = +y1r;
@@ -81,32 +87,32 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
             Number.isNaN(lx2) || 
             Number.isNaN(ly2))
         {
-            alert("x1, y1, x2, y2 must be numbers");
+            this.spawnErrorBox("x1, y1, x2, y2 must be numbers", e, index + 1);
             return null;
         }
 
         // validate line values.
         if (lx1 < 0 || lx1 > 4000)
         {
-            alert("x1 must be in range [0,4000]");
+            this.spawnErrorBox("x1 must be in range [0,4000]", e, index + 1);
             return null;
         }
 
         if (ly1 < 0 || ly1 > 4000)
         {
-            alert("y1 must be in range [0,4000]");
+            this.spawnErrorBox("y1 must be in range [0,4000]", e, index + 1);
             return null;
         }
 
         if (lx2 < 0 || lx2 > 4000)
         {
-            alert("x2 must be in range [0,4000]");
+            this.spawnErrorBox("x2 must be in range [0,4000]", e, index + 1);
             return null;
         }
 
         if (ly2 < 0 || ly2 > 4000)
         {
-            alert("y2 must be in range [0,4000]");
+            this.spawnErrorBox("y2 must be in range [0,4000]", e, index + 1);
             return null;
         }
 
@@ -143,13 +149,14 @@ class EdgeList extends Component<EdgeListProps, {tBoxText: string}> {
             // validate line length.
             if (splitParts.length !== 5)
             {
-                alert("Each line must be formatted as follows: <x1> <y1> <x2> <y2> <color>");
+                this.spawnErrorBox("Each line must be formatted as follows: <x1> <y1> <x2> <y2> <color>.", 
+                                    e, index + 1);
                 errFound = true;
                 return false;
             }
 
             // validate line fields.
-            let edge = this.getValidatedEdge(splitParts[0], splitParts[1], splitParts[2], 
+            let edge = this.getValidatedEdge(e, splitParts[0], splitParts[1], splitParts[2], 
                 splitParts[3], splitParts[4], index);
 
             if (edge == null)
