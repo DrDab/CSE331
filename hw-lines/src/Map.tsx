@@ -126,14 +126,14 @@ class Map extends Component<MapProps, MapState>
           }} />
 
           {
-            edges.map(function (edge) 
+            edges.map((edge) => 
             {
               return <MapLine key={edge.id} color={edge.color} x1={edge.x1} y1={edge.y1} x2={edge.x2} y2={edge.y2}/>
             })
           }
 
           {
-            points.map(function (point)
+            points.map((point) =>
             {
               console.log("(" + point.x + "," + point.y + ")");
               return <Marker position={{ lat: UW_LATITUDE + (point.y - UW_LATITUDE_OFFSET) * UW_LATITUDE_SCALE, lng:

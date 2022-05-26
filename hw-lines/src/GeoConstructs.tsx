@@ -1,6 +1,5 @@
-
-
-export interface Edge {
+export interface Edge 
+{
     id: string;
     color: string;
     x1: number;
