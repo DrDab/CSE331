@@ -12,10 +12,19 @@
 package campuspaths;
 
 import campuspaths.utils.CORSFilter;
+import com.google.gson.Gson;
+import pathfinder.CampusMap;
+import pathfinder.DijkstraPathfinder;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Spark;
 
-public class SparkServer {
+public class SparkServer
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         CORSFilter corsFilter = new CORSFilter();
         corsFilter.apply();
         // The above two lines help set up some settings that allow the
@@ -23,7 +32,41 @@ public class SparkServer {
         // comes from a different server.
         // You should leave these two lines at the very beginning of main().
 
-        // TODO: Create all the Spark Java routes you need here.
+        CampusMap campusMap = new CampusMap();
+        Gson gson = new Gson();
+
+        Spark.get("/getBuildings", new Route()
+        {
+            @Override
+            public Object handle(Request request,
+                                 Response response) throws Exception
+            {
+                return gson.toJson(campusMap.buildingNames());
+            }
+        });
+
+
+        Spark.get("/getPath", new Route()
+        {
+            @Override
+            public Object handle(Request request,
+                                 Response response) throws Exception
+            {
+                String src = request.queryParams("src");
+                String dest = request.queryParams("dest");
+
+                if (src == null || dest == null || !campusMap.shortNameExists(src) ||
+                        !campusMap.shortNameExists(dest))
+                {
+                    Spark.halt(400, src == null ? "src cannot be null!" :
+                            (dest == null ? "dest cannot be null!" :
+                                    "Building " + (!campusMap.shortNameExists(src) ? src : dest) +
+                                            " does not exist!"));
+                }
+
+                return gson.toJson(campusMap.findShortestPath(src, dest));
+            }
+        });
     }
 
 }
