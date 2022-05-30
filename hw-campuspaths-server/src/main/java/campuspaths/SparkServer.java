@@ -14,7 +14,6 @@ package campuspaths;
 import campuspaths.utils.CORSFilter;
 import com.google.gson.Gson;
 import pathfinder.CampusMap;
-import pathfinder.DijkstraPathfinder;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -50,7 +49,7 @@ public class SparkServer
         {
             @Override
             public Object handle(Request request,
-                                 Response response) throws Exception
+                                 Response response)
             {
                 String src = request.queryParams("src");
                 String dest = request.queryParams("dest");
