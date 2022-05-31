@@ -23,6 +23,41 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
         this.loadBldgNames();
     }
 
+    render() 
+    {
+      console.log("NavSelector render called!");
+      let bldgDropdown = this.getBldgDropdown();
+
+        return (
+            <div>
+            <button onClick={e => {this.onFindPathClicked(e)}}>Find Path</button>
+            &nbsp;
+            from
+            &nbsp;
+            <select onChange={e => this.onSrcBldgChanged(e)}>
+
+              <option value="Select Src Bldg...">Select Src Bldg</option>
+              { 
+                bldgDropdown
+              }
+
+            </select>
+            &nbsp;
+            to
+            &nbsp;
+            <select onChange={e => this.onDestBldgChanged(e)}>
+
+              <option value="Select Dest Bldg...">Select Dest Bldg</option>
+              { 
+                bldgDropdown
+              }
+
+            </select>
+            </div>
+          );
+      
+    }
+
     async loadBldgNames() 
     {
       try
@@ -123,42 +158,6 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
 
       return res
     }
-
-    render() 
-    {
-      console.log("NavSelector render called!");
-      let bldgDropdown = this.getBldgDropdown();
-
-        return (
-            <div>
-            <button onClick={e => {this.onFindPathClicked(e)}}>Find Path</button>
-            &nbsp;
-            from
-            &nbsp;
-            <select onChange={e => this.onSrcBldgChanged(e)}>
-
-              <option value="Select Src Bldg...">Select Src Bldg</option>
-              { 
-                bldgDropdown
-              }
-
-            </select>
-            &nbsp;
-            to
-            &nbsp;
-            <select onChange={e => this.onDestBldgChanged(e)}>
-
-              <option value="Select Dest Bldg...">Select Dest Bldg</option>
-              { 
-                bldgDropdown
-              }
-
-            </select>
-            </div>
-          );
-      
-    }
-
 }
 
 export default NavSelector;
