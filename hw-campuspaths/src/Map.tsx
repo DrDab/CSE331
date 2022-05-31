@@ -39,9 +39,9 @@ interface MapState
 
 // custom icon for start flag w/ offset correction added
 const startIcon = L.icon({
-  iconUrl: 'start_flag.png',
+  iconUrl: 'start_marker.svg',
   iconSize: [32,32],
-  iconAnchor: [4.5,31]
+  iconAnchor: [16,32]
 });
 
 // custom icon for end flag w/ offset correction added
