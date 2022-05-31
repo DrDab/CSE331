@@ -10,16 +10,54 @@
  */
 
 import React, {Component} from 'react';
+import Map from "./Map";
 
 // Allows us to write CSS styles inside App.css, any styles will apply to all components inside <App />
 import "./App.css";
+import { Edge } from './GeoConstructs';
+import NavSelector from './NavSelector';
 
-class App extends Component<{}, {}> {
+interface AppState
+{
+  myEdges: Edge[];
+}
+
+class App extends Component<{}, AppState> 
+{
+
+    constructor(props:any)
+    {
+      super(props);
+
+      this.state = 
+      {
+         myEdges: []
+      };
+    }
 
     render() {
         return (
-            <p>Here's the beginning of your AMAZING CampusPaths GUI!</p>
-        );
+            <div>
+              <h1 id="app-title" style={{textAlign: 'center'}}>
+                Campus Paths
+              </h1>
+
+              <div>
+                <Map myEdges={this.state.myEdges} />
+              </div>
+
+              <div style={{textAlign: 'center'}} >
+                
+                <br/>
+                <NavSelector onEdgesReady={(edges) => {
+
+                }}/>
+
+              </div>
+             
+            </div>
+          );
+      
     }
 
 }
