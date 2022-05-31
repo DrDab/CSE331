@@ -30,7 +30,7 @@ public class DijkstraPathfinder
      * @return the shortest distance between sourceNode and destNode, or null
      *         if there are no paths from sourceNode to destNode.
      */
-    public static <T> Double getShortestDistance(DirectedGraph<T, Double> graph, T sourceNode, T destNode)
+    private static <T> Double getShortestDistance(DirectedGraph<T, Double> graph, T sourceNode, T destNode)
     {
         Double shortest = null;
 
