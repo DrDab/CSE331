@@ -9,27 +9,26 @@ import static org.junit.Assert.assertEquals;
 
 public class TestDijkstraPathfinder
 {
-    private DijkstraPathfinder<String> pFinder;
+    private DirectedGraph<String, Double> graph;
 
     @Before
     public void initDijkstraPathfinder()
     {
-        DirectedGraph<String, Double> graph = new DirectedGraph<>();
+        graph = new DirectedGraph<>();
         graph.addNode("Canterlot");
         graph.addNode("Ponyville");
         graph.addNode("Manehattan");
         graph.addNode("Everfree Forest");
         graph.addEdge("Ponyville", "Canterlot", 1.337);
         graph.addEdge("Ponyville", "Manehattan", 7355.608);
-        pFinder = new DijkstraPathfinder<>(graph);
     }
 
     @Test
     public void testGetShortestDistanceNoPath()
     {
-        assertEquals(null, pFinder.getShortestDistance("Canterlot",
+        assertEquals(null, DijkstraPathfinder.getShortestDistance(graph, "Canterlot",
                 "Ponyville"));
-        assertEquals(null, pFinder.getShortestDistance("Manehattan",
+        assertEquals(null, DijkstraPathfinder.getShortestDistance(graph, "Manehattan",
                 "Ponyville"));
     }
 
@@ -38,11 +37,11 @@ public class TestDijkstraPathfinder
     {
         // make sure getShortestDistance method returns null when no valid paths
         // exist from the source node to destination node.
-        assertEquals(null, pFinder.getShortestDistance("Canterlot",
+        assertEquals(null, DijkstraPathfinder.getShortestDistance(graph, "Canterlot",
                 "Ponyville"));
-        assertEquals(null, pFinder.getShortestDistance("Manehattan",
+        assertEquals(null, DijkstraPathfinder.getShortestDistance(graph, "Manehattan",
                 "Ponyville"));
-        assertEquals(null, pFinder.getShortestDistance("Everfree Forest",
+        assertEquals(null, DijkstraPathfinder.getShortestDistance(graph, "Everfree Forest",
                 "Ponyville"));
     }
 }

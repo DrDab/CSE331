@@ -2,6 +2,7 @@ package pathfinder;
 
 import graph.DirectedGraph;
 import pathfinder.datastructures.Path;
+import pathfinder.datastructures.Point;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -14,27 +15,9 @@ import java.util.Set;
  * uses Dijkstra's shortest-path algorithm to find the shortest path from a given source
  * node in the graph to a given destination node.
  */
-public class DijkstraPathfinder<T>
+public class DijkstraPathfinder
 {
     // This class does not represent an ADT.
-
-    // the graph on which to use pathfinding, where the edges are non-negative
-    // Double costs to travel between nodes.
-    private DirectedGraph<T, Double> graph;
-
-    /**
-     * Instantiates a DijkstraPathFinder for the given graph mapping immutable nodes
-     * of type T to edges of non-negative doubles representing the distance from
-     * one node to another.
-     *
-     * @param graph, the graph mapping nodes of type T to double edges of distance
-     *               between nodes.
-     * @spec.requires graph != null and has no edges &lt; 0
-     */
-    public DijkstraPathfinder(DirectedGraph<T, Double> graph)
-    {
-        this.graph = graph;
-    }
 
     /**
      * Gets the shortest distance in the graph between
@@ -47,7 +30,7 @@ public class DijkstraPathfinder<T>
      * @return the shortest distance between sourceNode and destNode, or null
      *         if there are no paths from sourceNode to destNode.
      */
-    public Double getShortestDistance(T sourceNode, T destNode)
+    public static <T> Double getShortestDistance(DirectedGraph<T, Double> graph, T sourceNode, T destNode)
     {
         Double shortest = null;
 
@@ -67,7 +50,7 @@ public class DijkstraPathfinder<T>
      * @return the shortest path from sourceNode to destNode in the graph, or
      *         null if no path from sourceNode to destNode exists.
      */
-    public Path<T> getShortestPath(T sourceNode, T destNode)
+    public static <T> Path<T> getShortestPath(DirectedGraph<T, Double> graph, T sourceNode, T destNode)
     {
         PriorityQueue<Path<T>> active = new PriorityQueue<>(
                 new Comparator<Path<T>>() {
@@ -98,7 +81,7 @@ public class DijkstraPathfinder<T>
             {
                 if (!finished.contains(child))
                 {
-                    Path<T> newPath = minPath.extend(child, getShortestDistance(minDest, child));
+                    Path<T> newPath = minPath.extend(child, getShortestDistance(graph, minDest, child));
                     active.add(newPath);
                 }
             }

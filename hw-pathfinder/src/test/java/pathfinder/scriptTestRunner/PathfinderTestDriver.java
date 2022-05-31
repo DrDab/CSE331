@@ -124,8 +124,7 @@ public class PathfinderTestDriver
         }
         else
         {
-            DijkstraPathfinder<String> finder = new DijkstraPathfinder<>(graph);
-            Path<String> path = finder.getShortestPath(sourceNode, destNode);
+            Path<String> path = DijkstraPathfinder.getShortestPath(graph, sourceNode, destNode);
 
             output.printf("path from %s to %s:%n", sourceNode, destNode);
 

@@ -162,8 +162,7 @@ public class CampusMap implements ModelAPI
         Point srcPoint = new Point(srcBldg.getX(), srcBldg.getY());
         Point destPoint = new Point(destBldg.getX(), destBldg.getY());
 
-        DijkstraPathfinder<Point> pFinder = new DijkstraPathfinder<>(graph);
-        return pFinder.getShortestPath(srcPoint, destPoint);
+        return DijkstraPathfinder.getShortestPath(graph, srcPoint, destPoint);
     }
 
 }
