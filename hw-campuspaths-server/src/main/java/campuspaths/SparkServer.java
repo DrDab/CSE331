@@ -19,9 +19,24 @@ import spark.Response;
 import spark.Route;
 import spark.Spark;
 
+/**
+ * Configures a Spark HTTP server to respond to HTTP requests with
+ * path /getBuildings returning a JSON object of UW buildings' short names
+ * mapped to their full names, and path /getPath?src={SOURCE_BLDG_NAME}&dest={DEST_BLDG_NAME}
+ * returning a JSON representation of the Path instance representing the shortest path
+ * from UW source and destination buildings with shorthand names SOURCE_BLDG_NAME and
+ * DEST_BLDG_NAME respectively.
+ */
 public class SparkServer
 {
-
+    /**
+     * Configures the Spark HTTP server to respond to the HTTP requests to get
+     * the shortest path between two UW buildings and list all the available UW
+     * buildings to pathfind between.
+     *
+     * @param args, the arguments to be passed to the main method.
+     * @spec.requires args != null
+     */
     public static void main(String[] args)
     {
         CORSFilter corsFilter = new CORSFilter();
