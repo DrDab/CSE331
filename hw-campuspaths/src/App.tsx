@@ -27,7 +27,6 @@ interface AppState
 
 class App extends Component<{}, AppState> 
 {
-
     constructor(props: any)
     {
       super(props);
@@ -40,7 +39,8 @@ class App extends Component<{}, AppState>
       };
     }
 
-    render() {
+    render() 
+    {
         return (
             <div>
               <h1 id="app-title" style={{textAlign: 'center'}}>

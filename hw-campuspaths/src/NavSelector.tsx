@@ -13,6 +13,7 @@ interface NavSelectorState
     srcBldg: string,
     destBldg: string
     ready: boolean
+    pathDistance: number
 }
 
 class NavSelector extends Component<NavSelectorProps, NavSelectorState> 
@@ -20,7 +21,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     constructor(props: any)
     {
         super(props);
-        this.state = {buildings: new Map<string, string>(), srcBldg: "", destBldg:"", ready: false };
+        this.state = {buildings: new Map<string, string>(), srcBldg: "", destBldg:"", ready: false, pathDistance: 0.0 };
         this.loadBldgNames();
     }
 
@@ -54,6 +55,17 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
               }
 
             </select>
+
+            <br/><br/>
+            
+            <strong>
+            {
+              this.state.ready ? "Distance from " + this.state.srcBldg + " to " + 
+                this.state.destBldg + ": " + this.round(this.state.pathDistance, 1) + " ft (" + 
+                this.round(this.state.pathDistance * 12.0 * .0254, 1) + " m)" : ""
+            }
+            </strong>
+
             </div>
           );
       
@@ -74,7 +86,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
           tbuildings.set(key, value + "");
         }
 
-        this.setState({buildings: tbuildings, ready: true});
+        this.setState({buildings: tbuildings});
         console.log("sendRequest found buildings: " + this.state.buildings);
       }
       catch (e)
@@ -116,6 +128,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
           edges.push(edge);
         }
 
+        this.setState({ready: true, pathDistance: parsedObject["cost"]});
         this.props.onPointsChanged(firstPoint, lastPoint);
         this.props.onEdgesReady(edges);
         console.log("Path loaded!");
@@ -131,13 +144,13 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     onSrcBldgChanged(event: any) 
     {
       console.log("Src building set: "+ event.target.value);
-      this.setState({srcBldg: event.target.value});
+      this.setState({srcBldg: event.target.value, ready: false});
     }
 
     onDestBldgChanged(event: any) 
     {
       console.log("Dest building set: "+ event.target.value);
-      this.setState({destBldg: event.target.value});
+      this.setState({destBldg: event.target.value , ready: false});
     }
 
     onFindPathClicked(event: any) 
@@ -172,6 +185,12 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       }
 
       return res;
+    }
+
+    round(value:number, precision:number) : number
+    {
+      var multiplier = Math.pow(10.0, precision);
+      return Math.round(value * multiplier) / multiplier;
     }
 }
 
