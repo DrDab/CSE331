@@ -3,18 +3,21 @@ import { Edge, Point } from "./GeoConstructs";
 
 interface NavSelectorProps
 {
-    onEdgesReady(edges: Edge[]) : void;
-    onPointsChanged(startPoint: Point|null, endPoint: Point|null) : void
+    onEdgesReady(edges: Edge[]) : void;                                   // callback when the edges for a valid route are found.
+    onPointsChanged(startPoint: Point|null, endPoint: Point|null) : void  // callback when the start/end points for a route are found.
 }
 
 interface NavSelectorState
 {
-    buildings: Map<string, string>;
-    srcBldg: string,
-    destBldg: string
-    ready: boolean
-    pathDistance: number
+    buildings: Map<string, string>; // maps the shorthand names of UW buildings to their respective full names.
+    srcBldg: string,                // the shorthand name of the selected source building to pathfind from.
+    destBldg: string                // the shorthand name of the selected destination building to pathfind to.
+    ready: boolean                  // whether the pathfinding was successful.
+    pathDistance: number            // the distance of the computed path between the source building and destination building, in feet.
 }
+
+// the host name of the JSON-API HTTP server to do pathfinding from.
+const API_SERVER_HOSTNAME = "http://localhost:4567";
 
 class NavSelector extends Component<NavSelectorProps, NavSelectorState> 
 {
@@ -22,12 +25,16 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     {
         super(props);
         this.state = {buildings: new Map<string, string>(), srcBldg: "", destBldg:"", ready: false, pathDistance: 0.0 };
+
+        // asynchronously load the building names from API server.
         this.loadBldgNames();
     }
 
     render() 
     {
       console.log("NavSelector render called!");
+
+      // generate the dropdown list of buildings from the building map in the state.
       let bldgDropdown = this.getBldgDropdown();
 
         return (
@@ -71,11 +78,14 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       
     }
 
+    // Contacts the API server w/ page /getBuildings and sets this.state.buildings to the value
+    // of the JSON data returned mapping each building's shorthand name to its full name.
+    // If unsuccessful, creates alert dialogue with message "Failed to load buildings."
     async loadBldgNames() 
     {
       try
       {
-        let responsePromise = fetch("http://localhost:4567/getBuildings");
+        let responsePromise = fetch(API_SERVER_HOSTNAME + "/getBuildings");
         let response = await responsePromise;
         let parsingPromise = response.json();
         let parsedObject = await parsingPromise;
@@ -96,13 +106,17 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       }
     }
 
+    // contacts the API server to get the path from buildings with shorthand names,
+    // srcBldg (the source building) and destBldg (the destination building), and triggers
+    // the callbacks onPointsChanged and onEdgesReady when a path is found. If not successful,
+    // creates alert dialogue with message "Failed to load path."
     async loadPath(srcBldg:string, destBldg:string)
     {
       try
       {
         let srcEnc = encodeURIComponent(srcBldg);
         let destEnc = encodeURI(destBldg);
-        let responsePromise = fetch(`http://localhost:4567/getPath?src=${srcEnc}&dest=${destEnc}`);
+        let responsePromise = fetch(API_SERVER_HOSTNAME + `/getPath?src=${srcEnc}&dest=${destEnc}`);
         let response = await responsePromise;
         let parsingPromise = response.json();
         let parsedObject = await parsingPromise;
@@ -141,18 +155,26 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       }
     }
 
+    // Updates the state's source building to the shorthand name of the selected
+    // source building, when the selected source building in the dropdown box is changed.
     onSrcBldgChanged(event: any) 
     {
       console.log("Src building set: "+ event.target.value);
       this.setState({srcBldg: event.target.value, ready: false});
     }
 
+    // Updates the state's destination building to the shorthand name of the selected
+    // destination building, when the selected source building in the dropdown box is changed.
     onDestBldgChanged(event: any) 
     {
       console.log("Dest building set: "+ event.target.value);
       this.setState({destBldg: event.target.value , ready: false});
     }
 
+    // Checks if the selected buildings exist on the campus map before calling loadPath for
+    // the selected source/destination buildings. If the buildings don't exist, then
+    // creates an alert message stating the source/destination buildings don't exist instead of
+    // loading the path.
     onFindPathClicked(event: any) 
     {
       console.log("onFindPathClicked called");
@@ -173,6 +195,8 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       this.loadPath(srcBldg, destBldg);
     }
 
+    // generates the contents of the building dropdown list from the buildings map
+    // in the state.
     getBldgDropdown() : JSX.Element[]
     {
       console.log("getBldgDropdown called");
@@ -187,6 +211,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       return res;
     }
 
+    // rounds a given decimal number value to a given precision, precision.
     round(value:number, precision:number) : number
     {
       var multiplier = Math.pow(10.0, precision);

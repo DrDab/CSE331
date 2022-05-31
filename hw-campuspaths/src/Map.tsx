@@ -27,14 +27,9 @@ const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
 
 interface MapProps 
 {
-  myEdges: Edge[],
+  routeEdges: Edge[],
   startPoint: Point|null,
   endPoint: Point|null
-}
-
-interface MapState 
-{
-
 }
 
 // custom icon for start flag w/ offset correction added
@@ -52,9 +47,9 @@ const finishIcon = L.icon({
 });
 
 
-class Map extends Component<MapProps, MapState> 
+class Map extends Component<MapProps, {}> 
 {
-
+  // converts a 2D point (x,y) in UW Map coordinates to Earth coordinates (latitude and longitude).
   pointToLatLng(point: Point) : LatLngLiteral
   {
     return { lat: UW_LATITUDE + (point.y - UW_LATITUDE_OFFSET) * UW_LATITUDE_SCALE, 
@@ -64,7 +59,7 @@ class Map extends Component<MapProps, MapState>
   render() 
   {
     console.log("Map render called");
-    let edges = this.props.myEdges;
+    let edges = this.props.routeEdges;
 
     return (
       <div id="map">
@@ -79,18 +74,21 @@ class Map extends Component<MapProps, MapState>
           />
 
           {
+              // draw the edges of the campus route on the map.
               edges.map((edge) => 
               {
                 return <MapLine key={edge.id} color={edge.color} x1={edge.x1} y1={edge.y1} x2={edge.x2} y2={edge.y2}/>
               }) 
           }
-
+          
           {
+            // if a starting point exists, draw it on the map with the appropriate icon. 
             this.props.startPoint == null ? [] : 
               <Marker position={this.pointToLatLng(this.props.startPoint)} icon={startIcon} />
           }
 
           {
+            // if an end point exists, draw it on the map with the appropriate icon. 
             this.props.endPoint == null ? [] : 
               <Marker position={this.pointToLatLng(this.props.endPoint)} icon={finishIcon} />
           }

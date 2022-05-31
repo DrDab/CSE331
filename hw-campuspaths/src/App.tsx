@@ -20,9 +20,9 @@ import NavSelector from './NavSelector';
 
 interface AppState
 {
-  myEdges: Edge[],
-  startPoint: Point|null,
-  endPoint: Point|null
+  routeEdges: Edge[],        // the Edges of the campus route to render on map (in UW coordinates)
+  startPoint: Point|null,    // the source point of the campus route to render on map (in UW coordinates)
+  endPoint: Point|null       // the destination point of the campus route to render on map (in UW coordinates)
 }
 
 class App extends Component<{}, AppState> 
@@ -33,7 +33,7 @@ class App extends Component<{}, AppState>
 
       this.state = 
       {
-         myEdges: [],
+         routeEdges: [],
          startPoint: null,
          endPoint: null
       };
@@ -47,8 +47,10 @@ class App extends Component<{}, AppState>
                 Campus Paths
               </h1>
 
+              { /* Map taking in the route's start point, end point and edges in the state of App as props. */ }
+
               <div>
-                <Map  myEdges={this.state.myEdges} 
+                <Map  routeEdges={this.state.routeEdges} 
                       startPoint={this.state.startPoint} 
                       endPoint={this.state.endPoint} />
               </div>
@@ -61,7 +63,7 @@ class App extends Component<{}, AppState>
 
                 <NavSelector onEdgesReady={(edges) => 
                   {
-                    this.setState({myEdges: edges});
+                    this.setState({routeEdges: edges});
                   }}
 
                   onPointsChanged={(startPoint, endPoint) => 
