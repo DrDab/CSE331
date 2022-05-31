@@ -55,6 +55,8 @@ public class SparkServer
             public Object handle(Request request,
                                  Response response) throws Exception
             {
+                // return a JSON object of all the campus map's building shorthand names
+                // mapped to their full names.
                 return gson.toJson(campusMap.buildingNames());
             }
         });
@@ -66,18 +68,25 @@ public class SparkServer
             public Object handle(Request request,
                                  Response response)
             {
+                // source building parameter (must be shorthand name)
                 String src = request.queryParams("src");
+
+                // destination building parameter (must be shorthand name)
                 String dest = request.queryParams("dest");
 
                 if (src == null || dest == null || !campusMap.shortNameExists(src) ||
                         !campusMap.shortNameExists(dest))
                 {
+                    // if the source/destination building parameters are null
+                    // or aren't in the campus map, throw error 400.
                     Spark.halt(400, src == null ? "src cannot be null!" :
                             (dest == null ? "dest cannot be null!" :
                                     "Building " + (!campusMap.shortNameExists(src) ? src : dest) +
                                             " does not exist!"));
                 }
 
+                // otherwise return the JSON representation of the shortest path
+                // from the source building to the destination building
                 return gson.toJson(campusMap.findShortestPath(src, dest));
             }
         });
