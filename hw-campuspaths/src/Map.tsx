@@ -9,13 +9,14 @@
  * author.
  */
 
-import { LatLngExpression } from "leaflet";
+import L, { LatLng, LatLngExpression, LatLngLiteral } from "leaflet";
 import React, { Component } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MapLine from "./MapLine";
-import { UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER } from "./Constants";
-import { Edge } from "./GeoConstructs";
+import { UW_LATITUDE, UW_LATITUDE_CENTER, UW_LATITUDE_OFFSET, UW_LATITUDE_SCALE, UW_LONGITUDE, UW_LONGITUDE_CENTER, UW_LONGITUDE_OFFSET, UW_LONGITUDE_SCALE } from "./Constants";
+import { Edge, Point } from "./GeoConstructs";
+import { render } from "react-dom";
 
 // This defines the location of the map. These are the coordinates of the UW Seattle campus
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
@@ -26,7 +27,9 @@ const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
 
 interface MapProps 
 {
-  myEdges: Edge[]
+  myEdges: Edge[],
+  startPoint: Point|null,
+  endPoint: Point|null
 }
 
 interface MapState 
@@ -34,9 +37,32 @@ interface MapState
 
 }
 
+// custom icon for start flag w/ offset correction added
+const startIcon = L.icon({
+  iconUrl: 'start_flag.png',
+  iconSize: [32,32],
+  iconAnchor: [4.5,31]
+});
+
+// custom icon for end flag w/ offset correction added
+const finishIcon = L.icon({
+  iconUrl: 'finish_flag.png',
+  iconSize: [32,32],
+  iconAnchor: [3.5,31]
+});
+
+
 class Map extends Component<MapProps, MapState> 
 {
-  render() {
+
+  pointToLatLng(point: Point) : LatLngLiteral
+  {
+    return { lat: UW_LATITUDE + (point.y - UW_LATITUDE_OFFSET) * UW_LATITUDE_SCALE, 
+             lng: UW_LONGITUDE + (point.x - UW_LONGITUDE_OFFSET) * UW_LONGITUDE_SCALE };
+  }
+
+  render() 
+  {
     console.log("Map render called");
     let edges = this.props.myEdges;
 
@@ -51,12 +77,24 @@ class Map extends Component<MapProps, MapState>
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+
           {
               edges.map((edge) => 
               {
                 return <MapLine key={edge.id} color={edge.color} x1={edge.x1} y1={edge.y1} x2={edge.x2} y2={edge.y2}/>
               }) 
           }
+
+          {
+            this.props.startPoint == null ? [] : 
+              <Marker position={this.pointToLatLng(this.props.startPoint)} icon={startIcon} />
+          }
+
+          {
+            this.props.endPoint == null ? [] : 
+              <Marker position={this.pointToLatLng(this.props.endPoint)} icon={finishIcon} />
+          }
+
         </MapContainer>
       </div>
     );

@@ -1,9 +1,10 @@
 import { Component } from "react";
-import { Edge } from "./GeoConstructs";
+import { Edge, Point } from "./GeoConstructs";
 
 interface NavSelectorProps
 {
     onEdgesReady(edges: Edge[]) : void;
+    onPointsChanged(startPoint: Point|null, endPoint: Point|null) : void
 }
 
 interface NavSelectorState
@@ -79,6 +80,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       catch (e)
       {
         console.log(e);
+        alert("Failed to load buildings.");
       }
     }
 
@@ -94,22 +96,35 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
         let parsedObject = await parsingPromise;
 
         let edges:Edge[] = [];
+        let firstPoint: Point|null = null;
+        let lastPoint: Point|null = null;
 
         for (let i in parsedObject["path"])
         {
           let pEdge = parsedObject["path"][i];
           let start = pEdge["start"];
           let end = pEdge["end"];
-          let edge:Edge = {id: i, color:"green", x1:start["x"], y1:start["y"], x2:end["x"], y2:end["y"]};
+          let edge:Edge = {id: i, color:"blue", x1:start["x"], y1:start["y"], x2:end["x"], y2:end["y"]};
+
+          if (firstPoint == null)
+          {
+            firstPoint = {x:start["x"], y:start["y"]};
+          }
+
+          lastPoint = {x:end["x"], y:end["y"]};
+
           edges.push(edge);
         }
 
+        this.props.onPointsChanged(firstPoint, lastPoint);
         this.props.onEdgesReady(edges);
+        console.log("Path loaded!");
         console.log(edges);
       }
       catch (e)
       {
         console.log(e);
+        alert("Failed to load path.");
       }
     }
 
@@ -156,7 +171,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
         res.push(<option value={key}>{buildings.get(key)}</option>);
       }
 
-      return res
+      return res;
     }
 }
 

@@ -14,24 +14,29 @@ import Map from "./Map";
 
 // Allows us to write CSS styles inside App.css, any styles will apply to all components inside <App />
 import "./App.css";
-import { Edge } from './GeoConstructs';
+
+import { Edge, Point } from './GeoConstructs';
 import NavSelector from './NavSelector';
 
 interface AppState
 {
-  myEdges: Edge[];
+  myEdges: Edge[],
+  startPoint: Point|null,
+  endPoint: Point|null
 }
 
 class App extends Component<{}, AppState> 
 {
 
-    constructor(props:any)
+    constructor(props: any)
     {
       super(props);
 
       this.state = 
       {
-         myEdges: []
+         myEdges: [],
+         startPoint: null,
+         endPoint: null
       };
     }
 
@@ -43,15 +48,25 @@ class App extends Component<{}, AppState>
               </h1>
 
               <div>
-                <Map myEdges={this.state.myEdges} />
+                <Map  myEdges={this.state.myEdges} 
+                      startPoint={this.state.startPoint} 
+                      endPoint={this.state.endPoint} />
               </div>
 
               <div style={{textAlign: 'center'}} >
 
                 <br/>
-                <NavSelector onEdgesReady={(edges) => {
+
+                <NavSelector onEdgesReady={(edges) => 
+                  {
                     this.setState({myEdges: edges});
-                }}/>
+                  }}
+
+                  onPointsChanged={(startPoint, endPoint) => 
+                  {
+                    this.setState({startPoint: startPoint, endPoint: endPoint});
+                  }}
+                />
 
               </div>
              
