@@ -57,6 +57,8 @@ class App extends Component<{}, AppState>
 
                 <br/>
 
+                { /* The "control panel" used to specify the source and destination buildings to pathfind between. */ }
+
                 <NavSelector onEdgesReady={(edges) => 
                   {
                     this.setState({myEdges: edges});
