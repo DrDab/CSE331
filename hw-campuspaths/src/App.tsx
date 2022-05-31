@@ -47,10 +47,10 @@ class App extends Component<{}, AppState>
               </div>
 
               <div style={{textAlign: 'center'}} >
-                
+
                 <br/>
                 <NavSelector onEdgesReady={(edges) => {
-
+                    this.setState({myEdges: edges});
                 }}/>
 
               </div>
