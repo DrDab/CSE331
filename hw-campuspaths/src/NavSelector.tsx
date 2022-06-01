@@ -87,11 +87,17 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       
     }
 
-    // Resets the content displayed on screen to its original.
-    reset()
+    // Resets the contents of the on screen map.
+    resetMapContents()
     {
       this.props.onEdgesReady([]);
       this.props.onPointsChanged(null, null);
+    }
+
+    // Resets all content displayed on screen to its original form.
+    reset()
+    {
+      this.resetMapContents();
       this.setState({ pathSuccessful: false, 
                       srcBldg: BLDG_PLACEHOLDER_NAME, 
                       destBldg: BLDG_PLACEHOLDER_NAME });
@@ -179,6 +185,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     onSrcBldgChanged(event: any) 
     {
       console.log("Src building set: "+ event.target.value);
+      this.resetMapContents();
       this.setState({srcBldg: event.target.value, pathSuccessful: false});
     }
 
@@ -187,6 +194,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     onDestBldgChanged(event: any) 
     {
       console.log("Dest building set: "+ event.target.value);
+      this.resetMapContents();
       this.setState({destBldg: event.target.value , pathSuccessful: false});
     }
 
