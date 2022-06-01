@@ -38,8 +38,6 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
 
     render() 
     {
-      console.log("NavSelector render called!");
-
       // generate the dropdown list of buildings from the building map in the state.
       let bldgDropdown = this.getBldgDropdown();
 
@@ -149,7 +147,6 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
         }
 
         this.setState({buildings: tbuildings});
-        console.log("sendRequest found buildings: " + this.state.buildings);
       }
       catch (e)
       {
@@ -200,8 +197,6 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
         this.setState({pathSuccessful: true, pathDistance: parsedObject["cost"], pathHumanString: pathEnglish});
         this.props.onPointsChanged(firstPoint, lastPoint);
         this.props.onEdgesReady(edges);
-        console.log("Path loaded!");
-        console.log(edges);
       }
       catch (e)
       {
@@ -214,7 +209,6 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     // source building, when the selected source building in the dropdown box is changed.
     onSrcBldgChanged(event: any) 
     {
-      console.log("Src building set: "+ event.target.value);
       this.resetMapContents();
       this.setState({srcBldg: event.target.value, pathSuccessful: false});
     }
@@ -223,7 +217,6 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     // destination building, when the selected source building in the dropdown box is changed.
     onDestBldgChanged(event: any) 
     {
-      console.log("Dest building set: "+ event.target.value);
       this.resetMapContents();
       this.setState({destBldg: event.target.value , pathSuccessful: false});
     }
@@ -234,7 +227,6 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     // loading the path.
     onFindPathClicked(event: any) 
     {
-      console.log("onFindPathClicked called");
       let srcBldg: string = this.state.srcBldg;
       let destBldg: string = this.state.destBldg;
       let buildings: Map<string, string> = this.state.buildings;
@@ -256,7 +248,6 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     // in the state.
     getBldgDropdown() : JSX.Element[]
     {
-      console.log("getBldgDropdown called");
       let buildings: Map<string, string> = this.state.buildings;
       let res: JSX.Element[] = []
 

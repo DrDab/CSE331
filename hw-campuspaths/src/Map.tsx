@@ -57,7 +57,6 @@ class Map extends Component<MapProps, {}>
 
   render() 
   {
-    console.log("Map render called");
     let edges = this.props.routeEdges;
 
     return (
