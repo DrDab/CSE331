@@ -19,12 +19,16 @@ interface NavSelectorState
 // the host name of the JSON-API HTTP server to do pathfinding from.
 const API_SERVER_HOSTNAME = "http://localhost:4567";
 
+// the placeholder name of the default building option in the 
+// from/to building selection dropdown lists.
+const BLDG_PLACEHOLDER_NAME = "$$$$!OPT_SELECT_BLDG!$$$$";
+
 class NavSelector extends Component<NavSelectorProps, NavSelectorState> 
 {
     constructor(props: any)
     {
         super(props);
-        this.state = {  buildings: new Map<string, string>(), srcBldg: "", destBldg:"", 
+        this.state = {  buildings: new Map<string, string>(), srcBldg: "", destBldg:"",
                         pathSuccessful: false, pathDistance: 0.0 };
 
         // asynchronously load the building names from API server.
@@ -46,7 +50,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
             &nbsp;
             <select onChange={e => this.onSrcBldgChanged(e)} value={this.state.srcBldg}>
               {
-                <option value="$$$$!OPT_SELECT_BLDG!$$$$">Select Src Bldg</option>
+                <option value={ BLDG_PLACEHOLDER_NAME }>Select Src Bldg</option>
               }
 
               { 
@@ -58,7 +62,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
             &nbsp;
             <select onChange={e => this.onDestBldgChanged(e)} value={this.state.destBldg}>
               {
-                <option value="$$$$!OPT_SELECT_BLDG!$$$$">Select Dest Bldg</option>
+                <option value={ BLDG_PLACEHOLDER_NAME }>Select Dest Bldg</option>
               }
 
               {
@@ -89,8 +93,8 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       this.props.onEdgesReady([]);
       this.props.onPointsChanged(null, null);
       this.setState({ pathSuccessful: false, 
-                      srcBldg: "$$$$!OPT_SELECT_BLDG!$$$$", 
-                      destBldg: "$$$$!OPT_SELECT_BLDG!$$$$" });
+                      srcBldg: BLDG_PLACEHOLDER_NAME, 
+                      destBldg: BLDG_PLACEHOLDER_NAME });
     }
 
     // Contacts the API server w/ page /getBuildings and sets this.state.buildings to the value
