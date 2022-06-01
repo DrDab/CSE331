@@ -9,14 +9,13 @@
  * author.
  */
 
-import L, { LatLng, LatLngExpression, LatLngLiteral } from "leaflet";
-import React, { Component } from "react";
+import L, { LatLngExpression, LatLngLiteral } from "leaflet";
+import { Component } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MapLine from "./MapLine";
 import { UW_LATITUDE, UW_LATITUDE_CENTER, UW_LATITUDE_OFFSET, UW_LATITUDE_SCALE, UW_LONGITUDE, UW_LONGITUDE_CENTER, UW_LONGITUDE_OFFSET, UW_LONGITUDE_SCALE } from "./Constants";
 import { Edge, Point } from "./GeoConstructs";
-import { render } from "react-dom";
 
 // This defines the location of the map. These are the coordinates of the UW Seattle campus
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];

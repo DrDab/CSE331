@@ -44,11 +44,11 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
 
         return (
             <div>
-            <button onClick={e => {this.onFindPathClicked(e)}}>Find Path</button>
+            <button key="findPathButton" onClick={e => {this.onFindPathClicked(e)}}>Find Path</button>
             &nbsp;
             from
             &nbsp;
-            <select onChange={e => this.onSrcBldgChanged(e)} value={this.state.srcBldg}>
+            <select key="srcBldgSelector" onChange={e => this.onSrcBldgChanged(e)} value={this.state.srcBldg}>
               {
                 <option value={ BLDG_PLACEHOLDER_NAME }>Select Src Bldg</option>
               }
@@ -60,7 +60,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
             &nbsp;
             to
             &nbsp;
-            <select onChange={e => this.onDestBldgChanged(e)} value={this.state.destBldg}>
+            <select key="destBldgSelector" onChange={e => this.onDestBldgChanged(e)} value={this.state.destBldg}>
               {
                 <option value={ BLDG_PLACEHOLDER_NAME }>Select Dest Bldg</option>
               }
@@ -232,7 +232,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
 
       for (let key of buildings.keys())
       {
-        res.push(<option value={key}>{buildings.get(key)}</option>);
+        res.push(<option key={key} value={key}>{buildings.get(key)}</option>);
       }
 
       return res;
