@@ -6,4 +6,12 @@ List any additional features or functionality you implemented
 in your CampusPaths application below. Only things listed here
 will be considered for extra credit.
 
+Added total path distance readout when the path is computed, which
+shows the length of the path in feet and meters.
 
+Added start and finish markers to the map to clarify where
+the start and finish of the path is. The start point is denoted
+by a red marker while the end point is denoted by a finish flag.
+
+Added feature to show the human-readable step-by-step instructions 
+for the path to take, shown below the total path distance readout.

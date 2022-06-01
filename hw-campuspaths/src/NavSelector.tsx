@@ -14,6 +14,7 @@ interface NavSelectorState
     destBldg: string                // the shorthand name of the selected destination building to pathfind to.
     pathSuccessful: boolean         // whether the pathfinding was successful.
     pathDistance: number            // the distance of the computed path between the source building and destination building, in feet.
+    pathHumanString: string         // the human-readable string representation of the computed path.
 }
 
 // the host name of the JSON-API HTTP server to do pathfinding from.
@@ -29,7 +30,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     {
         super(props);
         this.state = {  buildings: new Map<string, string>(), srcBldg: "", destBldg:"",
-                        pathSuccessful: false, pathDistance: 0.0 };
+                        pathSuccessful: false, pathDistance: 0.0, pathHumanString:"" };
 
         // asynchronously load the building names from API server.
         this.loadBldgNames();
@@ -70,6 +71,8 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
               }
             </select>
 
+            &nbsp;&nbsp;<button onClick={e => this.reset()}>Reset</button>
+
             <br/><br/>
             
             <strong>
@@ -81,10 +84,34 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
             </strong>
 
             <br/><br/>
-            <button onClick={e => this.reset()}>Reset</button>
+            {
+              <div style={{whiteSpace: 'pre-line'}} >
+              {this.state.pathSuccessful ? this.state.pathHumanString : []}
+              </div>
+            }
             </div>
-          );
-      
+          );  
+    }
+
+    // Returns a human-readable string reprsentation of a list of Edges 
+    // representing a path in sequential order, where the cost of each Edge 
+    // is in feet of distance.
+    humanDirectionsFromEdges(edges: Edge[]) : string
+    {
+      let res: string = "Directions:\n";
+      let stepNo: number = 1;
+
+      edges.forEach(e => {
+        let angle = Math.atan2(e.y1 - e.y2, e.x2 - e.x1);
+        let compassBearing = (450.0 - (angle * 180.0 / Math.PI)) % 360.0;
+        if (compassBearing < 0.0)
+          compassBearing += 360.0;
+        res += stepNo + ". Walk " + this.round(e.cost * 12.0 * .0254, 0) + " m, bearing " + this.round(compassBearing, 0) + " degrees\n";
+        stepNo++;
+      })
+
+      res += "Arrived at destination.\n"
+      return res;
     }
 
     // Resets the contents of the on screen map.
@@ -114,7 +141,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
         let response = await responsePromise;
         let parsingPromise = response.json();
         let parsedObject = await parsingPromise;
-        let tbuildings : Map<string, string> = this.state.buildings;
+        let tbuildings: Map<string, string> = this.state.buildings;
 
         for (const [key, value] of Object.entries(parsedObject)) 
         {
@@ -155,7 +182,8 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
           let pEdge = parsedObject["path"][i];
           let start = pEdge["start"];
           let end = pEdge["end"];
-          let edge:Edge = {id: i, color:"blue", x1:start["x"], y1:start["y"], x2:end["x"], y2:end["y"]};
+          let edge:Edge = { id: i, color:"blue", x1:start["x"], y1:start["y"], x2:end["x"], 
+                            y2:end["y"], cost:pEdge["cost"] };
 
           if (firstPoint == null)
           {
@@ -167,7 +195,9 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
           edges.push(edge);
         }
 
-        this.setState({pathSuccessful: true, pathDistance: parsedObject["cost"]});
+        let pathEnglish = this.humanDirectionsFromEdges(edges);
+
+        this.setState({pathSuccessful: true, pathDistance: parsedObject["cost"], pathHumanString: pathEnglish});
         this.props.onPointsChanged(firstPoint, lastPoint);
         this.props.onEdgesReady(edges);
         console.log("Path loaded!");

@@ -1,5 +1,6 @@
 // represents an edge in the line mapper w/ unique ID string, color string and
-// start/end coordinates (x1,y1) and (x2,y2) in line-mapper coordinates.
+// start/end coordinates (x1,y1) and (x2,y2) in line-mapper coordinates, and
+// cost, in arbitrary units.
 export interface Edge 
 {
     id: string;
@@ -8,6 +9,7 @@ export interface Edge
     y1: number;
     x2: number;
     y2: number;
+    cost: number;
 }
 
 // represents a 2D point in line-mapper coordinates.
