@@ -12,7 +12,7 @@ interface NavSelectorState
     buildings: Map<string, string>; // maps the shorthand names of UW buildings to their respective full names.
     srcBldg: string,                // the shorthand name of the selected source building to pathfind from.
     destBldg: string                // the shorthand name of the selected destination building to pathfind to.
-    ready: boolean                  // whether the pathfinding was successful.
+    pathSuccessful: boolean         // whether the pathfinding was successful.
     pathDistance: number            // the distance of the computed path between the source building and destination building, in feet.
 }
 
@@ -24,7 +24,8 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     constructor(props: any)
     {
         super(props);
-        this.state = {buildings: new Map<string, string>(), srcBldg: "", destBldg:"", ready: false, pathDistance: 0.0 };
+        this.state = {  buildings: new Map<string, string>(), srcBldg: "", destBldg:"", 
+                        pathSuccessful: false, pathDistance: 0.0 };
 
         // asynchronously load the building names from API server.
         this.loadBldgNames();
@@ -43,39 +44,53 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
             &nbsp;
             from
             &nbsp;
-            <select onChange={e => this.onSrcBldgChanged(e)}>
+            <select onChange={e => this.onSrcBldgChanged(e)} value={this.state.srcBldg}>
+              {
+                <option value="$$$$!OPT_SELECT_BLDG!$$$$">Select Src Bldg</option>
+              }
 
-              <option value="Select Src Bldg...">Select Src Bldg</option>
               { 
                 bldgDropdown
               }
-
             </select>
             &nbsp;
             to
             &nbsp;
-            <select onChange={e => this.onDestBldgChanged(e)}>
-
-              <option value="Select Dest Bldg...">Select Dest Bldg</option>
-              { 
-                bldgDropdown
+            <select onChange={e => this.onDestBldgChanged(e)} value={this.state.destBldg}>
+              {
+                <option value="$$$$!OPT_SELECT_BLDG!$$$$">Select Dest Bldg</option>
               }
 
+              {
+                bldgDropdown
+              }
             </select>
 
             <br/><br/>
             
             <strong>
             {
-              this.state.ready ? "Distance from " + this.state.srcBldg + " to " + 
+              this.state.pathSuccessful ? "Distance from " + this.state.srcBldg + " to " + 
                 this.state.destBldg + ": " + this.round(this.state.pathDistance, 1) + " ft (" + 
                 this.round(this.state.pathDistance * 12.0 * .0254, 1) + " m)" : ""
             }
             </strong>
 
+            <br/><br/>
+            <button onClick={e => this.reset()}>Reset</button>
             </div>
           );
       
+    }
+
+    // Resets the content displayed on screen to its original.
+    reset()
+    {
+      this.props.onEdgesReady([]);
+      this.props.onPointsChanged(null, null);
+      this.setState({ pathSuccessful: false, 
+                      srcBldg: "$$$$!OPT_SELECT_BLDG!$$$$", 
+                      destBldg: "$$$$!OPT_SELECT_BLDG!$$$$" });
     }
 
     // Contacts the API server w/ page /getBuildings and sets this.state.buildings to the value
@@ -142,7 +157,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
           edges.push(edge);
         }
 
-        this.setState({ready: true, pathDistance: parsedObject["cost"]});
+        this.setState({pathSuccessful: true, pathDistance: parsedObject["cost"]});
         this.props.onPointsChanged(firstPoint, lastPoint);
         this.props.onEdgesReady(edges);
         console.log("Path loaded!");
@@ -160,7 +175,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     onSrcBldgChanged(event: any) 
     {
       console.log("Src building set: "+ event.target.value);
-      this.setState({srcBldg: event.target.value, ready: false});
+      this.setState({srcBldg: event.target.value, pathSuccessful: false});
     }
 
     // Updates the state's destination building to the shorthand name of the selected
@@ -168,7 +183,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     onDestBldgChanged(event: any) 
     {
       console.log("Dest building set: "+ event.target.value);
-      this.setState({destBldg: event.target.value , ready: false});
+      this.setState({destBldg: event.target.value , pathSuccessful: false});
     }
 
     // Checks if the selected buildings exist on the campus map before calling loadPath for
