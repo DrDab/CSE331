@@ -32,3 +32,10 @@ export const UW_LATITUDE_CENTER = 47.65440627742146;
 
 // Map center
 export const UW_LONGITUDE_CENTER = -122.30476957834502;
+
+// the host name of the JSON-API HTTP server to do pathfinding from.
+export const API_SERVER_HOSTNAME = "http://localhost:4567";
+
+// the placeholder name of the default building option in the 
+// from/to building selection dropdown lists.
+export const BLDG_PLACEHOLDER_NAME = "$$$$!OPT_SELECT_BLDG!$$$$";

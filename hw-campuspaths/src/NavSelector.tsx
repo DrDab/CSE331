@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { BLDG_PLACEHOLDER_NAME, API_SERVER_HOSTNAME } from "./Constants";
 import { Edge, Point } from "./GeoConstructs";
 
 interface NavSelectorProps
@@ -16,13 +17,6 @@ interface NavSelectorState
     pathDistance: number            // the distance of the computed path between the source building and destination building, in feet.
     pathHumanString: string         // the human-readable string representation of the computed path.
 }
-
-// the host name of the JSON-API HTTP server to do pathfinding from.
-const API_SERVER_HOSTNAME = "http://localhost:4567";
-
-// the placeholder name of the default building option in the 
-// from/to building selection dropdown lists.
-const BLDG_PLACEHOLDER_NAME = "$$$$!OPT_SELECT_BLDG!$$$$";
 
 class NavSelector extends Component<NavSelectorProps, NavSelectorState> 
 {
@@ -69,7 +63,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
               }
             </select>
 
-            &nbsp;&nbsp;<button onClick={e => this.reset()}>Reset</button>
+            &nbsp;&nbsp;<button onClick={() => this.reset()}>Reset</button>
 
             <br/><br/>
             
@@ -164,7 +158,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       try
       {
         let srcEnc = encodeURIComponent(srcBldg);
-        let destEnc = encodeURI(destBldg);
+        let destEnc = encodeURIComponent(destBldg);
         let responsePromise = fetch(API_SERVER_HOSTNAME + `/getPath?src=${srcEnc}&dest=${destEnc}`);
         let response = await responsePromise;
         let parsingPromise = response.json();
