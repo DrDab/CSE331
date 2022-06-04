@@ -23,7 +23,7 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
     constructor(props: any)
     {
         super(props);
-        this.state = {  buildings: new Map<string, string>(), srcBldg: "", destBldg:"",
+        this.state = {  buildings: new Map<string, string>(), srcBldg: BLDG_PLACEHOLDER_NAME, destBldg: BLDG_PLACEHOLDER_NAME,
                         pathSuccessful: false, pathDistance: 0.0, pathHumanString:"" };
 
         // asynchronously load the building names from API server.
