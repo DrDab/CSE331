@@ -228,7 +228,8 @@ class NavSelector extends Component<NavSelectorProps, NavSelectorState>
       let srcBldgNonExistent: boolean = !buildings.has(srcBldg);
       let destBldgNonExistent: boolean = !buildings.has(destBldg);
 
-      if (srcBldgNonExistent || destBldgNonExistent)
+      if (srcBldg === BLDG_PLACEHOLDER_NAME || destBldg === BLDG_PLACEHOLDER_NAME || 
+          srcBldgNonExistent || destBldgNonExistent)
       {
         alert(srcBldgNonExistent && destBldgNonExistent ? "\"From\" and \"To\" buildings are invalid!" : 
               srcBldgNonExistent ? "\"From\" building is invalid!" : "\"To\" building is invalid!");
